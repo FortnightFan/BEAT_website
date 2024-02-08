@@ -1,32 +1,11 @@
 # BEAT_website
-Front home page
-    About
-    selling points
-    button for sign up
-    button for login
 
-log in page
-    email entry
-    password entry
-    login button - greyed out when not available
+BEAT_website is a full-stack web application designed to help users track their workouts and follow predefined workout sets.
 
-sign up page
+## Features
 
-workout system selection
-    pre-made workout categories
-    custom workout
-
-within each workout
-    
-days / body part selection
-
-within each day/body selection
-    
-exercises
-
-within each exercise
-    name of exercise
-    how to
-    weight
-    reps
-    sets
+- **Workout Tracking:** Users can log their workouts, including exercises performed, sets, reps, and weights.
+- **Predefined Sets:** Access a library of predefined workout sets tailored to different fitness goals and experience levels.
+- **Customization:** Customize workouts to fit your specific needs, adjusting exercises, sets, and intensity as required.
+- **User Profiles:** Each user has a profile to track their workout history and progress over time.
+- **Pet:** Each profile is attached to a pet that grows the more you excercise.

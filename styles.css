@@ -1,0 +1,64 @@
+body {
+    background-color: white;
+}
+
+h1, h3 {
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 0 auto;
+    padding: 12px;
+    color: white;
+    text-align: center;
+    border-radius: 10px;
+}
+
+h1 {
+    max-width: 960px;
+    background-color: #fa8072;
+    letter-spacing: 2px;
+    margin-top: 200px;
+    margin-bottom: 32px;
+    text-shadow: 0px 3px 0px #dc3f20;
+    box-shadow: 0px 5px 0px #dc3f20;
+}
+
+h3 {
+    max-width: 480px;
+    background-color: #fa72a8;
+    box-shadow: 0px 5px 0px #e8397b;
+    text-shadow: 0px 3px 0px #e8397b;
+
+}
+
+.about-us-section {
+    margin-top: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.image-container {
+    flex: 1; 
+    margin-right: 20px;
+    height: auto; 
+    width: auto;
+    display: block; 
+    max-width: 50%; 
+}
+
+.image-container img {
+    max-width: 100%;
+}
+
+
+.text-container {
+    flex: 1; 
+    background-color: #fa72a8;
+    padding: 8px;
+    padding-top: 32px;
+    padding-bottom: 32px;
+
+}
+
+.text-container h2 {
+    margin-top: 0; 
+}

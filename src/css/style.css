@@ -1,0 +1,87 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f2eaea;
+}
+
+/* General styles for the header */
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 10px 20px;
+  text-align: center; /* Center the title and subtitle */
+  background: #e12929; /* Dark background for the header */
+  color: white; /* Light text */
+  margin: 0; /* Remove default margin */
+  padding: 5px 0; /* Add some padding */
+}
+
+nav {
+  font-family: Arial, sans-serif;
+  position: absolute;
+  top: 50; /* Set the top to 50% of the viewport */
+  right: 0;
+  transform: translateY(-50); /* Then move it up by half its own height */
+  margin: 0;
+  padding: 0;
+}
+
+/* Remove default list styles */
+nav ul {
+  list-style-type: none; /* Removes the bullet points */
+  padding: 0; /* Resets the padding */
+  margin: 0; /* Resets the margins */
+  display: flex; /* Aligns the list items in a row */
+  justify-content: center; /* Centers the list items horizontally */
+  align-items: center; /* Center list items vertically */
+}
+
+/* Style for each list item */
+nav ul li {
+  margin: 0 10px; /* Spacing between each list item */
+}
+
+/* Style for each link */
+nav ul li a {
+  text-decoration: none; /* Removes underline from links */
+  color: white; /* Color of the links */
+  padding: 5px 10px; /* Padding to make the clickable area larger */
+  transition: color 0.3s; /* Smooth transition for hover effect */
+}
+
+/* Hover state for links */
+nav ul li a:hover {
+  color: #000000; /* Change color when hovering over the link */
+  border-bottom: 2px solid #000000; /* Adds an underline on hover */
+}
+
+#hero {
+  background: url('images/HeroImage.jpg') no-repeat center center;
+  background-size: cover;
+  text-align: center;
+  color: white;
+  text-shadow: 0px 0px 0 #000, 0px 0px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+  padding: 100px 0;
+}
+
+.btn {
+  padding: 10px 20px;
+  margin: 10px;
+  color: white;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-primary {
+  background-color: #007bff;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+}
+
+
+

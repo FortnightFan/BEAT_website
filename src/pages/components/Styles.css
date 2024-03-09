@@ -1,0 +1,48 @@
+* { padding: 0; margin: 0; } 
+
+.heading_text {
+  color: white;
+  font-size: 48px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-weight: bold;
+}
+
+.text {
+  color: white;
+  font-size: 22px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); 
+  font-weight: bold; 
+}
+
+/* Navigation Bar component */
+
+.navbar {
+  display: flex;
+  justify-content: left; 
+  align-items: center;
+  background-color: #c21c1c; 
+  color: white; 
+  height: 60px; 
+  padding: 0 20px; 
+  position: fixed; 
+  top: 0; 
+  width: 100%; 
+
+}
+
+/* Get started component */
+
+.get_started_background{
+  padding-top: 120px;
+  padding-bottom: 120px;
+  background-image: url('HeroImage.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.get_started {
+  max-width: fit-content;
+  margin-inline: auto;
+  padding-top: 15px;
+}

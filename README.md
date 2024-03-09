@@ -1,11 +1,8 @@
-# BEAT_website
+# React + Vite
 
-BEAT_website is a full-stack web application designed to help users track their workouts and follow predefined workout sets.
+This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-## Features
+Currently, two official plugins are available:
 
-- **Workout Tracking:** Users can log their workouts, including exercises performed, sets, reps, and weights.
-- **Predefined Sets:** Access a library of predefined workout sets tailored to different fitness goals and experience levels.
-- **Customization:** Customize workouts to fit your specific needs, adjusting exercises, sets, and intensity as required.
-- **User Profiles:** Each user has a profile to track their workout history and progress over time.
-- **Pet:** Each profile is attached to a pet that grows the more you excercise.
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh

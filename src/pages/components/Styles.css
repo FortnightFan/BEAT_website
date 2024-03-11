@@ -30,6 +30,13 @@
 
 }
 
+.site-logo {
+  height: 45px;
+  width: auto;
+  align-self: center;
+
+}
+
 /* Get started component */
 
 .get_started_background{
@@ -45,4 +52,68 @@
   max-width: fit-content;
   margin-inline: auto;
   padding-top: 15px;
+}
+
+/* Section break style */
+.section-break {
+  height: 50px; /* Or whatever height you prefer for the break */
+}
+
+/* Two-column section layout */
+.two-column-section {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  flex-wrap: wrap;
+  padding: 20px; /* Adjust to your preference */
+}
+
+.left-column {
+  flex-basis: 40%; /* Adjust the width ratio if needed */
+  /* Include any additional styling for the left column */
+}
+
+.left-column img {
+  width: 100%; /* Makes the image responsive */
+  height: auto; /* Maintain aspect ratio */
+  /* You can also add styles like border-radius if you want rounded corners for images */
+  max-height: 1000px; /* Adjust this value to control the maximum height */
+}
+
+.right-column {
+  flex-basis: 50%; /* Adjust the width ratio if needed */
+  padding: 0 2rem; /* Add padding for text, adjust as needed */
+  display: flex;
+  flex-direction: column; /* Stack content vertically */
+  justify-content: center; /* Center content vertically */
+  align-items: flex-start; /* Align text to the start (left-align for LTR languages) */
+  text-align: left; /* Ensure text is aligned left */
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, sans-serif; /* Choose a font-family that matches your design */
+  color: #333; /* A darker text color for better readability */
+  background-color: #e6e6e6; /* A subtle background color can sometimes help text pop; optional */
+}
+
+.right-column h2 {
+  font-size: 3rem; /* Make headings larger */
+  color: #c21c1c; /* Use the theme color for headings */
+  margin-bottom: 0.5rem; /* Add some margin below the heading */
+  font-weight: bold; /* Optionally make the heading bold */
+}
+
+.right-column p {
+  font-size: 25px; /* Paragraph font size */
+  line-height: 1.6; /* Line height for better readability */
+
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .two-column-section {
+    flex-direction: column; /* Stack the columns on smaller screens */
+  }
+
+  .left-column,
+  .right-column {
+    flex-basis: auto; /* Let them take the full width on smaller screens */
+  }
 }

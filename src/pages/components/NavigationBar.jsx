@@ -1,13 +1,15 @@
-import React from 'react';
-import './Styles.css';
+import AccessibilityOutlinedIcon from '@mui/icons-material/AccessibilityOutlined';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import AccessibilityOutlinedIcon from '@mui/icons-material/AccessibilityOutlined';
+import React from 'react';
+import Logo from './BEAT_Logo_Black.png';
+import './Styles.css';
 
 const NavigationBar = () => {
   return (
     <div className="navbar">
       <div>
+        {/* <img src={Logo} alt="B.E.A.T Logo" className="site-logo" /> */}
         <IconButton aria-label="delete" size="small">
           <AccessibilityOutlinedIcon fontSize='large'/>
         </IconButton>

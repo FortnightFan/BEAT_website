@@ -12,6 +12,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
+import Footer from './components/Footer';
+import NavigationBar from './components/NavigationBar';
 
 function Copyright(props) {
   return (
@@ -42,6 +44,7 @@ export default function SignUp() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
+      <NavigationBar />
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -128,6 +131,7 @@ export default function SignUp() {
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
+      <Footer />
     </ThemeProvider>
   );
 }

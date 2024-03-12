@@ -10,6 +10,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Logo from './BEAT_Logo_Black.png';
 
+
 const NavigationBar = () => {
 
   const [open, setOpen] = React.useState(false);

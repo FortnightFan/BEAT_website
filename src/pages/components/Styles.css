@@ -48,6 +48,16 @@
   background-position: center;
 }
 
+.profile_background{
+  padding-top: 120px;
+  padding-bottom: 120px;
+  background-image: url('https://i0.wp.com/www.strengthlog.com/wp-content/uploads/2023/05/Pull-Day-Workout.jpg?fit=1888%2C1260&ssl=1');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: 'blur(5px)'
+}
+
 .get_started {
   max-width: fit-content;
   margin-inline: auto;

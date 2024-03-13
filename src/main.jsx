@@ -7,12 +7,13 @@ import SignIn from './pages/SignIn.jsx'
 import SignUp from './pages/SignUp.jsx'
 import PrevWorkouts from './pages/PrevWorkouts.jsx'
 import StatMetrics from './pages/StatMetrics.jsx'
-
+import Profile from './pages/Profile.jsx'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Home />
     <SignIn />
     <SignUp />
+    <Profile />
     <BodyDataForm />
     <RoutineSelector />
     <PrevWorkouts/>

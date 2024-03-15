@@ -45,14 +45,15 @@ export default function SignUp() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <NavigationBar />
-      <Container component="main" maxWidth="xs">
+      <Container component="main" sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
         <CssBaseline />
         <Box
           sx={{
-            marginTop: 8,
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            flexGrow: 1, // This makes the Box grow to fill available space
+            justifyContent: 'center' // This centers the content vertically
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>

@@ -1,18 +1,41 @@
-
-import Footer from './components/Footer';
-import NavigationBar from './components/NavigationBar';
 import React from 'react';
-import Workout from './components/Workout';
+import { AppBar, Box, Container, Typography, Paper, IconButton } from '@mui/material';
+import NavigationBar from './components/NavigationBar';
+import Footer from './components/Footer';
 
-
-const WorkoutsSelector = () => {
+const WorkoutCategories = () => {
     return (
-        <div>
+        <>
             <NavigationBar />
-            <Workout />
-            <Footer />
-        </div>
+            <Container disableGutters maxWidth={false} sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', justifyContent: 'space-between' }}>
+                <AppBar position="static" sx={{ marginBottom: 2 }}>
+                    <Typography variant="h6" align="center" sx={{ padding: 1, color: 'white' }}>
+                        Workout Categories
+                    </Typography>
+                </AppBar>
+
+                <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 2 }}>
+                    <Paper sx={{ width: 200, height: 200, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <Typography variant="h4">ST</Typography>
+                    </Paper>
+                    <Paper sx={{ width: 200, height: 200, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <Typography variant="h4">AE</Typography>
+                    </Paper>
+                    <Paper sx={{ width: 200, height: 200, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <Typography variant="h4">C</Typography>
+                    </Paper>
+                    <Paper sx={{ width: 200, height: 200, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <Typography variant="h4">HIIT</Typography>
+                    </Paper>
+                    <Paper sx={{ width: 200, height: 200, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                        <Typography variant="h4">Custom</Typography>
+                    </Paper>
+                </Box>
+
+                <Footer />
+            </Container>
+        </>
     );
 };
 
-export default WorkoutsSelector;
+export default WorkoutCategories;

@@ -11,6 +11,7 @@ import SignIn from './pages/SignIn.jsx'
 import SignUp from './pages/SignUp.jsx'
 import StatMetrics from './pages/StatMetrics.jsx'
 import StrengthTrainingPage from './pages/StrengthTraining.jsx'
+import WorkoutCategories from './pages/WorkoutCategories.jsx'
 import WorkoutSelector from './pages/WorkoutSelector.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
@@ -22,10 +23,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <BodyDataForm />
     <RoutineSelector />
     <WorkoutSelector />
-    <PrevWorkouts/>
-    <StatMetrics/>
-    <StrengthTrainingPage/>
-    <CustomWorkout/>
-    <ExerciseTracker/>
+    <WorkoutCategories />
+    <PrevWorkouts />
+    <StatMetrics />
+    <StrengthTrainingPage />
+    <CustomWorkout />
+    <AllExercises />
+    <ExerciseTracker />
   </React.StrictMode>,
 )

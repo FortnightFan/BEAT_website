@@ -16,19 +16,19 @@ const WorkoutCategories = () => {
 
                 <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 2 }}>
                     <Paper sx={{ width: 200, height: 200, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <Typography variant="h4">ST</Typography>
+                        <Typography variant="h4">Strength Training</Typography>
                     </Paper>
                     <Paper sx={{ width: 200, height: 200, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <Typography variant="h4">AE</Typography>
+                        <Typography variant="h4">Aerobic Exercises</Typography>
                     </Paper>
                     <Paper sx={{ width: 200, height: 200, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <Typography variant="h4">C</Typography>
+                        <Typography variant="h4">Calisthenics</Typography>
                     </Paper>
                     <Paper sx={{ width: 200, height: 200, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <Typography variant="h4">HIIT</Typography>
+                        <Typography variant="h4">High Intensity Interval Training</Typography>
                     </Paper>
                     <Paper sx={{ width: 200, height: 200, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <Typography variant="h4">Custom</Typography>
+                        <Typography variant="h4">Customize a Workout</Typography>
                     </Paper>
                 </Box>
 

@@ -13,7 +13,7 @@ import StatMetrics from './pages/StatMetrics.jsx'
 import StrengthTrainingPage from './pages/StrengthTraining.jsx'
 import WorkoutCategories from './pages/WorkoutCategories.jsx'
 import WorkoutSelector from './pages/WorkoutSelector.jsx'
-
+import AllExercises from './pages/AllExercises.jsx'
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Home />

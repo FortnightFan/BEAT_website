@@ -15,8 +15,8 @@ import WorkoutSelector from './pages/WorkoutSelector.jsx'
 import AllExercises from  './pages/AllExercises.jsx'
 import NavigationBar from './pages/components/NavigationBar.jsx'
 import Footer from './pages/components/Footer.jsx'
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Router>

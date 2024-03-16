@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from "react";
 import './Styles.css';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
@@ -9,7 +9,7 @@ import Divider from '@mui/material/Divider';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import Logo from './BEAT_Logo_Black.png';
-
+import { NavLink } from 'react-router-dom';
 
 const NavigationBar = () => {
 
@@ -21,17 +21,23 @@ const NavigationBar = () => {
   const DrawerList = (
     <Box sx={{ width: 450 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
-        <ListItemButton>
-          <ListItemText primary='hello' />
-        </ListItemButton>
+        <NavLink to='/'>
+          <ListItemButton>
+            <ListItemText>Home</ListItemText>
+          </ListItemButton>
+        </NavLink>
+
       </List>
 
       <Divider />
 
       <List>
-        <ListItemButton>
-          <ListItemText primary='First' />
-        </ListItemButton>
+        <NavLink to='/profile'>
+          <ListItemButton>
+            <ListItemText primary='Profile' />
+          </ListItemButton>
+        </NavLink>
+
 
         <ListItemButton>
           <ListItemText primary='Second' />
@@ -56,10 +62,18 @@ const NavigationBar = () => {
         <Drawer sx={{color: "red",}} open={open} onClose={toggleDrawer(false)}>
           {DrawerList}
         </Drawer>
-      
-        <Button variant="contained" sx={{ ml: 3, backgroundColor: 'orange' }}>About</Button>
-        <Button variant="contained" sx={{ ml: 3 }}>Register</Button>
-        <Button variant="contained" sx={{ ml: 3 }}>Login</Button>
+
+        <NavLink to='/'>
+          <Button variant="contained" sx={{ ml: 3, backgroundColor: 'orange' }}>About</Button>
+        </NavLink>
+
+        <NavLink to='/signup'>
+          <Button variant="contained" sx={{ ml: 3 }}>Register</Button>
+        </NavLink>
+
+        <NavLink to='/signin'>
+          <Button variant="contained" sx={{ ml: 3 }}>Login</Button>
+        </NavLink>
       </Box>
     </div>
 

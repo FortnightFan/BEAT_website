@@ -6,7 +6,6 @@ import Footer from './components/Footer';
 const WorkoutCategories = () => {
     return (
         <>
-            <NavigationBar />
             <Container disableGutters maxWidth={false} sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', justifyContent: 'space-between' }}>
                 <AppBar position="static" sx={{ marginBottom: 2 }}>
                     <Typography variant="h6" align="center" sx={{ padding: 1, color: 'white' }}>
@@ -32,7 +31,6 @@ const WorkoutCategories = () => {
                     </Paper>
                 </Box>
 
-                <Footer />
             </Container>
         </>
     );

@@ -12,7 +12,6 @@ const previousWorkouts = [
 const PrevWorkouts = () => {
     return (
         <div>            
-            <NavigationBar />
                 <div style={{ maxWidth: 600, margin: 'auto' }}>
                     <Typography variant="h4">
                         Previous Workouts
@@ -30,7 +29,6 @@ const PrevWorkouts = () => {
                         </List>
                     </Paper>
                 </div>
-            <Footer />   
         </div>  
     );
 };

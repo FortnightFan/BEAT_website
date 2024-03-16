@@ -15,7 +15,6 @@ const ExerciseTracker = () => {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
-      <NavigationBar />
       <AppBar position="static">
         <Typography variant="h4" align="center" sx={{ padding: 2, color: 'white' }}>
           Lat Pull Down
@@ -71,7 +70,6 @@ const ExerciseTracker = () => {
         </Grid>
       </Container>
 
-      <Footer />
     </Box>
   );
 };

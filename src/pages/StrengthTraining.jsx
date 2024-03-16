@@ -27,7 +27,6 @@ const StrengthTraining = () => {
 
   return (
     <>
-      <NavigationBar />
       <Container disableGutters maxWidth={false} sx={{
         display: 'flex', flexDirection: 'column', minHeight: '100vh', justifyContent: 'space-between'
       }}>
@@ -54,7 +53,6 @@ const StrengthTraining = () => {
           ))}
         </List>
 
-        <Footer />
       </Container>
     </>
   );

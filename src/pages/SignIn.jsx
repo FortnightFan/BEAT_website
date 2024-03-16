@@ -44,7 +44,6 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <NavigationBar />
       <Container component="main" sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
         <CssBaseline />
         <Box
@@ -111,7 +110,6 @@ export default function SignIn() {
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
-      <Footer />
     </ThemeProvider>
   );
 }

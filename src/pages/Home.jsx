@@ -9,11 +9,9 @@ import NavigationBar from './components/NavigationBar';
 const MainComponent = () => {
     return (
         <div>            
-            <NavigationBar />
             <GetStarted />
             <MarketingTextBox />
             <ContentInfo />
-            <Footer />
         </div>  
     );
 };

@@ -44,7 +44,6 @@ export default function SignUp() {
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <NavigationBar />
       <Container component="main" sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
         <CssBaseline />
         <Box
@@ -132,7 +131,6 @@ export default function SignUp() {
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
-      <Footer />
     </ThemeProvider>
   );
 }

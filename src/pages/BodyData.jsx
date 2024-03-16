@@ -20,7 +20,6 @@ export default function BodyDataForm() {
 
   return (
     <>
-      <NavigationBar />
       <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <Container component="main" maxWidth="sm" sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
           <AppBar position="static" color="primary" sx={{ marginBottom: 4 }}>
@@ -54,7 +53,6 @@ export default function BodyDataForm() {
             </Typography>
           </Paper>
         </Container>
-        <Footer />
       </Box>
     </>
   );

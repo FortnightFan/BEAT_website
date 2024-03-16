@@ -30,7 +30,6 @@ const CustomWorkoutSelector = () => {
 
   return (
     <>
-      <NavigationBar />
       <Container disableGutters maxWidth={false} sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', justifyContent: 'space-between' }}>
         <AppBar position="static" sx={{ marginBottom: 2 }}>
           <Typography variant="h6" align="center" sx={{ padding: 1, color: 'white' }}>
@@ -68,7 +67,6 @@ const CustomWorkoutSelector = () => {
           </Button>
         </Box>
         
-        <Footer />
       </Container>
     </>
   );

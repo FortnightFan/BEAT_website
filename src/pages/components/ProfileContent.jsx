@@ -1,5 +1,6 @@
 import { Box, Button} from '@mui/material';
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 const name = "Kevin"
 const workoutTips = [
@@ -24,13 +25,19 @@ const workoutTips = [
         <Box height={100}/>
         <div>
             <center>
-                <Button variant="contained">Previous Workouts</Button>
+                <NavLink to='/profile/prevworkouts'>
+                    <Button variant="contained">Previous Workouts</Button>
+                </NavLink>
+                
                 <Box height={25}/>
-                <Button variant="contained">Statistical Metrics</Button>
-                <Box height={25}/>
-                <Button variant="contained">Body</Button>
+                <NavLink to='/profile/bodydata'>
+                    <Button variant="contained">Body</Button>
+                </NavLink>
+
                 <Box height={50}/>
-                <Button variant="contained" color="success" size="large">Get Started</Button>
+                <NavLink to='/routineselector'>
+                    <Button variant="contained" color="success" size="large">Get Started</Button>
+                </NavLink>
                 <Box height={25}/>
             </center>
         </div>

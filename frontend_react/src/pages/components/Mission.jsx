@@ -1,5 +1,6 @@
 import Button from '@mui/material/Button';
 import React from 'react';
+import WeightRack from './WeightRack.jpg';
 
 const Mission = () => {
   return (
@@ -11,7 +12,7 @@ const Mission = () => {
       <div className="two-column-section" style={{ flexDirection: 'row-reverse' }}>
         {/* Left side with an image */}
         <div className="left-column">
-          <img src="src/pages/components/WeightRack.jpg" alt="Weight Rack Visual" />
+          <img src={WeightRack} alt="Weight Rack Visual" />
         </div>
         {/* Right side with text */}
         <div className="right-column">

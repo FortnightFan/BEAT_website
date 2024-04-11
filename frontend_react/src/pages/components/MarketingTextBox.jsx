@@ -1,4 +1,6 @@
 import React from 'react';
+import promoPhoto from './PromoPhoto.jpg';
+
 
 const Marketing = () => {
   return (
@@ -10,7 +12,7 @@ const Marketing = () => {
       <div className="two-column-section">
         {/* Left side with an image */}
         <div className="left-column">
-          <img src="PromoPhoto.jpg" alt="Black and White Gym" />
+          <img src={promoPhoto} alt="Black and White Gym" />
         </div>
         {/* Right side with text */}
         <div className="right-column">

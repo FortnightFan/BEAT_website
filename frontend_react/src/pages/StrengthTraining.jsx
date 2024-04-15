@@ -1,7 +1,6 @@
 import { AppBar, Box, Container, List, ListItem, Paper, Typography } from '@mui/material';
 import React from 'react';
-import Footer from './components/Footer';
-import NavigationBar from './components/NavigationBar';
+import HoverListItem from './HoverListItem';
 
 // Import icons from assets
 import AbsIcon from '../assets/Icons/AbdominalMuscleIcon.png';
@@ -36,20 +35,18 @@ const StrengthTraining = () => {
           </Typography>
         </AppBar>
 
-        <List sx={{ width: '100%', bgcolor: 'background.paper', padding: 0, overflow: 'hidden' }}>
+        <List sx={{ width: '100%', bgcolor: 'background.paper', padding: 0, overflow: 'hidden', flex: 1 }}>
           {musclegroups.map((musclegroup, index) => (
-            <ListItem key={index} sx={{ display: 'flex', justifyContent: 'center', padding: 0 }}>
-              <Paper sx={{
-                display: 'flex', alignItems: 'center', justifyContent: 'space-between', maxWidth: 600, width: '100%', margin: 1
-              }} elevation={2}>
+            <HoverListItem key={index} sx={{ display: 'flex', justifyContent: 'center', padding: 0 }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', maxWidth: 600, width: '100%', margin: 1 }}>
                 <Typography variant="subtitle1" sx={{
                   flexGrow: 1, textAlign: 'center', fontWeight: 'bold', fontSize: '1.1rem', marginLeft: 2
                 }}>
                   {musclegroup.name}
                 </Typography>
                 <img src={musclegroup.icon} alt={musclegroup.name} style={{ width: 50, height: 50, marginLeft: 16 }} />
-              </Paper>
-            </ListItem>
+              </div>
+            </HoverListItem>
           ))}
         </List>
 

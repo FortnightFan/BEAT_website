@@ -10,7 +10,7 @@ const Footer = () => {
         py: 3, // Padding top & bottom
         px: 2, // Padding left & right
         mt: 'auto', // Margin top auto for pushing footer to the bottom
-        backgroundColor: '#c21c1c', // Example background color
+        backgroundColor: 'maroon', // Example background color
         color: 'white', // Text color
       }}
     >

@@ -1,38 +1,45 @@
+import { Box, CssBaseline } from '@mui/material';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import './index.css';
+import AllExercises from './pages/AllExercises.jsx';
+import BodyDataForm from './pages/BodyData.jsx';
+import Home from './pages/Home';
+import PrevWorkouts from './pages/PrevWorkouts.jsx';
+import Profile from './pages/Profile.jsx';
+import RoutineSelector from './pages/RoutineSelector.jsx';
+import SignIn from './pages/SignIn.jsx';
+import SignUp from './pages/SignUp.jsx';
+import StrengthTrainingPage from './pages/StrengthTraining.jsx';
+import WorkoutCategories from './pages/WorkoutCategories.jsx';
+import WorkoutSelector from './pages/WorkoutSelector.jsx';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-import Home from './pages/Home'
-import PrevWorkouts from './pages/PrevWorkouts.jsx'
-import Profile from './pages/Profile.jsx'
-import RoutineSelector from './pages/RoutineSelector.jsx'
-import SignIn from './pages/SignIn.jsx'
-import SignUp from './pages/SignUp.jsx'
-import StrengthTrainingPage from './pages/StrengthTraining.jsx'
-import WorkoutCategories from './pages/WorkoutCategories.jsx'
-import WorkoutSelector from './pages/WorkoutSelector.jsx'
-import AllExercises from  './pages/AllExercises.jsx'
-import BodyDataForm from './pages/BodyData.jsx'
-
-import Footer from './pages/components/Footer'
+import Footer from './pages/components/Footer';
 import NavigationBar from './pages/components/NavigationBar';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <Router>
-      <NavigationBar/>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/profile/bodydata" element={<BodyDataForm />} />
-        <Route path="/profile/prevworkouts" element={<PrevWorkouts />} />
-        <Route path="/routineselector" element={<RoutineSelector />} />      
-      </Routes>
-      <Footer/>
+      <CssBaseline /> {/* Ensures a consistent baseline across browsers */}
+      <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', margin: 0, padding: 0 }}>
+        <NavigationBar/>
+        <Box component="main" sx={{ flex: 1, overflowY: 'auto' }}> {/* Allows content to grow and footer to stick at the bottom */}
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/profile/bodydata" element={<BodyDataForm />} />
+            <Route path="/profile/prevworkouts" element={<PrevWorkouts />} />
+            <Route path="/routineselector" element={<RoutineSelector />} />      
+            <Route path="/routine/:routineId" element={<WorkoutSelector />} />
+            <Route path="/workout/:workoutID" element={<StrengthTrainingPage />} />
+          </Routes>
+        </Box>
+        <Footer/>
+      </Box>
     </Router>
   </React.StrictMode>,
 )

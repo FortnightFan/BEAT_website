@@ -1,5 +1,7 @@
 * { padding: 0; margin: 0; } 
 
+
+
 .heading_text {
   color: white;
   font-size: 48px;
@@ -17,6 +19,7 @@
 /* Navigation Bar component */
 
 .navbar {
+  position: fixed;
   display: flex;
   justify-content: left; 
   align-items: center;

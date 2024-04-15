@@ -1,82 +1,93 @@
-import * as React from "react";
-import './Styles.css';
-import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Drawer from '@mui/material/Drawer';
+import IconButton from '@mui/material/IconButton';
 import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItemButton from '@mui/material/ListItemButton';
+import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
-import Logo from './BEAT_Logo_Black.png';
+import Toolbar from '@mui/material/Toolbar';
+import Typography from '@mui/material/Typography';
+import * as React from "react";
 import { NavLink } from 'react-router-dom';
+import Logo from './BEAT_Logo_Black.png';
 
 const NavigationBar = () => {
-
   const [open, setOpen] = React.useState(false);
-  const toggleDrawer = (newOpen) => () => {
+
+  const toggleDrawer = (newOpen) => (event) => {
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
     setOpen(newOpen);
   };
 
   const DrawerList = (
-    <Box sx={{ width: 450 }} role="presentation" onClick={toggleDrawer(false)}>
+    <Box
+      sx={{ width: 250 }}
+      role="presentation"
+      onClick={toggleDrawer(false)}
+      onKeyDown={toggleDrawer(false)}
+    >
       <List>
-        <NavLink to='/'>
-          <ListItemButton>
-            <ListItemText>Home</ListItemText>
-          </ListItemButton>
-        </NavLink>
-
-      </List>
-
-      <Divider />
-
-      <List>
-        <NavLink to='/profile'>
-          <ListItemButton>
-            <ListItemText primary='Profile' />
-          </ListItemButton>
-        </NavLink>
-
-
-        <ListItemButton>
-          <ListItemText primary='Second' />
-        </ListItemButton>
-
-        <ListItemButton>
-          <ListItemText primary='Third' />
-        </ListItemButton>
-
+        {['Home', 'Profile', 'Second', 'Third'].map((text, index) => (
+          <ListItem button key={text} component={NavLink} to={`/${text.toLowerCase()}`}>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
       </List>
     </Box>
   );
 
-
   return (
-    <div>
-      <Box bgcolor={'maroon'}>
-        <IconButton onClick={toggleDrawer(true)} aria-label="delete" size="small">
-          <img src={Logo} alt="B.E.A.T Logo" className="site-logo" />
-        </IconButton>
+    <>
+      <AppBar position="static" sx={{ bgcolor: 'maroon' }}>
+        <Toolbar sx={{ justifyContent: 'space-between' }}>
 
-        <Drawer sx={{color: "red",}} open={open} onClose={toggleDrawer(false)}>
-          {DrawerList}
-        </Drawer>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            onClick={toggleDrawer(true)}
+          >
+            <MenuIcon />
+          </IconButton>
 
-        <NavLink to='/'>
-          <Button variant="contained" sx={{ ml: 3, backgroundColor: 'orange' }}>About</Button>
-        </NavLink>
+          {/* Spacer to balance the items */}
+          <Box sx={{ flex: 1 }} />
 
-        <NavLink to='/signup'>
-          <Button variant="contained" sx={{ ml: 3 }}>Register</Button>
-        </NavLink>
+          {/* Centered logo and title */}
+          <Box sx={{ display: 'flex', position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
+            <Box component="img" src={Logo} alt="B.E.A.T Logo" sx={{ height: 50 }} />
+            <Typography variant="h6" sx={{ alignSelf: 'center', ml: 1 }}>
+              B.E.A.T
+            </Typography>
+          </Box>
 
-        <NavLink to='/signin'>
-          <Button variant="contained" sx={{ ml: 3 }}>Login</Button>
-        </NavLink>
-      </Box>
-    </div>
-
+          {/* Spacer to balance the items */}
+          <Box sx={{ flex: 1 }} />
+          <Box sx={{ display: 'flex' }}>
+            <Button color="inherit" component={NavLink} to="/" sx={{ color: 'white' }}>
+              About
+            </Button>
+            <Button color="inherit" component={NavLink} to="/signup" sx={{ color: 'white' }}>
+              Register
+            </Button>
+            <Button color="inherit" component={NavLink} to="/signin" sx={{ color: 'white' }}>
+              Login
+            </Button>
+        </Box>  
+        </Toolbar>
+      </AppBar>
+      <Drawer
+        open={open}
+        onClose={toggleDrawer(false)}
+      >
+        {DrawerList}
+      </Drawer>
+    </>
   );
 };
 

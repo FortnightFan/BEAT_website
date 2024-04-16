@@ -83,9 +83,11 @@ params = {
     'primaryMuscles' : []
     }
 
-@app.route('/filtered_exercises')
+@app.route('/api/filtered_exercises',  methods=['POST'])
 def filtered_exercises():
     data = exercises_manager.filter_exercises(params)
+    # return jsonify(data)
+    data = {'message' : 'Recieved!'} 
     return jsonify(data)
 
 @app.route('/all_exercises')
@@ -98,13 +100,18 @@ def login_receive_data():
     data = request.json
     return jsonify({'message': 'Data received successfully'})
 
-@app.route('/api/data', methods=['POST'])
+@app.route('/api/login', methods=['POST'])
 def receive_data():
     with open(os.path.dirname(__file__)+'\\accounts.json') as f:
         user_logins = json.load(f)
     data = request.json 
-    if data in user_logins:
-        return_message = {'message': 'Login successful!'} 
+    for user in user_logins:
+        if user["email"] == data['email'] and user["password"] == data['password']:
+            return_message =    {  
+                                'message': 'Login successful!',
+                                'user' : user
+                                } 
+            break
     else:
         return_message = {'message': 'Login failed, incorrect email/password!'} 
         

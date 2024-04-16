@@ -37,7 +37,7 @@ export default function SignIn() {
   const [responseMessage, setResponseMessage] = useState('');
 
   const sendData = async () => {
-    const response = await fetch('/api/data', {
+    const response = await fetch('/api/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ export default function SignIn() {
     setResponseMessage(responseData.message);
     if (responseData.message === "Login successful!")
     {
-      console.log("Login successful!")
+      console.log("Login successful " + responseData.user.name + "!")
       navigate('/profile');
     }
 };

@@ -11,8 +11,6 @@ import LegIcon from '../assets/Icons/LegMuscleIcon.png';
 import ShoulderIcon from '../assets/Icons/ShouldersMuscleIcon.png';
 import TricepsIcon from '../assets/Icons/TricepsMuscleIcon.png';
 
-import CreateWorkoutList from './components/CreateWorkoutList';
-
 const StrengthTraining = () => {
   const musclegroups = [
     { name: 'Back', icon: BackIcon },
@@ -27,7 +25,6 @@ const StrengthTraining = () => {
 
   return (
     <>
-      <CreateWorkoutList/>
       <Container disableGutters maxWidth={false} sx={{
         display: 'flex', flexDirection: 'column', minHeight: '100vh', justifyContent: 'space-between'
       }}>

@@ -15,7 +15,7 @@ import StrengthTrainingPage from './pages/StrengthTraining.jsx';
 import WorkoutCategories from './pages/WorkoutCategories.jsx';
 import WorkoutSelector from './pages/WorkoutSelector.jsx';
 import reportWebVitals from './reportWebVitals';
-
+import CreateWorkoutList from './pages/components/CreateWorkoutList.jsx';
 import Footer from './pages/components/Footer';
 import NavigationBar from './pages/components/NavigationBar';
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -35,7 +35,7 @@ root.render(
             <Route path="/profile/prevworkouts" element={<PrevWorkouts />} />
             <Route path="/routineselector" element={<RoutineSelector />} />      
             <Route path="/routine/:routineId" element={<WorkoutSelector />} />
-            <Route path="/workout/:workoutID" element={<StrengthTrainingPage />} />
+            <Route path="/workout/:workoutID" element={<CreateWorkoutList />} />
           </Routes>
         </Box>
         <Footer/>

@@ -6,7 +6,7 @@ import AddButton from './AddButton';
 import DeleteButton from './DeleteButton';
 import HoverListItem from './HoverListItem';
 import RenameButton from './RenameButton';
-  
+
   const WorkoutSelector = () => {
     const [workouts, setworkouts] = React.useState([
       'Push',

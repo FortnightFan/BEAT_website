@@ -117,5 +117,16 @@ def receive_data():
         
     return jsonify(return_message)
 
+@app.route('/api/saved_exercises', methods=['POST'])
+def check_saved_exercises():
+    with open(os.path.dirname(__file__)+'\\saved_workouts.json') as f:
+        saved_workouts = json.load(f)
+    data = request.json
+    print (data)
+    for workout in saved_workouts:
+        if workout["ID"] == str(data["ID"]):
+            return workout
+    return "-1"
+
 if __name__ == '__main__':
     app.run(debug=True)

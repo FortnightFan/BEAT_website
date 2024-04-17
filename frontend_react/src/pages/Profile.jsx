@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import ProfileContent from './components/ProfileContent';
 import { BarChart } from '@mui/x-charts/BarChart';
+import React, { useEffect, useState } from 'react';
+import ProfileContent from './components/ProfileContent';
 
 const Profile = () => { 
 

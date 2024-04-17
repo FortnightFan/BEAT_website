@@ -8,9 +8,9 @@ with open(os.path.dirname(__file__)+'\\exercises.json') as f:
 def filter_exercises(params : dict):
     exercises = []
     for i in range(0,len(data)):
-        if data[i]["level"] == params["level"] or params["level"] == None:
-            if data[i]["equipment"] == params["equipment"] or params["equipment"] == None:
-                if any (item in data[i]["primaryMuscles"] for item in params["primaryMuscles"]) or params["primaryMuscles"] == []:
+        if data[i]["level"] == params["level"] or params["level"] == '':
+            if data[i]["equipment"] == params["equipment"] or params["equipment"] == '':
+                if any (item in data[i]["primaryMuscles"] for item in params["primaryMuscles"]) or params["primaryMuscles"] == ['']:
                     exercises.append(data[i])
     return exercises
 

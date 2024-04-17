@@ -85,9 +85,9 @@ params = {
 
 @app.route('/api/filtered_exercises',  methods=['POST'])
 def filtered_exercises():
+    params = request.json 
     data = exercises_manager.filter_exercises(params)
-    # return jsonify(data)
-    data = {'message' : 'Recieved!'} 
+    # print(json.dumps(data, indent=4))
     return jsonify(data)
 
 @app.route('/all_exercises')

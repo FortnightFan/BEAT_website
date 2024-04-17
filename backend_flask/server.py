@@ -128,5 +128,33 @@ def check_saved_exercises():
             return workout
     return "-1"
 
+
+
+
+
+@app.route('/api/update_saved_exercises', methods=['POST'])
+def update_saved_exercises():
+    data = request.json
+    id,exercises = str(data["ID"]), (data["exercises"])
+    with open(os.path.dirname(__file__)+'\\saved_workouts.json') as f:
+        saved_workouts = json.load(f)
+    for workout in saved_workouts:
+        if workout['ID'] == id:
+            workout["Exercises"] = exercises            
+            with open(os.path.dirname(__file__)+'\\saved_workouts.json', 'w') as f:
+                json.dump(saved_workouts, f, indent=2)
+
+    return ({"message": "Success"})    
+
+
+
+
+
+@app.route('/saved_exercises')
+def send_saved_exercises():
+    with open(os.path.dirname(__file__)+'\\saved_workouts.json') as f:
+        saved_workouts = json.load(f)
+    return jsonify(saved_workouts)
+
 if __name__ == '__main__':
     app.run(debug=True)

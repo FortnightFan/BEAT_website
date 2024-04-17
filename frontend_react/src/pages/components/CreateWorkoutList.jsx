@@ -16,6 +16,8 @@ function CreateWorkoutList() {
 
     const [FilteredExercises, setFilteredExercises] = useState(null);
 
+    const [WorkoutTitle,setWorkoutTitle] = useState('');
+
     const handleDifficultyChange = (event) => {
         setSelectedDifficulty(event.target.value);
     };
@@ -36,11 +38,36 @@ function CreateWorkoutList() {
     }
 
     const removeWorkout = (exerciseToRemove) => {
-        setWorkoutList(workoutList => workoutList.filter(exercise => exercise !== exerciseToRemove));
+        // Find the index of the first occurrence of the exercise
+        const index = workoutList.findIndex(exercise => exercise === exerciseToRemove);
+    
+        // If the exercise is found, remove it from the workoutList array
+        if (index !== -1) {
+            setWorkoutList(workoutList => {
+                const newList = [...workoutList]; // Create a copy of the original array
+                newList.splice(index, 1); // Remove the exercise at the found index
+                return newList; // Update the state with the modified array
+            });
+        }
     };
-
-    const saveData = () => {
-        console.log("Saved.")
+    const saveWorkoutData = async () => {
+        if (workoutList.length > 0) 
+        {
+            const url = window.location.pathname;
+            const match = url.match(/\d+/);
+            const number = match ? parseInt(match[0]) : null;
+            const response = await fetch('/api/update_saved_exercises', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "ID": number,
+                    "exercises": workoutList,
+                }), 
+            });
+            const data = await response.json();
+        }
     };
 
     const sendData = async () => {
@@ -79,6 +106,7 @@ function CreateWorkoutList() {
                     console.log("ERROR: Data not found");
                 } else {
                     const exercises = data.Exercises;
+                    setWorkoutTitle(data.Name)
                     for (const exercise of exercises) {
                         console.log(exercise.name); // Example: Log the name of each exercise
                         addWorkout(exercise); // Assuming addWorkout is a function defined elsewhere
@@ -87,15 +115,12 @@ function CreateWorkoutList() {
                 }
             });
         }
-        console.log('i fire once');
     }, [runOnce]); // Effect depends on the value of runOnce
 
   return (
     <div>
         <AppBar position="static" sx={{ marginBottom: 2 }}>
-          <Typography variant="h6" align="center" sx={{ padding: 1, color: 'white' }}>
-            Strength Training
-          </Typography>
+          <Typography variant="h6" align="center" sx={{ padding: 1, color: 'white' }}>{WorkoutTitle}</Typography>
         </AppBar>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Stack direction="column">
@@ -181,7 +206,7 @@ function CreateWorkoutList() {
                     </FormControl>
 
                     <Button variant="contained" style={{marginTop: '20px',  paddingTop: '10px' }} onClick={sendData}>Filter</Button>
-                    <Button variant="contained" style={{backgroundColor: "green", marginTop: '20px',  paddingTop: '10px' }} onClick={saveData}>Save</Button>
+                    <Button variant="contained" style={{backgroundColor: "green", marginTop: '20px',  paddingTop: '10px' }} onClick={saveWorkoutData}>Save</Button>
 
                 </Stack>
 
@@ -203,7 +228,10 @@ function CreateWorkoutList() {
                         </div>
                     )}
                 </Paper>
-
+                <Typography variant="h3" align="center" sx={{ padding: 1, color: 'black' }}>
+                    Current workouts
+                </Typography>
+                    
                 {/* Selected workout list */}
                 <Paper elevation={0} style={{ maxHeight: 300, overflow: 'auto', margin: '20px 0'}}>
                     {workoutList && (

@@ -1,20 +1,29 @@
 import { useNavigate } from 'react-router-dom';
 
 import { AppBar, Box, Container, List, Typography } from '@mui/material';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import AddButton from './AddButton';
 import DeleteButton from './DeleteButton';
 import HoverListItem from './HoverListItem';
 import RenameButton from './RenameButton';
 
   const WorkoutSelector = () => {
-    const [workouts, setworkouts] = React.useState([
-      'Push',
-      'Pull',
-      'Legs',
-      // ... more Workouts
-    ]);
-  
+
+    const [workouts, setworkouts] = React.useState([]);
+    const [runOnce, setRunOnce] = useState(false);
+
+    useEffect(() => {
+        if (!runOnce) {
+            fetch('/saved_exercises')
+            .then(response => response.json())
+            .then(data => { 
+              const workoutNames = data.map(item => item.Name);
+              setRunOnce(true);
+              setworkouts(workoutNames)
+            });
+        }
+    }, []);
+
     const navigate = useNavigate();
     const handleSelectworkout = (workoutId) => {
       // Navigate to the exercise selector for the selected workout

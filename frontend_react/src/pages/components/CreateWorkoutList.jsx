@@ -1,16 +1,13 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import AppBar from '@mui/material/AppBar';
-
-let runOnce = false;
-
+let runOnce = false
 function CreateWorkoutList() {
-
+    
     const [selectedDifficulty, setSelectedDifficulty] = useState('');
     const [selectedMuscle, setSelectedMuscle] = useState('');
     const [selectedEquipment, setSelectedEquipment] = useState('');
@@ -62,9 +59,10 @@ function CreateWorkoutList() {
         setFilteredExercises(data);
     };
     
-    const initialize = () => {
-        if (!runOnce)
-        {
+    const [runOnce, setRunOnce] = useState(false);
+
+    useEffect(() => {
+        if (!runOnce) {
             const url = window.location.pathname;
             const match = url.match(/\d+/);
             const number = match ? parseInt(match[0]) : null;
@@ -77,21 +75,20 @@ function CreateWorkoutList() {
             })
             .then(response => response.json())
             .then(data => {    
-                if (data == "-1"){console.log("ERROR: Data not found");}
-                else
-                {
+                if (data == "-1") {
+                    console.log("ERROR: Data not found");
+                } else {
                     const exercises = data.Exercises;
-                    for (const exercise of exercises) 
-                    {
+                    for (const exercise of exercises) {
                         console.log(exercise.name); // Example: Log the name of each exercise
-                        addWorkout(exercise); // Wait for the addWorkout function to complete
+                        addWorkout(exercise); // Assuming addWorkout is a function defined elsewhere
                     }
-                    runOnce = true
+                    setRunOnce(true);
                 }
-            })
+            });
         }
-    }
-    initialize();
+        console.log('i fire once');
+    }, [runOnce]); // Effect depends on the value of runOnce
 
   return (
     <div>
@@ -199,7 +196,6 @@ function CreateWorkoutList() {
                                             <div>
                                                 <img src={require("../../assets/exercises/" + exercise.images[0])} alt="image" style={{ maxWidth: '25%', maxHeight: '25vh' }}/>
                                             </div>
-                                            {console.log(exercise)}
                                             <Button onClick={() => addWorkout({exercise})} style={{ backgroundColor: 'green', color: 'white' }} variant="contained">Add</Button>
                                         </Paper>                                
                                 ))}

@@ -20,7 +20,6 @@ import Footer from './pages/components/Footer';
 import NavigationBar from './pages/components/NavigationBar';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
     <Router>
       <CssBaseline /> {/* Ensures a consistent baseline across browsers */}
       <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', margin: 0, padding: 0 }}>
@@ -41,7 +40,6 @@ root.render(
         <Footer/>
       </Box>
     </Router>
-  </React.StrictMode>,
 )
 
 // If you want to start measuring performance in your app, pass a function

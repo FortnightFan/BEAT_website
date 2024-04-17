@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Button from '@mui/material/Button';
@@ -144,13 +144,16 @@ function CreateWorkoutList() {
             </Stack>
 
             {/* List contents */}
-            <Paper elevation={0} style={{ maxHeight: 300, overflow: 'auto', margin: '20px 0'}}>
+            <Paper elevation={0} style={{ maxHeight: "500px", overflow: 'auto', margin: '20px 0'}}>
                 {FilteredExercises && (
                     <div>
                         <Stack direction="column" spacing='16px'>
                             {FilteredExercises.map((exercise, index) => (
-                                    <Paper key={index} elevation={3}>
+                                    <Paper sx={{ backgroundColor: 'grey.200' }} key={index} elevation={9}>
                                         <Typography variant="h6" component="div" style={{ marginBottom: '8px'}}>{exercise.name}</Typography>
+                                        <div>
+                                            <img src={require("../../assets/exercises/" + exercise.images[0])} alt="image" style={{ maxWidth: '25%', maxHeight: '25vh' }}/>
+                                        </div>
                                         <Button onClick={() => addWorkout({exercise})} style={{ backgroundColor: 'green', color: 'white' }} variant="contained">Add</Button>
                                     </Paper>                                
                             ))}
@@ -167,8 +170,6 @@ function CreateWorkoutList() {
                             {workoutList.map((exercisePicked, i) => (
                                     <Paper key={i} elevation={3}>
                                         <Typography variant="h6" component="div" style={{ marginBottom: '8px'}}><b>{i+1}</b>  -  {exercisePicked.exercise.name}</Typography>
-                                        <img src="/pages/components/0.jpg" alt="image" />
-                                        {exercisePicked.exercise.images[0]}
                                         <Button onClick={() => removeWorkout(exercisePicked)} style={{ backgroundColor: 'red', color: 'white' }} variant="contained">Remove</Button>
                                     </Paper>                                
                             ))}

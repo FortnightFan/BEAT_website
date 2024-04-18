@@ -18,6 +18,7 @@ import reportWebVitals from './reportWebVitals';
 import CreateWorkoutList from './pages/components/CreateWorkoutList.jsx';
 import Footer from './pages/components/Footer';
 import NavigationBar from './pages/components/NavigationBar';
+import WorkoutAdder from './pages/WorkoutAdder.jsx';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <Router>
@@ -35,6 +36,7 @@ root.render(
             <Route path="/routineselector" element={<RoutineSelector />} />      
             <Route path="/routine/:routineId" element={<WorkoutSelector />} />
             <Route path="/workout/:workoutID" element={<CreateWorkoutList />} />
+            <Route path="/workout/:workoutID/start" element={<WorkoutAdder />} />
           </Routes>
         </Box>
         <Footer/>

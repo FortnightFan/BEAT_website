@@ -1,5 +1,6 @@
 import { AppBar, Box, Button, Container, Grid, List, Typography } from '@mui/material';
 import React from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import AddButton from '../AddButton';
 import DeleteButton from '../DeleteButton';
@@ -16,31 +17,75 @@ const workoutTips = [
   ];
 
 const ProfileContent = () => {
-  const [routines, setRoutines] = React.useState([
-    'Push/Pull/Legs',
-    'Public Gym',
-    'Home Workout...',
-    // ... more routines
-  ]);
+  const [routines, setRoutines] = React.useState([]);
+    const [runOnce, setRunOnce] = useState(false);
+
+    useEffect(() => {
+        if (!runOnce) {
+            fetch('/saved_exercises')
+            .then(response => response.json())
+            .then(data => { 
+              const workoutNames = data.map(item => item.Name);
+              setRunOnce(true);
+              setRoutines(workoutNames)
+            });
+        }
+    }, []);
 
   const navigate = useNavigate();
 
   const handleSelectRoutine = (routineId) => {
-    navigate(`/routine/${routineId}`);
+    navigate(`/workout/${routineId}`);
   };
 
-  const handleRenameRoutine = (newName, index) => {
+  const handleRenameRoutine = async (newName, index) => {
     const newRoutines = routines.map((routine, i) => i === index ? newName : routine);
     setRoutines(newRoutines);
+    const response = await fetch('/api/rename_routine', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "Name" : newName,
+        "ID" : index,
+      }), 
+  });
+  const data = await response.json();
   };
 
-  const handleAddRoutine = (newRoutineName) => {
+  const handleAddRoutine = async (newRoutineName) => {
     setRoutines([...routines, newRoutineName]);
+    console.log(routines.length)
+
+    const response = await fetch('/api/add_new_routine', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "Name" : newRoutineName,
+        "ID" : routines.length,
+      }), 
+  });
+  const data = await response.json();
+
   };
 
-  const handleRemoveRoutine = (event, index) => {
+  const handleRemoveRoutine = async (event, index) => {
     event.stopPropagation();
-    setRoutines(routines.filter((_, i) => i !== index));
+    const response = await fetch('/api/remove_routine', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        "ID" : index
+      }), 
+  });
+  const data = await response.json();
+  
+  setRoutines(routines.filter((_, i) => i !== index));
   };
 
     return (

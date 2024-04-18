@@ -128,10 +128,6 @@ def check_saved_exercises():
             return workout
     return "-1"
 
-
-
-
-
 @app.route('/api/update_saved_exercises', methods=['POST'])
 def update_saved_exercises():
     data = request.json
@@ -143,12 +139,55 @@ def update_saved_exercises():
             workout["Exercises"] = exercises            
             with open(os.path.dirname(__file__)+'\\saved_workouts.json', 'w') as f:
                 json.dump(saved_workouts, f, indent=2)
+            return ({"message": "Success"})   
+    return ({"message": "ERROR: ID not valid"})   
 
-    return ({"message": "Success"})    
+@app.route('/api/add_new_routine', methods=['POST'])
+def add_new_routine():
+    data = request.json
+    name,id = data['Name'], data['ID']
+    with open(os.path.dirname(__file__)+'\\saved_workouts.json') as f:
+        saved_workouts = json.load(f)
+    saved_workouts.append({
+        "Name" : name,
+        "ID": str(id),
+        "Exercises" : []
+    })
+    with open(os.path.dirname(__file__)+'\\saved_workouts.json', 'w') as f:
+        json.dump(saved_workouts, f, indent=2)
+    return ({"message": "Successful"})   
 
+@app.route('/api/remove_routine', methods=['POST'])
+def remove_routine():
+    data = request.json
+    id = str(data['ID'])
+    with open(os.path.dirname(__file__)+'\\saved_workouts.json') as f:
+        saved_workouts = json.load(f)
+        for workout in saved_workouts:
+            if workout['ID'] == id:
+                saved_workouts.remove(workout)
+                for i, workout in enumerate(saved_workouts):
+                    workout['ID'] = str(i)
+                with open(os.path.dirname(__file__)+'\\saved_workouts.json', 'w') as f:
+                    json.dump(saved_workouts, f, indent=2)
+                
+                return ({"message": "Successful"})   
+    return ({"message": "ERROR ID not found"})  
 
+@app.route('/api/rename_routine', methods=['POST'])
+def rename_routine():
+    data = request.json
+    id, new_name = str(data["ID"]), data["Name"]
+    with open(os.path.dirname(__file__)+'\\saved_workouts.json') as f:
+        saved_workouts = json.load(f)
+    for workout in saved_workouts:
+        if workout['ID'] == id:
+            workout['Name'] = new_name
+            with open(os.path.dirname(__file__)+'\\saved_workouts.json', 'w') as f:
+                json.dump(saved_workouts, f, indent=2)
 
-
+            return ({"message": "Successful"})   
+    return ({"message": "ERROR ID not found"})  
 
 @app.route('/saved_exercises')
 def send_saved_exercises():

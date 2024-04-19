@@ -1,31 +1,35 @@
 [
   {
-    "Name": "Biceps",
+    "Name": "ARMS",
     "ID": "0",
     "Exercises": [
       {
         "category": "strength",
-        "equipment": "cable",
+        "equipment": "dumbbell",
         "force": "pull",
-        "id": "Lying_Close-Grip_Bar_Curl_On_High_Pulley",
+        "id": "Dumbbell_Lying_Pronation",
         "images": [
-          "Lying_Close-Grip_Bar_Curl_On_High_Pulley/0.jpg",
-          "Lying_Close-Grip_Bar_Curl_On_High_Pulley/1.jpg"
+          "Dumbbell_Lying_Pronation/0.jpg",
+          "Dumbbell_Lying_Pronation/1.jpg"
         ],
+        "info": {
+          "sets": 0,
+          "reps": 0,
+          "weight": 0
+        },
         "instructions": [
-          "Place a flat bench in front of a high pulley or lat pulldown machine.",
-          "Hold the straight bar attachment using an underhand grip (palms up) that is about shoulder width.",
-          "Lie on your back with your head over the end of the bench.",
-          "Now extend your arms straight above your shoulders. Your torso and your arms should make a 90-degree angle and the elbows should be in. This will be your starting position.",
-          "As you breathe out, curl the bar down in a semicircular motion until it touches your chin. Squeeze the biceps for a second at the top contracted position. Tip: As you execute this motion only the forearms should move. At no time should the upper arms be moving at all. They are to remain perpendicular throughout the movement.",
-          "Return to starting position slowly.",
+          "Lie on a flat bench face down with one arm holding a dumbbell and the other hand on top of the bench folded so that you can rest your head on it.",
+          "Bend the elbows of the arm holding the dumbbell so that it creates a 90-degree angle between the upper arm and the forearm.",
+          "Now raise the upper arm so that the forearm is perpendicular to the floor and the upper arm is perpendicular to your torso. Tip: The upper arm should be parallel to the floor and also creating a 90-degree angle with your torso. This will be your starting position.",
+          "As you breathe out, externally rotate your forearm so that the dumbbell is lifted forward as you maintain the 90 degree angle bend between the upper arms and the forearm. You will continue this external rotation until the forearm is parallel to the floor. At this point you will hold the contraction for a second.",
+          "As you breathe in, slowly go back to the starting position.",
           "Repeat for the recommended amount of repetitions."
         ],
-        "level": "beginner",
+        "level": "intermediate",
         "mechanic": "isolation",
-        "name": "Lying Close-Grip Bar Curl On High Pulley",
+        "name": "Dumbbell Lying Pronation",
         "primaryMuscles": [
-          "biceps"
+          "forearms"
         ],
         "secondaryMuscles": []
       },
@@ -33,111 +37,96 @@
         "category": "strength",
         "equipment": "machine",
         "force": "pull",
-        "id": "Machine_Bicep_Curl",
+        "id": "Ab_Crunch_Machine",
         "images": [
-          "Machine_Bicep_Curl/0.jpg",
-          "Machine_Bicep_Curl/1.jpg"
+          "Ab_Crunch_Machine/0.jpg",
+          "Ab_Crunch_Machine/1.jpg"
         ],
+        "info": {
+          "sets": 0,
+          "reps": 0,
+          "weight": 0
+        },
         "instructions": [
-          "Adjust the seat to the appropriate height and make your weight selection. Place your upper arms against the pads and grasp the handles. This will be your starting position.",
-          "Perform the movement by flexing the elbow, pulling your lower arm towards your upper arm.",
-          "Pause at the top of the movement, and then slowly return the weight to the starting position.",
-          "Avoid returning the weight all the way to the stops until the set is complete to keep tension on the muscles being worked."
+          "Select a light resistance and sit down on the ab machine placing your feet under the pads provided and grabbing the top handles. Your arms should be bent at a 90 degree angle as you rest the triceps on the pads provided. This will be your starting position.",
+          "At the same time, begin to lift the legs up as you crunch your upper torso. Breathe out as you perform this movement. Tip: Be sure to use a slow and controlled motion. Concentrate on using your abs to move the weight while relaxing your legs and feet.",
+          "After a second pause, slowly return to the starting position as you breathe in.",
+          "Repeat the movement for the prescribed amount of repetitions."
         ],
-        "level": "beginner",
+        "level": "intermediate",
         "mechanic": "isolation",
-        "name": "Machine Bicep Curl",
+        "name": "Ab Crunch Machine",
         "primaryMuscles": [
-          "biceps"
+          "abdominals"
         ],
         "secondaryMuscles": []
       },
       {
         "category": "strength",
-        "equipment": "dumbbell",
+        "equipment": "body only",
         "force": "pull",
-        "id": "Hammer_Curls",
+        "id": "3_4_Sit-Up",
         "images": [
-          "Hammer_Curls/0.jpg",
-          "Hammer_Curls/1.jpg"
+          "3_4_Sit-Up/0.jpg",
+          "3_4_Sit-Up/1.jpg"
         ],
         "instructions": [
-          "Stand up with your torso upright and a dumbbell on each hand being held at arms length. The elbows should be close to the torso.",
-          "The palms of the hands should be facing your torso. This will be your starting position.",
-          "Now, while holding your upper arm stationary, exhale and curl the weight forward while contracting the biceps. Continue to raise the weight until the biceps are fully contracted and the dumbbell is at shoulder level. Hold the contracted position for a brief moment as you squeeze the biceps. Tip: Focus on keeping the elbow stationary and only moving your forearm.",
-          "After the brief pause, inhale and slowly begin the lower the dumbbells back down to the starting position.",
+          "Lie down on the floor and secure your feet. Your legs should be bent at the knees.",
+          "Place your hands behind or to the side of your head. You will begin with your back on the ground. This will be your starting position.",
+          "Flex your hips and spine to raise your torso toward your knees.",
+          "At the top of the contraction your torso should be perpendicular to the ground. Reverse the motion, going only \u00c2\u00be of the way down.",
           "Repeat for the recommended amount of repetitions."
         ],
         "level": "beginner",
-        "mechanic": "isolation",
-        "name": "Hammer Curls",
-        "primaryMuscles": [
-          "biceps"
-        ],
-        "secondaryMuscles": []
-      }
-    ]
-  },
-  {
-    "Name": "Legs",
-    "ID": "1",
-    "Exercises": [
-      {
-        "name": "Kettlebell Pistol Squat",
-        "force": "push",
-        "level": "expert",
         "mechanic": "compound",
-        "equipment": "kettlebells",
+        "name": "3/4 Sit-Up",
         "primaryMuscles": [
-          "quadriceps"
+          "abdominals"
+        ],
+        "secondaryMuscles": [],
+        "info": {
+          "sets": 0,
+          "reps": 0,
+          "weight": 0
+        }
+      },
+      {
+        "category": "strength",
+        "equipment": "kettlebells",
+        "force": "push",
+        "id": "Advanced_Kettlebell_Windmill",
+        "images": [
+          "Advanced_Kettlebell_Windmill/0.jpg",
+          "Advanced_Kettlebell_Windmill/1.jpg"
+        ],
+        "instructions": [
+          "Clean and press a kettlebell overhead with one arm.",
+          "Keeping the kettlebell locked out at all times, push your butt out in the direction of the locked out kettlebell. Keep the non-working arm behind your back and turn your feet out at a forty-five degree angle from the arm with the kettlebell.",
+          "Lower yourself as far as possible.",
+          "Pause for a second and reverse the motion back to the starting position."
+        ],
+        "level": "intermediate",
+        "mechanic": "isolation",
+        "name": "Advanced Kettlebell Windmill",
+        "primaryMuscles": [
+          "abdominals"
         ],
         "secondaryMuscles": [
-          "calves",
           "glutes",
           "hamstrings",
           "shoulders"
         ],
-        "instructions": [
-          "Pick up a kettlebell with two hands and hold it by the horns. Hold one leg off of the floor and squat down on the other.",
-          "Squat down by flexing the knee and sitting back with the hips, holding the kettlebell up in front of you.",
-          "Hold the bottom position for a second and then reverse the motion, driving through the heel and keeping your head and chest up.",
-          "Lower yourself again and repeat."
-        ],
-        "category": "strength",
-        "images": [
-          "Kettlebell_Pistol_Squat/0.jpg",
-          "Kettlebell_Pistol_Squat/1.jpg"
-        ],
-        "id": "Kettlebell_Pistol_Squat"
-      },
-      {
-        "name": "Kneeling Hip Flexor",
-        "force": "static",
-        "level": "beginner",
-        "mechanic": "isolation",
-        "equipment": null,
-        "primaryMuscles": [
-          "quadriceps"
-        ],
-        "secondaryMuscles": [
-          "quadriceps"
-        ],
-        "instructions": [
-          "Kneel on a mat and bring your right knee up so the bottom of your foot is on the floor and extend your left leg out behind you so the top of your foot is on the floor.",
-          "Shift your weight forward until you feel a stretch in your hip. Hold for 15 seconds, then repeat for your other side."
-        ],
-        "category": "stretching",
-        "images": [
-          "Kneeling_Hip_Flexor/0.jpg",
-          "Kneeling_Hip_Flexor/1.jpg"
-        ],
-        "id": "Kneeling_Hip_Flexor"
+        "info": {
+          "sets": 0,
+          "reps": 0,
+          "weight": 0
+        }
       }
     ]
   },
   {
-    "Name": "Changed the name smh my head",
-    "ID": "2",
+    "Name": "hello2",
+    "ID": "1",
     "Exercises": [
       {
         "category": "strength",
@@ -161,13 +150,80 @@
         "primaryMuscles": [
           "abdominals"
         ],
-        "secondaryMuscles": []
+        "secondaryMuscles": [],
+        "info": {
+          "sets": 0,
+          "reps": 0,
+          "weight": 0
+        }
+      },
+      {
+        "category": "strength",
+        "equipment": "other",
+        "force": "pull",
+        "id": "Ab_Roller",
+        "images": [
+          "Ab_Roller/0.jpg",
+          "Ab_Roller/1.jpg"
+        ],
+        "instructions": [
+          "Hold the Ab Roller with both hands and kneel on the floor.",
+          "Now place the ab roller on the floor in front of you so that you are on all your hands and knees (as in a kneeling push up position). This will be your starting position.",
+          "Slowly roll the ab roller straight forward, stretching your body into a straight position. Tip: Go down as far as you can without touching the floor with your body. Breathe in during this portion of the movement.",
+          "After a pause at the stretched position, start pulling yourself back to the starting position as you breathe out. Tip: Go slowly and keep your abs tight at all times."
+        ],
+        "level": "intermediate",
+        "mechanic": "compound",
+        "name": "Ab Roller",
+        "primaryMuscles": [
+          "abdominals"
+        ],
+        "secondaryMuscles": [
+          "shoulders"
+        ],
+        "info": {
+          "sets": 0,
+          "reps": 0,
+          "weight": 0
+        }
+      },
+      {
+        "category": "strength",
+        "equipment": "kettlebells",
+        "force": "push",
+        "id": "Advanced_Kettlebell_Windmill",
+        "images": [
+          "Advanced_Kettlebell_Windmill/0.jpg",
+          "Advanced_Kettlebell_Windmill/1.jpg"
+        ],
+        "instructions": [
+          "Clean and press a kettlebell overhead with one arm.",
+          "Keeping the kettlebell locked out at all times, push your butt out in the direction of the locked out kettlebell. Keep the non-working arm behind your back and turn your feet out at a forty-five degree angle from the arm with the kettlebell.",
+          "Lower yourself as far as possible.",
+          "Pause for a second and reverse the motion back to the starting position."
+        ],
+        "level": "intermediate",
+        "mechanic": "isolation",
+        "name": "Advanced Kettlebell Windmill",
+        "primaryMuscles": [
+          "abdominals"
+        ],
+        "secondaryMuscles": [
+          "glutes",
+          "hamstrings",
+          "shoulders"
+        ],
+        "info": {
+          "sets": 0,
+          "reps": 0,
+          "weight": 0
+        }
       }
     ]
   },
   {
-    "Name": "gbye",
-    "ID": "3",
+    "Name": "Chest",
+    "ID": "2",
     "Exercises": []
   }
 ]

@@ -1,15 +1,30 @@
-import React from 'react';
-import NavigationBar from './components/NavigationBar';
-import Footer from './components/Footer.jsx';
-
+import React, { useState, useEffect } from 'react';
 import { Typography, Paper, List, ListItem, ListItemText, Divider } from '@mui/material';
-const previousWorkouts = [
-    { name: 'Leg Day', date: '2024-03-10' },
-    { name: 'Chest & Triceps', date: '2024-03-08' },
-    { name: 'Back & Biceps', date: '2024-03-06' },
-  ];
+
+
+// { name: 'Leg Day', date: '2024-03-10' },
+// { name: 'Chest & Triceps', date: '2024-03-08' },
+// { name: 'Back & Biceps', date: '2024-03-06' },
 
 const PrevWorkouts = () => {
+    const [previousWorkouts, setPreviousWorkouts] = useState([]);
+
+    const [runOnce, setRunOnce] = useState(false);
+
+    useEffect(() => {
+        if (!runOnce) {
+            fetch('/api/prev_workouts')
+            .then(response => response.json())
+            .then(data => {    
+                setPreviousWorkouts(data);
+                setRunOnce(true);
+            });
+        }
+    }, [runOnce]); 
+
+
+
+
     return (
         <div>            
                 <div style={{ maxWidth: 600, margin: 'auto' }}>
@@ -21,7 +36,8 @@ const PrevWorkouts = () => {
                         {previousWorkouts.map((workout, index) => (
                             <React.Fragment key={index}>
                             <ListItem>
-                                <ListItemText primary={workout.name} secondary={workout.date} />
+                                <ListItemText primary={workout.Name} secondary={workout.Date} />
+                                <Typography variant="body2">{String(Math.floor(workout.Time / 60)).padStart(2, '0')}:{String(workout.Time % 60).padStart(2, '0')}</Typography>
                             </ListItem>
                             {index < previousWorkouts.length - 1 && <Divider />}
                             </React.Fragment>

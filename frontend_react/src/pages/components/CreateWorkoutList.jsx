@@ -5,9 +5,13 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Typography from '@mui/material/Typography';
 import AppBar from '@mui/material/AppBar';
-let runOnce = false
+import { NavLink } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import Divider from '@mui/material/Divider';
+
 function CreateWorkoutList() {
-    
+    const { workoutID } = useParams();
+
     const [selectedDifficulty, setSelectedDifficulty] = useState('');
     const [selectedMuscle, setSelectedMuscle] = useState('');
     const [selectedEquipment, setSelectedEquipment] = useState('');
@@ -71,6 +75,7 @@ function CreateWorkoutList() {
     };
 
     const sendData = async () => {
+        
         const response = await fetch('/api/filtered_exercises', {
             method: 'POST',
             headers: {
@@ -207,46 +212,78 @@ function CreateWorkoutList() {
 
                     <Button variant="contained" style={{marginTop: '20px',  paddingTop: '10px' }} onClick={sendData}>Filter</Button>
                     <Button variant="contained" style={{backgroundColor: "green", marginTop: '20px',  paddingTop: '10px' }} onClick={saveWorkoutData}>Save</Button>
+                    <NavLink to={`/workout/${workoutID}/start`}>
+                        <Button variant="contained" style={{marginTop: '20px',  paddingTop: '10px' }} onClick={sendData}>Start</Button>
+                    </NavLink>
+
 
                 </Stack>
 
                 {/* List contents */}
                 <Paper elevation={0} style={{ maxHeight: "500px", overflow: 'auto', margin: '20px 0'}}>
-                    {FilteredExercises && (
+                    {FilteredExercises === null ? (
+                        <Typography variant="body1" align="center">
+                            Pick some options and press "Filter" to add workouts!
+                        </Typography>
+                    ) : (
                         <div>
                             <Stack direction="column" spacing='16px'>
                                 {FilteredExercises.map((exercise, index) => (
-                                        <Paper sx={{ backgroundColor: 'grey.200' }} key={index} elevation={9}>
-                                            <Typography variant="h6" component="div" style={{ marginBottom: '8px'}}>{exercise.name}</Typography>
-                                            <div>
-                                                <img src={require("../../assets/exercises/" + exercise.images[0])} alt="image" style={{ maxWidth: '25%', maxHeight: '25vh' }}/>
-                                            </div>
-                                            <Button onClick={() => addWorkout({exercise})} style={{ backgroundColor: 'green', color: 'white' }} variant="contained">Add</Button>
-                                        </Paper>                                
+                                    <Paper sx={{ backgroundColor: 'grey.200' }} key={index} elevation={9}>
+                                        <Typography variant="h6" component="div" style={{ marginBottom: '8px'}}>{exercise.name}</Typography>
+                                        <div>
+                                            <img src={require("../../assets/exercises/" + exercise.images[0])} alt="image" style={{ maxWidth: '25%', maxHeight: '25vh' }}/>
+                                        </div>
+                                        <Button onClick={() => addWorkout({exercise})} style={{ backgroundColor: 'green', color: 'white' }} variant="contained">Add</Button>
+                                    </Paper>                                
                                 ))}
                             </Stack>
                         </div>
                     )}
                 </Paper>
+                <Divider />
                 <Typography variant="h3" align="center" sx={{ padding: 1, color: 'black' }}>
                     Current workouts
                 </Typography>
                     
                 {/* Selected workout list */}
                 <Paper elevation={0} style={{ maxHeight: 300, overflow: 'auto', margin: '20px 0'}}>
-                    {workoutList && (
+                    {workoutList && workoutList.length > 0 && (
                         <div>
                             <Stack direction="column" spacing='16px'>
                                 {workoutList.map((exercisePicked, i) => (
-                                        <Paper key={i} elevation={3}>
-                                            <Typography variant="h6" component="div" style={{ marginBottom: '8px'}}><b>{i+1}</b>  -  {exercisePicked.name}</Typography>
-                                            <Button onClick={() => removeWorkout(exercisePicked)} style={{ backgroundColor: 'red', color: 'white' }} variant="contained">Remove</Button>
-                                        </Paper>                                
+                                    <Paper key={i} elevation={3}>
+                                        {console.log(exercisePicked)}
+                                        <Typography variant="h6" component="div" style={{ marginBottom: '8px'}}>
+                                            <b>{i+1}</b>  -  {exercisePicked.name}
+                                        </Typography>
+                                        {/* <Stack direction="row" spacing="10px">
+                                            <Typography variant="h8" component="div" style={{ marginBottom: '4px'}}>Reps: {exercisePicked.info.reps}</Typography>
+                                            <Button variant="contained" onClick={() => incrementReps(exercisePicked, 1)}>+</Button>
+                                            <Button variant="contained">-</Button>
+                                        </Stack>
+                                        <Stack direction="row" spacing="10px">
+                                            <Typography variant="h8" component="div" style={{ marginBottom: '4px'}}>Sets: {exercisePicked.info.sets}</Typography>
+                                            <Button variant="contained">+</Button>
+                                            <Button variant="contained">-</Button>
+                                        </Stack>
+                                        <Stack direction="row" spacing="10px">
+                                            <Typography variant="h8" component="div" style={{ marginBottom: '4px'}}>Weight: {exercisePicked.info.weight}</Typography>
+                                            <Button variant="contained" >+</Button>
+                                            <Button variant="contained">-</Button>
+                                        </Stack> */}
+
+                                        <Button onClick={() => removeWorkout(exercisePicked)} style={{ backgroundColor: 'red', color: 'white' }} variant="contained">Remove</Button>
+                                    </Paper>                                
                                 ))}
                             </Stack>
                         </div>
                     )}
-                    {console.log(workoutList)}
+                    {!workoutList || workoutList.length === 0 && (
+                        <Typography variant="body1" align="center">
+                            No workouts selected. Add exercises using the above menu.
+                        </Typography>
+                    )}
                 </Paper>
             </Stack>
         </div>

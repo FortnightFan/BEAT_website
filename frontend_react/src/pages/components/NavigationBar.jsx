@@ -12,6 +12,7 @@ import Typography from '@mui/material/Typography';
 import * as React from "react";
 import { NavLink } from 'react-router-dom';
 import Logo from './BEAT_Logo_Black.png';
+import ThemeSwitcher from './ThemeSwitcher.jsx';
 
 const NavigationBar = () => {
   const [open, setOpen] = React.useState(false);
@@ -25,7 +26,7 @@ const NavigationBar = () => {
 
   const DrawerList = (
     <Box
-      sx={{ width: 250 }}
+      sx={{ width: 250, display: 'flex', flexDirection: 'column', height: '100%' }}
       role="presentation"
       onClick={toggleDrawer(false)}
       onKeyDown={toggleDrawer(false)}
@@ -37,6 +38,10 @@ const NavigationBar = () => {
           </ListItem>
         ))}
       </List>
+      <Box sx={{ flexGrow: 1 }} />
+      <Box sx={{ px: 2, py: 1 }}>
+        <ThemeSwitcher />
+      </Box>
     </Box>
   );
 

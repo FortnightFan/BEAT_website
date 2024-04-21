@@ -1,10 +1,10 @@
 import { AppBar, Box, Button, Container, Grid, List, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-import AddButton from '../AddButton';
-import DeleteButton from '../DeleteButton';
-import HoverListItem from '../HoverListItem';
-import RenameButton from '../RenameButton';
+import AddButton from './AddButton';
+import DeleteButton from './DeleteButton';
+import HoverListItem from './HoverListItem';
+import RenameButton from './RenameButton';
 
 const name = "Kevin"
 const workoutTips = [

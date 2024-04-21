@@ -1,9 +1,9 @@
 import { Box, Button, Container, Grid, Stack, Typography } from '@mui/material';
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import HeroBackgroundImage from './components/HeroImage.jpg';
-import PromoPhoto from './components/PromoPhoto.jpg';
-import WeightRack from './components/WeightRack.jpg';
+import HeroBackgroundImage from '../assets/images/HeroImage.jpg';
+import PromoPhoto from '../assets/images/PromoPhoto.jpg';
+import WeightRack from '../assets/images/WeightRack.jpg';
 
 const Home = () => {
     const navigate = useNavigate();

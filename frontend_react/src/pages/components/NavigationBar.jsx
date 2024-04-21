@@ -11,7 +11,7 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import * as React from "react";
 import { NavLink } from 'react-router-dom';
-import Logo from './BEAT_Logo_Black.png';
+import Logo from '../../assets/images/BEAT_Logo_Black.png';
 import ThemeSwitcher from './ThemeSwitcher.jsx';
 
 const NavigationBar = () => {

@@ -2,6 +2,7 @@ import { AppBar, Box, Container, Paper, TextField, Toolbar, Typography } from '@
 import React, { useState } from 'react';
 import Footer from './components/Footer';
 import NavigationBar from './components/NavigationBar';
+import SubNav from './components/Subnav';
 
 export default function BodyDataForm() {
   // States to store the input values
@@ -18,16 +19,18 @@ export default function BodyDataForm() {
   const handleBodyWaterChange = (event) => setBodyWater(event.target.value);
   const handleSkeletalMuscleChange = (event) => setSkeletalMuscle(event.target.value);
 
+  const crumbs = [
+    { label: 'Home', path: '/' },
+    { label: 'Profile', path: '/profile' },
+    { label: 'Body Data', path: '/BodyData' }
+  ];
+
   return (
     <>
+    <SubNav title="Body Data" crumbs={crumbs} />
       <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
         <Container component="main" maxWidth="sm" sx={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
           <AppBar position="static" color="primary" sx={{ marginBottom: 4 }}>
-            <Toolbar>
-              <Typography variant="h6" color="inherit">
-                Body Data
-              </Typography>
-            </Toolbar>
           </AppBar>
 
           <Paper elevation={4} sx={{ padding: 3, marginBottom: 4 }}>

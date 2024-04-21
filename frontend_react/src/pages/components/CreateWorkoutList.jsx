@@ -9,6 +9,7 @@ import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 import React, { useEffect, useState } from 'react';
 import { NavLink, useParams } from 'react-router-dom';
+import SubNav from './Subnav';
 
 function CreateWorkoutList() {
     const { workoutID } = useParams();
@@ -138,11 +139,16 @@ function CreateWorkoutList() {
         },
       };
 
+      const crumbs = [
+        { label: 'Home', path: '/' },
+        { label: 'Profile', path: '/profile' },
+        { label: 'Create Workout', path: '/CreateWorkoutList' }
+      ];
+
   return (
+    <>
+        <SubNav title={`Create Workout: ${WorkoutTitle}`} crumbs={crumbs}/>
     <div>
-        <AppBar position="static" sx={{ marginBottom: 2 }}>
-          <Typography variant="h6" align="center" sx={{ padding: 1, color: 'white' }}>{WorkoutTitle}</Typography>
-        </AppBar>
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
             <Stack direction="column">
                 <Stack direction="row" spacing={2}>
@@ -235,7 +241,7 @@ function CreateWorkoutList() {
                 <Paper elevation={0} style={{ maxHeight: "500px", overflow: 'auto', margin: '20px 0'}}>
                     {FilteredExercises === null ? (
                         <Typography variant="body1" align="center">
-                            Pick some options and press "Filter" to add workouts!
+                            Pick some options and press "Filter" to add exercises!
                         </Typography>
                     ) : (
                         <div>
@@ -264,7 +270,7 @@ function CreateWorkoutList() {
                 </Paper>
                 <Divider sx={{ padding: 3}}/>
                 <Typography variant="h3" align="center" sx={{ padding: 3}}>
-                    Current Workouts
+                    Current Exercises
                 </Typography>
                     
                 {/* Selected workout list */}
@@ -308,6 +314,7 @@ function CreateWorkoutList() {
             </Stack>
         </div>
     </div>
+    </>
   );
 }
 

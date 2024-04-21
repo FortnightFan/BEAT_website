@@ -2,7 +2,9 @@
 import { AppBar, Box, Container, Grid, Paper, Stack, TextField, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import BreadcrumbNav from './components/Breadcrumbs';
 import Stopwatch from './components/Stopwatch';
+import SubNav from './components/Subnav';
 
 const WorkoutAdder = ({ workoutId }) => {
     const navigate = useNavigate();
@@ -97,13 +99,18 @@ const WorkoutAdder = ({ workoutId }) => {
         setElapsedTime(newElapsedTime);
     };
 
-    return (
-        <Container>
-            <AppBar position="static">
-                <Typography variant="h6" align="center">{workoutName}</Typography>
-            </AppBar>
-            <Stopwatch onElapsedTimeChange={handleElapsedTimeChange} />
+    const crumbs = [
+        { label: 'Home', path: '/' },
+        { label: 'Profile', path: '/profile' },
+        { label: 'Create Workout', path: `/workout/${workoutID}` },
+        { label: 'Workout', path: '/start' }
+      ];
 
+    return (
+        <>
+        <SubNav title={"Workout: " + workoutName} crumbs={crumbs}/>
+        <Container>
+            <Stopwatch onElapsedTimeChange={handleElapsedTimeChange} />
             <Box sx={{ my: 2 }} justifyContent={'center'} alignItems={'center'}>
                 {workoutList.map((exercise, index) => (
                     <Paper key={index} elevation={2} sx={{ p: 2, my: 1 }}>
@@ -167,6 +174,7 @@ const WorkoutAdder = ({ workoutId }) => {
                 </Grid>
             </Box>
         </Container>
+        </>
     );
 };
 

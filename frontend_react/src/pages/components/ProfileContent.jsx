@@ -5,6 +5,7 @@ import AddButton from './AddButton';
 import DeleteButton from './DeleteButton';
 import HoverListItem from './HoverListItem';
 import RenameButton from './RenameButton';
+import SubNav from './Subnav';
 
 const name = "Kevin"
 const workoutTips = [
@@ -18,6 +19,11 @@ const workoutTips = [
 const ProfileContent = () => {
   const [routines, setRoutines] = React.useState([]);
     const [runOnce, setRunOnce] = useState(false);
+
+    const crumbs = [
+        { label: 'Home', path: '/' },
+        { label: 'Profile', path: '/profile' },
+      ];
 
     useEffect(() => {
         if (!runOnce) {
@@ -89,14 +95,9 @@ const ProfileContent = () => {
   };
 
     return (
+        <>
+        <SubNav title={`Welcome back, ${name}!`} crumbs={crumbs}/>
         <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
-        {/* Welcome Header */}
-        <AppBar position="static" sx={{ marginBottom: 2 }}>
-            <Typography variant="h6" align="center" sx={{ padding: 1, color: 'white' }}>
-            Welcome back, {name}!
-            </Typography>
-        </AppBar>
-        
         {/* Main Content */}
         <Grid container spacing={2}>
             {/* Left Grid - Profile content and buttons */}
@@ -113,12 +114,12 @@ const ProfileContent = () => {
             <div>
                 <center>
                     <NavLink to='/profile/prevworkouts'>
-                        <Button variant="contained">Previous Workouts</Button>
+                        <Button variant="contained" sx={{ width: '200px', mb: 1 }}>Previous Workouts</Button>
                     </NavLink>
                     
                     <Box height={25}/>
                     <NavLink to='/profile/bodydata'>
-                        <Button variant="contained">Body</Button>
+                        <Button variant="contained" sx={{ width: '200px', mb: 1 }}>Body</Button>
                     </NavLink>
 
                 </center>
@@ -148,6 +149,7 @@ const ProfileContent = () => {
             </Grid>
         </Grid>
         </Container>
+        </>
     );
 };
 

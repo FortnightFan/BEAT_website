@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { Typography, Paper, List, ListItem, ListItemText, Divider } from '@mui/material';
+import { Divider, List, ListItem, ListItemText, Paper, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import SubNav from './components/Subnav';
 
 
 // { name: 'Leg Day', date: '2024-03-10' },
@@ -22,15 +23,18 @@ const PrevWorkouts = () => {
         }
     }, [runOnce]); 
 
-
+    const crumbs = [
+        { label: 'Home', path: '/' },
+        { label: 'Profile', path: '/profile' },
+        { label: 'Previous Workouts', path: '/prevworkouts' }
+      ];
 
 
     return (
+        <>
+            <SubNav title="Previous Workouts" crumbs={crumbs} />
         <div>            
                 <div style={{ maxWidth: 600, margin: 'auto' }}>
-                    <Typography variant="h4">
-                        Previous Workouts
-                    </Typography>
                     <Paper>
                         <List>
                         {previousWorkouts.map((workout, index) => (
@@ -45,7 +49,8 @@ const PrevWorkouts = () => {
                         </List>
                     </Paper>
                 </div>
-        </div>  
+        </div>
+        </>  
     );
 };
 

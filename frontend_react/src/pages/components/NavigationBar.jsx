@@ -9,13 +9,19 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/material/styles'; // Import useTheme for theme context
+import useMediaQuery from '@mui/material/useMediaQuery'; // Import useMediaQuery
 import * as React from "react";
 import { NavLink } from 'react-router-dom';
 import Logo from '../../assets/images/BEAT_Logo_Black.png';
+import { useAuth } from '../../context/AuthContext';
 import ThemeSwitcher from './ThemeSwitcher.jsx';
 
 const NavigationBar = () => {
   const [open, setOpen] = React.useState(false);
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+  const { isLoggedIn, logout } = useAuth();
 
   const toggleDrawer = (newOpen) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -56,7 +62,7 @@ const NavigationBar = () => {
   return (
     <>
       <AppBar position="static" sx={{ bgcolor: 'maroon' }}>
-        <Toolbar sx={{ justifyContent: 'space-between' }}>
+        <Toolbar>
 
           <IconButton
             size="large"
@@ -72,7 +78,7 @@ const NavigationBar = () => {
           <Box sx={{ flex: 1 }} />
 
           {/* Centered logo and title */}
-          <Box sx={{ display: 'flex', position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}>
+          <Box sx={{ display: 'flex', position: 'absolute', left: '50%', transform: 'translateX(-50%)', alignItems: 'center' }}>
             <Box component="img" src={Logo} alt="B.E.A.T Logo" sx={{ height: 50 }} />
             <Typography variant="h6" sx={{ alignSelf: 'center', ml: 1 }}>
               B.E.A.T
@@ -81,17 +87,25 @@ const NavigationBar = () => {
 
           {/* Spacer to balance the items */}
           <Box sx={{ flex: 1 }} />
-          <Box sx={{ display: 'flex' }}>
-            <Button color="inherit" component={NavLink} to="/" sx={{ color: 'white' }}>
-              About
-            </Button>
-            <Button color="inherit" component={NavLink} to="/signup" sx={{ color: 'white' }}>
-              Register
-            </Button>
-            <Button color="inherit" component={NavLink} to="/signin" sx={{ color: 'white' }}>
-              Login
-            </Button>
-        </Box>  
+          {!isSmallScreen && !isLoggedIn && (
+        <>
+          <Button color="inherit" component={NavLink} to="/" sx={{ color: 'white' }}>About</Button>
+          <Button color="inherit" component={NavLink} to="/signup" sx={{ color: 'white' }}>Register</Button>
+          <Button color="inherit" component={NavLink} to="/signin" sx={{ color: 'white' }}>Login</Button>
+        </>
+      )}
+
+      {isLoggedIn ? (
+        <Button color="inherit" onClick={logout}>Logout</Button>
+      ) : (
+        isSmallScreen && (
+          <>
+            <Button color="inherit" component={NavLink} to="/signin">Login</Button>
+            <Button color="inherit" component={NavLink} to="/signup">Register</Button>
+          </>
+        )
+      )}
+
         </Toolbar>
       </AppBar>
       <Drawer

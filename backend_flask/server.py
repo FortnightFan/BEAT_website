@@ -7,57 +7,6 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-""" ROUTINES_FILE = os.path.join(os.path.dirname(__file__), 'routines.json')
-
-
-def load_routines():
-    if not os.path.exists(ROUTINES_FILE):
-        return []
-    with open(ROUTINES_FILE, 'r') as f:
-        return json.load(f)
-
-def save_routines(routines):
-    with open(ROUTINES_FILE, 'w') as f:
-        json.dump(routines, f)
-
-@app.route('/routines', methods=['GET'])
-def get_routines():
-    routines = load_routines()
-    return jsonify(routines)
-
-@app.route('/routines/<int:routine_id>', methods=['PUT'])
-def update_routine(routine_id):
-    routines = load_routines()
-    routine = next((r for r in routines if r['id'] == routine_id), None)
-    if not routine:
-        return jsonify({'error': 'Routine not found'}), 404
-    routine['name'] = request.json.get('name', routine['name'])
-    save_routines(routines)
-    return jsonify(routine), 200
-
-@app.route('/routines', methods=['POST'])
-def add_routine():
-    routines = load_routines()
-    if not request.json or 'name' not in request.json:
-        return jsonify({'error': 'Bad request'}), 400
-    new_id = max((routine['id'] for routine in routines), default=0) + 1
-    new_routine = {
-        'id': new_id,
-        'name': request.json['name']
-    }
-    routines.append(new_routine)
-    save_routines(routines)
-    return jsonify(new_routine), 201
-
-@app.route('/routines/<int:routine_id>', methods=['DELETE'])
-def delete_routine(routine_id):
-    routines = load_routines()
-    new_routines = [routine for routine in routines if routine['id'] != routine_id]
-    if len(routines) == len(new_routines):
-        return jsonify({'error': 'Routine not found'}), 404
-    save_routines(new_routines)
-    return jsonify({'message': 'Routine deleted successfully'}), 200 """
-
 @app.route('/data')
 def hello_world():
     return {

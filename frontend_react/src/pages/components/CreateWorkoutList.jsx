@@ -1,17 +1,18 @@
-import React, { useState, useEffect } from 'react';
-import { FormControl, InputLabel, Select, MenuItem } from '@mui/material';
-import Stack from '@mui/material/Stack';
-import Button from '@mui/material/Button';
-import Paper from '@mui/material/Paper';
-import Typography from '@mui/material/Typography';
+import StartIcon from '@mui/icons-material/PlayArrow';
+import { FormControl, Grid, InputLabel, MenuItem, Select } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
-import { NavLink } from 'react-router-dom';
-import { useParams } from 'react-router-dom';
+import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import { useTheme } from '@mui/material/styles';
+import React, { useEffect, useState } from 'react';
+import { NavLink, useParams } from 'react-router-dom';
 
 function CreateWorkoutList() {
     const { workoutID } = useParams();
-
+    const theme = useTheme();
     const [selectedDifficulty, setSelectedDifficulty] = useState('');
     const [selectedMuscle, setSelectedMuscle] = useState('');
     const [selectedEquipment, setSelectedEquipment] = useState('');
@@ -122,6 +123,21 @@ function CreateWorkoutList() {
         }
     }, [runOnce]); // Effect depends on the value of runOnce
 
+    const ButtonStyles = {
+        backgroundColor: "green", // A green shade
+        color: "white",
+        marginTop: '20px',
+        marginBottom: '20px',
+        padding: '10px 20px', // Increased padding for a larger button
+        fontSize: '16px', // Larger font size
+        fontWeight: 'bold', // Make the font bold
+        boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', // Add shadow for depth
+        '&:hover': {
+          backgroundColor: "#45a049", // A slightly darker green on hover
+          boxShadow: '0px 6px 12px rgba(0, 0, 0, 0.3)', // Increase shadow on hover
+        },
+      };
+
   return (
     <div>
         <AppBar position="static" sx={{ marginBottom: 2 }}>
@@ -212,13 +228,9 @@ function CreateWorkoutList() {
 
                     <Button variant="contained" style={{marginTop: '20px',  paddingTop: '10px' }} onClick={sendData}>Filter</Button>
                     <Button variant="contained" style={{backgroundColor: "green", marginTop: '20px',  paddingTop: '10px' }} onClick={saveWorkoutData}>Save</Button>
-                    <NavLink to={`/workout/${workoutID}/start`}>
-                        <Button variant="contained" style={{marginTop: '20px',  paddingTop: '10px' }} onClick={sendData}>Start</Button>
-                    </NavLink>
 
 
                 </Stack>
-
                 {/* List contents */}
                 <Paper elevation={0} style={{ maxHeight: "500px", overflow: 'auto', margin: '20px 0'}}>
                     {FilteredExercises === null ? (
@@ -227,51 +239,45 @@ function CreateWorkoutList() {
                         </Typography>
                     ) : (
                         <div>
-                            <Stack direction="column" spacing='16px'>
+                            <Stack direction="column" spacing={2}>
                                 {FilteredExercises.map((exercise, index) => (
-                                    <Paper sx={{ backgroundColor: 'grey.200' }} key={index} elevation={9}>
-                                        <Typography variant="h6" component="div" style={{ marginBottom: '8px'}}>{exercise.name}</Typography>
-                                        <div>
-                                            <img src={require("../../assets/exercises/" + exercise.images[0])} alt="image" style={{ maxWidth: '25%', maxHeight: '25vh' }}/>
+                                    <Paper key={index} elevation={9} sx={{padding: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderRadius: '15px', overflow: 'hidden', bgcolor: theme.palette.mode === 'dark' ? 'grey.800' : 'grey.100' }}>
+                                        {/* Name on the left */}
+                                        <Typography variant="h6" component="div" sx={{ width: '20%', textAlign: 'center' }}>
+                                            {exercise.name}
+                                        </Typography>
+
+                                        {/* Image centered */}
+                                        <div style={{ overflow: 'hidden', borderRadius: '15px', width: '35%', display: 'flex', justifyContent: 'center' }}>
+                                            <img src={require(`../../assets/exercises/${exercise.images[0]}`)} alt={exercise.name} style={{ maxWidth: '100%', maxHeight: '25vh' }}/>
                                         </div>
-                                        <Button onClick={() => addWorkout({exercise})} style={{ backgroundColor: 'green', color: 'white' }} variant="contained">Add</Button>
+
+                                        {/* Add button on the right */}
+                                        <Button onClick={() => addWorkout({exercise})} variant="contained" sx={{ backgroundColor: 'green', color: 'white', width: '15%' }}>
+                                            Add
+                                        </Button>
                                     </Paper>                                
                                 ))}
                             </Stack>
                         </div>
                     )}
                 </Paper>
-                <Divider />
-                <Typography variant="h3" align="center" sx={{ padding: 1, color: 'black' }}>
-                    Current workouts
+                <Divider sx={{ padding: 3}}/>
+                <Typography variant="h3" align="center" sx={{ padding: 3}}>
+                    Current Workouts
                 </Typography>
                     
                 {/* Selected workout list */}
-                <Paper elevation={0} style={{ maxHeight: 300, overflow: 'auto', margin: '20px 0'}}>
+                <Paper elevation={0} style={{margin: '20px'}}>
                     {workoutList && workoutList.length > 0 && (
                         <div>
                             <Stack direction="column" spacing='16px'>
                                 {workoutList.map((exercisePicked, i) => (
-                                    <Paper key={i} elevation={3}>
+                                    <Paper key={i} elevation={3} sx={{padding: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderRadius: '15px', overflow: 'hidden', bgcolor: theme.palette.mode === 'dark' ? 'grey.800' : 'grey.100' }}>
                                         {console.log(exercisePicked)}
                                         <Typography variant="h6" component="div" style={{ marginBottom: '8px'}}>
                                             <b>{i+1}</b>  -  {exercisePicked.name}
                                         </Typography>
-                                        {/* <Stack direction="row" spacing="10px">
-                                            <Typography variant="h8" component="div" style={{ marginBottom: '4px'}}>Reps: {exercisePicked.info.reps}</Typography>
-                                            <Button variant="contained" onClick={() => incrementReps(exercisePicked, 1)}>+</Button>
-                                            <Button variant="contained">-</Button>
-                                        </Stack>
-                                        <Stack direction="row" spacing="10px">
-                                            <Typography variant="h8" component="div" style={{ marginBottom: '4px'}}>Sets: {exercisePicked.info.sets}</Typography>
-                                            <Button variant="contained">+</Button>
-                                            <Button variant="contained">-</Button>
-                                        </Stack>
-                                        <Stack direction="row" spacing="10px">
-                                            <Typography variant="h8" component="div" style={{ marginBottom: '4px'}}>Weight: {exercisePicked.info.weight}</Typography>
-                                            <Button variant="contained" >+</Button>
-                                            <Button variant="contained">-</Button>
-                                        </Stack> */}
 
                                         <Button onClick={() => removeWorkout(exercisePicked)} style={{ backgroundColor: 'red', color: 'white' }} variant="contained">Remove</Button>
                                     </Paper>                                
@@ -285,9 +291,22 @@ function CreateWorkoutList() {
                         </Typography>
                     )}
                 </Paper>
+                <Grid container justifyContent="center" style={{ marginTop: 20 }}>
+                    <Grid item>
+                        <NavLink to={`/workout/${workoutID}/start`}>
+                            <Button
+                                variant="contained"
+                                startIcon={<StartIcon />}
+                                sx={ButtonStyles}
+                                onClick={sendData}
+                            >
+                                Start
+                            </Button>
+                        </NavLink>
+                    </Grid>
+                </Grid>
             </Stack>
         </div>
-        
     </div>
   );
 }

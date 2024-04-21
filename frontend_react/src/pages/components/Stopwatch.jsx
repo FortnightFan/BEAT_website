@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import StartIcon from '@mui/icons-material/PlayArrow';
+import StopIcon from '@mui/icons-material/Stop';
 import { Button, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 
 const Stopwatch = ({ onElapsedTimeChange }) => {
     const [isRunning, setIsRunning] = useState(false);
@@ -40,7 +42,16 @@ const Stopwatch = ({ onElapsedTimeChange }) => {
                 {formatTime(elapsedTime)}
             </Typography>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-                <Button variant="contained" onClick={handleStartStop}>
+                <Button
+                    variant="contained"
+                    startIcon={isRunning ? <StopIcon /> : <StartIcon />}
+                    onClick={handleStartStop}
+                    style={{
+                        backgroundColor: isRunning ? 'red' : 'green',
+                        color: 'white',
+                        fontStyle: 'bold',
+                    }}
+                >
                     {isRunning ? 'Stop' : 'Start'}
                 </Button>
             </div>

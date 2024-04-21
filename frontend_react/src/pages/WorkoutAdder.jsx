@@ -1,76 +1,75 @@
 // WorkoutAdder.jsx
-import React, { useState, useEffect } from 'react';
+import { AppBar, Box, Container, Grid, Paper, Stack, TextField, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import { NavLink } from 'react-router-dom';
-import Stopwatch from './components/Stopwatch'
+import Stopwatch from './components/Stopwatch';
 
 const WorkoutAdder = ({ workoutId }) => {
+    const navigate = useNavigate();
     const { workoutID } = useParams();
+
+    // Define state variables
     const [workoutName, setWorkoutName] = useState('');
+    const [exerciseDetails, setExerciseDetails] = useState({});
+    const [workoutList, setWorkoutList] = useState([]);
+    const [elapsedTime, setElapsedTime] = useState(0);
     const [sets, setSets] = useState([]);
     const [reps, setReps] = useState([]);
     const [weight, setWeight] = useState([]);
 
-    const maxSetsReps = 10;
-
-    const [workoutList, setWorkoutList] = useState([]);
-
     const [runOnce, setRunOnce] = useState(false);
 
     useEffect(() => {
+        // This function is defined within useEffect to avoid the exhaustive-deps warning
+        const fetchData = async () => {
+          const response = await fetch('/api/saved_exercises', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ "ID": workoutID }),
+          });
+          
+          const data = await response.json();
+          if (data === "-1") {
+            console.log("ERROR: Data not found");
+          } else {
+            setWorkoutName(data.Name);
+            const initialSetRepsWeight = new Array(data.Exercises.length).fill(0);
+            setSets(initialSetRepsWeight);
+            setReps(initialSetRepsWeight);
+            setWeight(initialSetRepsWeight);
+            setWorkoutList(data.Exercises);
+          }
+        };
+      
         if (!runOnce) {
-            fetch('/api/saved_exercises', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({"ID" : workoutID})
-            })
-            .then(response => response.json())
-            .then(data => {    
-                if (data == "-1") {
-                    console.log("ERROR: Data not found");
-                } else {
-                    setWorkoutName(data.Name)
-                    const exercises = data.Exercises;
-                    for (let i = 0; i < exercises.length; i++) {
-                        sets.push(0);
-                    }
-                    for (let i = 0; i < exercises.length; i++) {
-                        reps.push(0);
-                    }
-                    for (let i = 0; i < exercises.length; i++) {
-                        weight.push(0);
-                    }
-                    console.log(sets)
-                    console.log(exercises);
-                    setWorkoutList(exercises);
-                    setRunOnce(true);
-                }
-            });
+          fetchData();
+          setRunOnce(true); // Make sure this is set after fetching data to prevent infinite loop
         }
-    }, [runOnce]); 
+        // Including workoutID in the dependency array to ensure effect reruns if workoutID changes
+      }, [runOnce, workoutID]); 
 
 
-
-    const handleSetsChange = (value, index) => {
-        const newSets = [...sets]; 
-        newSets[index] = Math.min(Math.max(0, sets[index] + value), maxSetsReps);
-        setSets(newSets);
-        console.log(elapsedTime)
+    const handleSetCountChange = (exerciseId, setCount) => {
+        setExerciseDetails(prevDetails => {
+            const newDetails = { ...prevDetails };
+            const setsArray = Array.from({ length: setCount }, () => ({ reps: '', weight: '' }));
+            newDetails[exerciseId] = setsArray;
+            return newDetails;
+        });
     };
 
-    const handleRepsChange = (value, index) => {
-        const newReps = [...reps]; 
-        newReps[index] = Math.min(Math.max(0, reps[index] + value), maxSetsReps);
-        setReps(newReps);
+    const handleRepWeightChange = (exerciseId, setIndex, type, value) => {
+        setExerciseDetails(prevDetails => {
+            const newDetails = { ...prevDetails };
+            const updatedSets = [...newDetails[exerciseId]];
+            updatedSets[setIndex] = { ...updatedSets[setIndex], [type]: value };
+            newDetails[exerciseId] = updatedSets;
+            return newDetails;
+        });
     };
-
-    const navigate = useNavigate();
+    
     
     const handleSave = async () => {
         const today = new Date();
@@ -94,109 +93,80 @@ const WorkoutAdder = ({ workoutId }) => {
         navigate(`/profile`);
     };
 
-    const [elapsedTime, setElapsedTime] = useState(0);
     const handleElapsedTimeChange = (newElapsedTime) => {
         setElapsedTime(newElapsedTime);
     };
 
     return (
-        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '20px' }}>
+        <Container>
+            <AppBar position="static">
+                <Typography variant="h6" align="center">{workoutName}</Typography>
+            </AppBar>
             <Stopwatch onElapsedTimeChange={handleElapsedTimeChange} />
-            <div>
-                <p>Elapsed Time: {elapsedTime} seconds</p>
-            </div>
-            <h1>{workoutName}</h1>
-            {workoutList && workoutList.length > 0 && (
-                <div>
-                    {workoutList.map((exercise, index) => (
-                        <div key={index}>
-                            <h1 style={{ textAlign: 'center' }}>{exercise.name}</h1>
+
+            <Box sx={{ my: 2 }} justifyContent={'center'} alignItems={'center'}>
+                {workoutList.map((exercise, index) => (
+                    <Paper key={index} elevation={2} sx={{ p: 2, my: 1 }}>
+                        <Typography variant="h6">{exercise.name}</Typography>
                             <Stack spacing='20px' direction="row" style={{ display: 'flex', justifyContent: 'center' }}>
-                                <img src={require("../assets/exercises/" + exercise.images[0])} alt="image" style={{ maxWidth: '35%', maxHeight: '35vh' }}/>
-                                <img src={require("../assets/exercises/" + exercise.images[1])} alt="image" style={{ maxWidth: '35%', maxHeight: '35vh' }}/>
+                                <img src={require("../assets/exercises/" + exercise.images[0])} alt={exercise.name} style={{ maxWidth: '35%', maxHeight: '35vh', borderRadius: '25px', padding: '10px' }}/>
+                                <img src={require("../assets/exercises/" + exercise.images[1])} alt={exercise.name} style={{ maxWidth: '35%', maxHeight: '35vh', borderRadius: '25px', padding: '10px' }}/>
                             </Stack>
-                            <Paper style={{ maxWidth: '700px', margin: '0 auto', maxHeight: '300px', overflow: 'auto' }}>
+                            <Paper elevation={2} style={{ margin: '0 auto', maxHeight: '300px', overflow: 'auto', padding: '10px', marginBottom: '30px' }}>
                                 {exercise.instructions.map((instruction, index) => (
                                     <Typography key={index} variant="h6" align="left" paragraph>
                                         {index+1} - {instruction}
                                     </Typography>
                                 ))}
                             </Paper>
-                            <div style={{ fontSize: '1.5em', marginBottom: '30px', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#c0c0c0', padding: '10px', borderRadius: '5px' }}>
-                                <p style={{ margin: '0', marginBottom: '5px' }}>Sets</p>
-                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    <button style={{ fontSize: '1.5em', padding: '10px', color: 'white', backgroundColor: 'red', border: 'none', cursor: 'pointer' }} onClick={() => handleSetsChange(-1, index)}>-</button>
-                                    <input 
-                                        type="text" 
-                                        value={`${sets[index]}/${maxSetsReps}`} 
-                                        readOnly
-                                        style={{ fontSize: '1.5em', padding: '5px', width: '300px', textAlign: 'center', marginLeft: '10px', marginRight: '10px' }} 
+                            <Grid container justifyContent="center" alignItems="center" padding={1} sx={{ mx: 18, my: 1 }}>
+                                <Grid item width={'35%'}>
+                                    <TextField
+                                        alignItems="center"
+                                        type="number"
+                                        label="Number of Sets"
+                                        value={exerciseDetails[exercise.id]?.length || 0}
+                                        onChange={(e) => handleSetCountChange(exercise.id, parseInt(e.target.value, 10))}
+                                        sx={{ width: '35%' }}
                                     />
-                                    <button style={{ fontSize: '1.5em', padding: '10px', color: 'white', backgroundColor: 'green', border: 'none', cursor: 'pointer' }} onClick={() => handleSetsChange(1, index)}>+</button>
-                                </div>
-                            </div>
-
-                            {/* Reps Container */}
-                            <div style={{ fontSize: '1.5em', marginBottom: '30px', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#c0c0c0', padding: '10px', borderRadius: '5px' }}>
-                                <p style={{ margin: '0', marginBottom: '5px' }}>Reps</p>
-                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    <button style={{ fontSize: '1.5em', padding: '10px', color: 'white', backgroundColor: 'red', border: 'none', cursor: 'pointer' }} onClick={() => handleRepsChange(-1, index)}>-</button>
-                                    <input 
-                                        type="text" 
-                                        value={`${reps[index]}/${maxSetsReps}`} 
-                                        readOnly
-                                        style={{ fontSize: '1.5em', padding: '5px', width: '300px', textAlign: 'center', marginLeft: '10px', marginRight: '10px' }} 
+                                </Grid>
+                            </Grid>
+                        {exerciseDetails[exercise.id]?.map((set, index) => (
+                            <Grid container justifyContent="center" alignItems="center" key={index} padding={1} sx={{ mx: 10, my: 1 }}>
+                                <Grid item>
+                                    <TextField
+                                        type="number"
+                                        label={`Set ${index + 1} Reps`}
+                                        value={set.reps}
+                                        onChange={(e) => handleRepWeightChange(exercise.id, index, 'reps', parseInt(e.target.value, 10))}
+                                        sx={{ mx: 1}}
                                     />
-                                    <button style={{ fontSize: '1.5em', padding: '10px', color: 'white', backgroundColor: 'green', border: 'none', cursor: 'pointer' }} onClick={() => handleRepsChange(1, index)}>+</button>
-                                </div>
-                            </div>
-
-                            {/* Weight Container */}
-                            <div style={{ fontSize: '1.5em', marginBottom: '30px', display: 'flex', flexDirection: 'column', alignItems: 'center', backgroundColor: '#c0c0c0', padding: '10px', borderRadius: '5px' }}>
-                                <p style={{ margin: '0', marginBottom: '5px' }}>Weight</p>
-                                <div style={{ display: 'flex', alignItems: 'center' }}>
-                                    <input 
-                                        type="number" 
-                                        value={weight[index]} 
-                                        min="0" 
-                                        onChange={(e) => setWeight(parseInt(e.target.value), index)} 
-                                        style={{ fontSize: '1.5em', padding: '5px', width: '300px', textAlign: 'center', marginLeft: '10px', marginRight: '10px' }} 
+                                </Grid>
+                                <Grid item xs={12} sm={8} md={6} lg={4}>
+                                    <TextField
+                                        type="number"
+                                        label={`Set ${index + 1} Weight`}
+                                        value={set.weight}
+                                        onChange={(e) => handleRepWeightChange(exercise.id, index, 'weight', parseInt(e.target.value, 10))}
                                     />
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                    {/* Save Button */}
-                    <button 
-                        onClick={handleSave} 
-                        style={{ fontSize: '1.5em', padding: '10px 20px', backgroundColor: 'green', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', marginBottom: '30px' }}
-                    >
-                        SAVE
-                    </button>
-                </div>
-            )}
-{!workoutList || workoutList.length === 0 && (
-    <div>
-        <Typography variant="body1" align="center">
-            You didn't add any exercises...
-        </Typography>
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-            <NavLink to={`/workout/${workoutID}`}>
-                <Button variant="contained">Go back</Button>
-            </NavLink>
-        </div>
-        
-    </div>
-
-    
-    
-
-)}
-
-           
-            
-
-        </div>
+                                </Grid>
+                            </Grid>
+                        ))}
+                    </Paper>
+                ))}
+                {/* Save Button */}
+                <Grid container justifyContent="center" style={{ marginTop: 20 }}>
+                    <Grid item>
+                        <button 
+                            onClick={handleSave} 
+                            style={{ fontSize: '1.5em', padding: '10px 20px', backgroundColor: 'green', color: 'white', border: 'none', borderRadius: '5px', cursor: 'pointer', marginBottom: '30px' }}
+                            >
+                            Save Workout
+                        </button>
+                    </Grid>
+                </Grid>
+            </Box>
+        </Container>
     );
 };
 

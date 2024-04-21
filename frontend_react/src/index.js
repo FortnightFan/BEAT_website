@@ -26,6 +26,7 @@ root.render(
         <Box component="main" sx={{ flex: 1, overflowY: 'auto' }}> {/* Allows content to grow and footer to stick at the bottom */}
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
             <Route path="/signin" element={<SignIn />} />
             <Route path="/signup" element={<SignUp />} />
             <Route path="/profile" element={<Profile />} />

@@ -32,11 +32,19 @@ const NavigationBar = () => {
       onKeyDown={toggleDrawer(false)}
     >
       <List>
-        {['Home', 'Profile', 'Second', 'Third'].map((text, index) => (
-          <ListItem button key={text} component={NavLink} to={`/${text.toLowerCase()}`}>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        <ListItem button key="Home" component={NavLink} to="/">
+          <ListItemText primary="Home" />
+        </ListItem>
+        <ListItem button key="Profile" component={NavLink} to="/profile">
+          <ListItemText primary="Profile" />
+        </ListItem>
+        <ListItem button key="Previous Workouts" component={NavLink} to="/profile/prevworkouts">
+          <ListItemText primary="Previous Workouts" />
+        </ListItem>
+        <ListItem button key="Body" component={NavLink} to="/profile/bodydata">
+          <ListItemText primary="Body" />
+        </ListItem>
+        {/* Add more ListItem components for other navigation paths */}
       </List>
       <Box sx={{ flexGrow: 1 }} />
       <Box sx={{ px: 2, py: 1 }}>

@@ -29,6 +29,7 @@ const ProfileContent = () => {
               setRoutines(workoutNames)
             });
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
   const navigate = useNavigate();

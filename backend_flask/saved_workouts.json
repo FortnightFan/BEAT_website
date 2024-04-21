@@ -70,6 +70,11 @@
           "3_4_Sit-Up/0.jpg",
           "3_4_Sit-Up/1.jpg"
         ],
+        "info": {
+          "sets": 0,
+          "reps": 0,
+          "weight": 0
+        },
         "instructions": [
           "Lie down on the floor and secure your feet. Your legs should be bent at the knees.",
           "Place your hands behind or to the side of your head. You will begin with your back on the ground. This will be your starting position.",
@@ -83,12 +88,7 @@
         "primaryMuscles": [
           "abdominals"
         ],
-        "secondaryMuscles": [],
-        "info": {
-          "sets": 0,
-          "reps": 0,
-          "weight": 0
-        }
+        "secondaryMuscles": []
       },
       {
         "category": "strength",
@@ -99,6 +99,11 @@
           "Advanced_Kettlebell_Windmill/0.jpg",
           "Advanced_Kettlebell_Windmill/1.jpg"
         ],
+        "info": {
+          "sets": 0,
+          "reps": 0,
+          "weight": 0
+        },
         "instructions": [
           "Clean and press a kettlebell overhead with one arm.",
           "Keeping the kettlebell locked out at all times, push your butt out in the direction of the locked out kettlebell. Keep the non-working arm behind your back and turn your feet out at a forty-five degree angle from the arm with the kettlebell.",
@@ -115,7 +120,31 @@
           "glutes",
           "hamstrings",
           "shoulders"
+        ]
+      },
+      {
+        "category": "strength",
+        "equipment": "barbell",
+        "force": "pull",
+        "id": "Wide-Grip_Standing_Barbell_Curl",
+        "images": [
+          "Wide-Grip_Standing_Barbell_Curl/0.jpg",
+          "Wide-Grip_Standing_Barbell_Curl/1.jpg"
         ],
+        "instructions": [
+          "Stand up with your torso upright while holding a barbell at the wide outer handle. The palm of your hands should be facing forward. The elbows should be close to the torso. This will be your starting position.",
+          "While holding the upper arms stationary, curl the weights forward while contracting the biceps as you breathe out. Tip: Only the forearms should move.",
+          "Continue the movement until your biceps are fully contracted and the bar is at shoulder level. Hold the contracted position for a second and squeeze the biceps hard.",
+          "Slowly begin to bring the bar back to starting position as your breathe in.",
+          "Repeat for the recommended amount of repetitions."
+        ],
+        "level": "beginner",
+        "mechanic": "isolation",
+        "name": "Wide-Grip Standing Barbell Curl",
+        "primaryMuscles": [
+          "biceps"
+        ],
+        "secondaryMuscles": [],
         "info": {
           "sets": 0,
           "reps": 0,
@@ -125,7 +154,7 @@
     ]
   },
   {
-    "Name": "hello2",
+    "Name": "Legs",
     "ID": "1",
     "Exercises": [
       {

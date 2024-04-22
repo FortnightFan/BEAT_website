@@ -1,8 +1,10 @@
 // WorkoutAdder.jsx
-import { AppBar, Box, Container, Grid, Paper, Stack, TextField, Typography } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { Accordion, AccordionDetails, AccordionSummary, AppBar, Box, Container, Grid, Paper, Stack, TextField, Typography, } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import BreadcrumbNav from './components/Breadcrumbs';
+import SetTimer from './components/SetTimer';
 import Stopwatch from './components/Stopwatch';
 import SubNav from './components/Subnav';
 
@@ -98,6 +100,22 @@ const WorkoutAdder = ({ workoutId }) => {
     const handleElapsedTimeChange = (newElapsedTime) => {
         setElapsedTime(newElapsedTime);
     };
+        const [savedTimes, setSavedTimes] = useState([]);
+    
+        const handleSaveSetTime = (exerciseId, setIndex, timeElapsed, time, reps, weight) => {
+            setExerciseDetails(prevDetails => {
+                const newDetails = {...prevDetails};
+                if (!newDetails[exerciseId]) {
+                    newDetails[exerciseId] = [];
+                }
+                // Ensure the array is large enough to hold this index
+                if (setIndex >= newDetails[exerciseId].length) {
+                    newDetails[exerciseId].length = setIndex + 1;
+                }
+                newDetails[exerciseId][setIndex] = {...newDetails[exerciseId][setIndex], time: timeElapsed};
+                return newDetails;
+            });
+        };
 
     const crumbs = [
         { label: 'Home', path: '/' },
@@ -109,12 +127,25 @@ const WorkoutAdder = ({ workoutId }) => {
     return (
         <>
         <SubNav title={"Workout: " + workoutName} crumbs={crumbs}/>
-        <Container>
+
+        <Container maxWidth="md">
             <Stopwatch onElapsedTimeChange={handleElapsedTimeChange} />
+
             <Box sx={{ my: 2 }} justifyContent={'center'} alignItems={'center'}>
                 {workoutList.map((exercise, index) => (
+                    <Accordion key={index}>
+                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                            <Typography variant="h6">{exercise.name}</Typography>
+                        </AccordionSummary>
+                    <AccordionDetails>
+                    
                     <Paper key={index} elevation={2} sx={{ p: 2, my: 1 }}>
-                        <Typography variant="h6">{exercise.name}</Typography>
+
+                        <Accordion>
+                            <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                                <Typography variant="subtitle1">Tutorial Details</Typography>
+                            </AccordionSummary>
+                            <AccordionDetails>
                             <Stack spacing='20px' direction="row" style={{ display: 'flex', justifyContent: 'center' }}>
                                 <img src={require("../assets/exercises/" + exercise.images[0])} alt={exercise.name} style={{ maxWidth: '35%', maxHeight: '35vh', borderRadius: '25px', padding: '10px' }}/>
                                 <img src={require("../assets/exercises/" + exercise.images[1])} alt={exercise.name} style={{ maxWidth: '35%', maxHeight: '35vh', borderRadius: '25px', padding: '10px' }}/>
@@ -126,40 +157,60 @@ const WorkoutAdder = ({ workoutId }) => {
                                     </Typography>
                                 ))}
                             </Paper>
-                            <Grid container justifyContent="center" alignItems="center" padding={1} sx={{ mx: 18, my: 1 }}>
-                                <Grid item width={'35%'}>
+                            </AccordionDetails>
+                        </Accordion>
+                            <Grid container justifyContent="center" alignItems="center" padding={1} sx={{ mx: 'auto', my: 1 }}>
+                                <Grid item xs={12} sm={12} md={6} lg={6}>
                                     <TextField
                                         alignItems="center"
                                         type="number"
                                         label="Number of Sets"
                                         value={exerciseDetails[exercise.id]?.length || 0}
                                         onChange={(e) => handleSetCountChange(exercise.id, parseInt(e.target.value, 10))}
-                                        sx={{ width: '35%' }}
+                                        fullWidth
                                     />
                                 </Grid>
                             </Grid>
-                        {exerciseDetails[exercise.id]?.map((set, index) => (
-                            <Grid container justifyContent="center" alignItems="center" key={index} padding={1} sx={{ mx: 10, my: 1 }}>
-                                <Grid item>
-                                    <TextField
-                                        type="number"
-                                        label={`Set ${index + 1} Reps`}
-                                        value={set.reps}
-                                        onChange={(e) => handleRepWeightChange(exercise.id, index, 'reps', parseInt(e.target.value, 10))}
-                                        sx={{ mx: 1}}
-                                    />
+                            
+                            {exerciseDetails[exercise.id]?.map((set, index) => (
+                                <Grid container justifyContent="center" alignItems="center" key={index} sx={{ mx: 'auto', my: 2 }}>
+                                    {/* Reps and Weight inputs */}
+                                    <Grid item xs={12} sm={5} md={4}>
+                                        <TextField
+                                            fullWidth
+                                            type="number"
+                                            label={`Set ${index + 1} Reps`}
+                                            value={set.reps}
+                                            onChange={(e) => handleRepWeightChange(exercise.id, index, 'reps', parseInt(e.target.value, 10))}
+                                            sx={{ mb: 1 }} // Optional, adds margin below the TextField
+                                        />
+                                    </Grid>
+                                    <Grid item xs={12} sm={5} md={4}>
+                                        <TextField
+                                            fullWidth
+                                            type="number"
+                                            label={`Set ${index + 1} Weight`}
+                                            value={set.weight}
+                                            onChange={(e) => handleRepWeightChange(exercise.id, index, 'weight', parseInt(e.target.value, 10))}
+                                            sx={{ mb: 1 }}
+                                        />
+                                    </Grid>
+                                    
+                                    {/* Timer to the right, vertically centered between Reps and Weight */}
+                                    <Grid item xs={12} sm={2} md={4} container alignItems="center" justifyContent="flex-end">
+                                        <SetTimer
+                                            index={index}
+                                            restDuration={5}
+                                            onSaveTime={(time) => handleSaveSetTime(exercise.id, index, time)}
+                                            // Pass a unique key if the timers need to reset independently
+                                            key={`set-timer-${exercise.id}-${index}`} 
+                                        />
+                                    </Grid>
                                 </Grid>
-                                <Grid item xs={12} sm={8} md={6} lg={4}>
-                                    <TextField
-                                        type="number"
-                                        label={`Set ${index + 1} Weight`}
-                                        value={set.weight}
-                                        onChange={(e) => handleRepWeightChange(exercise.id, index, 'weight', parseInt(e.target.value, 10))}
-                                    />
-                                </Grid>
-                            </Grid>
-                        ))}
+                            ))}
                     </Paper>
+                    </AccordionDetails>
+                    </Accordion>
                 ))}
                 {/* Save Button */}
                 <Grid container justifyContent="center" style={{ marginTop: 20 }}>

@@ -1,5 +1,5 @@
 import StartIcon from '@mui/icons-material/PlayArrow';
-import { FormControl, Grid, InputLabel, MenuItem, Select } from '@mui/material';
+import { Container, FormControl, Grid, InputLabel, MenuItem, Select, useMediaQuery } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
@@ -14,6 +14,7 @@ import SubNav from './Subnav';
 function CreateWorkoutList() {
     const { workoutID } = useParams();
     const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const [selectedDifficulty, setSelectedDifficulty] = useState('');
     const [selectedMuscle, setSelectedMuscle] = useState('');
     const [selectedEquipment, setSelectedEquipment] = useState('');
@@ -148,8 +149,9 @@ function CreateWorkoutList() {
   return (
     <>
         <SubNav title={`Create Workout: ${WorkoutTitle}`} crumbs={crumbs}/>
+        <Container maxWidth="md">
     <div>
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+        <div style={{ display: 'flexGrow', justifyContent: 'center', alignItems: 'center' }}>
             <Stack direction="column">
                 <Stack direction="row" spacing={2}>
                     <FormControl style={{ width: '200px',  marginTop: '10px',  paddingTop: '10px' }}>
@@ -314,6 +316,7 @@ function CreateWorkoutList() {
             </Stack>
         </div>
     </div>
+    </Container>
     </>
   );
 }

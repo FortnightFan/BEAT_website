@@ -268,6 +268,11 @@
           "Elevated_Cable_Rows/0.jpg",
           "Elevated_Cable_Rows/1.jpg"
         ],
+        "info": {
+          "sets": 0,
+          "reps": 0,
+          "weight": 0
+        },
         "instructions": [
           "Get a platform of some sort (it can be an aerobics or calf raise platform) that is around 4-6 inches in height.",
           "Place it on the seat of the cable row machine.",
@@ -286,7 +291,128 @@
         "secondaryMuscles": [
           "middle back",
           "traps"
+        ]
+      },
+      {
+        "category": "strength",
+        "equipment": "barbell",
+        "force": "push",
+        "id": "Anti-Gravity_Press",
+        "images": [
+          "Anti-Gravity_Press/0.jpg",
+          "Anti-Gravity_Press/1.jpg"
         ],
+        "instructions": [
+          "Place a bar on the ground behind the head of an incline bench.",
+          "Lay on the bench face down. With a pronated grip, pick the barbell up from the floor. Flex the elbows, performing a reverse curl to bring the bar near your chest. This will be your starting position.",
+          "To begin, press the barbell out in front of your head by extending your elbows. Keep your arms parallel to the ground throughout the movement.",
+          "Return to the starting position and repeat to complete the set."
+        ],
+        "level": "beginner",
+        "mechanic": "compound",
+        "name": "Anti-Gravity Press",
+        "primaryMuscles": [
+          "shoulders"
+        ],
+        "secondaryMuscles": [
+          "middle back",
+          "traps",
+          "triceps"
+        ],
+        "info": {
+          "sets": 0,
+          "reps": 0,
+          "weight": 0
+        }
+      }
+    ]
+  },
+  {
+    "Name": "test2",
+    "ID": "4",
+    "Exercises": [
+      {
+        "category": "strength",
+        "equipment": "barbell",
+        "force": "pull",
+        "id": "Reverse_Barbell_Curl",
+        "images": [
+          "Reverse_Barbell_Curl/0.jpg",
+          "Reverse_Barbell_Curl/1.jpg"
+        ],
+        "instructions": [
+          "Stand up with your torso upright while holding a barbell at shoulder width with the elbows close to the torso. The palm of your hands should be facing down (pronated grip). This will be your starting position.",
+          "While holding the upper arms stationary, curl the weights while contracting the biceps as you breathe out. Only the forearms should move. Continue the movement until your biceps are fully contracted and the bar is at shoulder level. Hold the contracted position for a second as you squeeze the muscle.",
+          "Slowly begin to bring the bar back to starting position as your breathe in.",
+          "Repeat for the recommended amount of repetitions."
+        ],
+        "level": "beginner",
+        "mechanic": "isolation",
+        "name": "Reverse Barbell Curl",
+        "primaryMuscles": [
+          "biceps"
+        ],
+        "secondaryMuscles": [
+          "forearms"
+        ],
+        "info": {
+          "sets": 0,
+          "reps": 0,
+          "weight": 0
+        }
+      },
+      {
+        "category": "strength",
+        "equipment": "barbell",
+        "force": "pull",
+        "id": "Wide-Grip_Standing_Barbell_Curl",
+        "images": [
+          "Wide-Grip_Standing_Barbell_Curl/0.jpg",
+          "Wide-Grip_Standing_Barbell_Curl/1.jpg"
+        ],
+        "instructions": [
+          "Stand up with your torso upright while holding a barbell at the wide outer handle. The palm of your hands should be facing forward. The elbows should be close to the torso. This will be your starting position.",
+          "While holding the upper arms stationary, curl the weights forward while contracting the biceps as you breathe out. Tip: Only the forearms should move.",
+          "Continue the movement until your biceps are fully contracted and the bar is at shoulder level. Hold the contracted position for a second and squeeze the biceps hard.",
+          "Slowly begin to bring the bar back to starting position as your breathe in.",
+          "Repeat for the recommended amount of repetitions."
+        ],
+        "level": "beginner",
+        "mechanic": "isolation",
+        "name": "Wide-Grip Standing Barbell Curl",
+        "primaryMuscles": [
+          "biceps"
+        ],
+        "secondaryMuscles": [],
+        "info": {
+          "sets": 0,
+          "reps": 0,
+          "weight": 0
+        }
+      },
+      {
+        "category": "strength",
+        "equipment": "barbell",
+        "force": "pull",
+        "id": "Preacher_Curl",
+        "images": [
+          "Preacher_Curl/0.jpg",
+          "Preacher_Curl/1.jpg"
+        ],
+        "instructions": [
+          "To perform this movement you will need a preacher bench and an E-Z bar. Grab the E-Z curl bar at the close inner handle (either have someone hand you the bar which is preferable or grab the bar from the front bar rest provided by most preacher benches). The palm of your hands should be facing forward and they should be slightly tilted inwards due to the shape of the bar.",
+          "With the upper arms positioned against the preacher bench pad and the chest against it, hold the E-Z Curl Bar at shoulder length. This will be your starting position.",
+          "As you breathe in, slowly lower the bar until your upper arm is extended and the biceps is fully stretched.",
+          "As you exhale, use the biceps to curl the weight up until your biceps is fully contracted and the bar is at shoulder height. Squeeze the biceps hard and hold this position for a second.",
+          "Repeat for the recommended amount of repetitions."
+        ],
+        "level": "beginner",
+        "mechanic": "isolation",
+        "name": "Preacher Curl",
+        "primaryMuscles": [
+          "biceps"
+        ],
+        "secondaryMuscles": [],
         "info": {
           "sets": 0,
           "reps": 0,

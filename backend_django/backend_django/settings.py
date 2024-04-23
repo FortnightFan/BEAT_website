@@ -74,7 +74,9 @@ TEMPLATES = [
 ]
 
 CORS_ORIGIN_ALLOW_ALL = True
-
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000"  # The address of your React app
+]
 WSGI_APPLICATION = 'backend_django.wsgi.application'
 
 

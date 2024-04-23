@@ -26,14 +26,40 @@ function Copyright(props) {
 }
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const formData = new FormData(event.currentTarget);
+  
+    const registrationData = {
+      email: formData.get('email'),
+      first_name: formData.get('first_name'),
+      last_name: formData.get('last_name'),
+      password: formData.get('password'),
+    };
+  
+    try {
+      const response = await fetch('http://localhost:8000/accounts/register/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(registrationData),
+      });
+  
+      if (!response.ok) {
+        throw new Error('Registration failed');
+      }
+  
+      // Registration successful
+      console.log('User registered successfully');
+      // Add code to navigate to a different page or display a success message
+    } catch (error) {
+      console.error('Error registering user:', error.message);
+      // Add code to display an error message to the user
+    }
   };
+  
+  
 
   return (
       <Container component="main" sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
@@ -58,7 +84,7 @@ export default function SignUp() {
               <Grid item xs={12} sm={6}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="first_name"
                   required
                   fullWidth
                   id="firstName"
@@ -72,7 +98,7 @@ export default function SignUp() {
                   fullWidth
                   id="lastName"
                   label="Last Name"
-                  name="lastName"
+                  name="last_name"
                   autoComplete="family-name"
                 />
               </Grid>

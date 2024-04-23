@@ -4,10 +4,25 @@ import { useNavigate } from 'react-router-dom';
 import HeroBackgroundImage from '../assets/images/HeroImage.jpg';
 import PromoPhoto from '../assets/images/PromoPhoto.jpg';
 import WeightRack from '../assets/images/WeightRack.jpg';
+import { useState, useEffect } from 'react';
 
 const Home = () => {
     const navigate = useNavigate();
-
+    const [exercises, setExercises] = useState([]);
+  
+    // Fetch data from the API endpoint when the component mounts
+    useEffect(() => {
+      const fetchData = async () => {
+          const response = await fetch('http://127.0.0.1:8000/api/exercises/');
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          const data = await response.json();
+          setExercises(data);
+      };
+  
+      fetchData();
+    }, []);
     return (
         <Container maxWidth={false} disableGutters sx={{ overflowX: 'hidden' }}>
             {/* Hero Section with Background Image */}
@@ -110,8 +125,16 @@ const Home = () => {
           />
         </Grid>
       </Grid>
+      <h1>List below should be filled if backend is working correctly</h1>
+      <ul>
+        {exercises.map(exercise => (
+          <li key={exercise.id}>{exercise.name}, {exercise.images}</li>
+        ))}
+      </ul>
         </Container>
     );
 };
+
+
 
 export default Home;

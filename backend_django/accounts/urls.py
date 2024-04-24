@@ -1,7 +1,8 @@
 from django.urls import path
-from .views import register_user  # Import the register_user view from views.py
+from .views import home, register_user, sign_in
 
 urlpatterns = [
-    # URL pattern for user registration
-    path('register/', register_user, name='register'),  # Map /accounts/register/ to the register_user view
+    path('', home, name='home'),
+    path('register/', register_user, name='register'),
+    path('sign-in/', sign_in, name='sign_in'),  # Add this line for the sign-in view
 ]

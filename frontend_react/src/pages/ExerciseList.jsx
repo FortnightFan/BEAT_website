@@ -1,9 +1,8 @@
-// WorkoutAdder.jsx
+// ExerciseList.jsx
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Accordion, AccordionDetails, AccordionSummary, AppBar, Box, Container, Grid, Paper, Stack, TextField, Typography, } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import BreadcrumbNav from './components/Breadcrumbs';
 import SetTimer from './components/SetTimer';
 import Stopwatch from './components/Stopwatch';
 import SubNav from './components/Subnav';
@@ -49,11 +48,12 @@ const WorkoutAdder = ({ workoutId }) => {
       
         if (!runOnce) {
           fetchData();
-          setRunOnce(true); // Make sure this is set after fetching data to prevent infinite loop
+          setRunOnce(true);
         }
         // Including workoutID in the dependency array to ensure effect reruns if workoutID changes
       }, [runOnce, workoutID]); 
 
+    const preventNegativeValues = (e) => ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()
 
     const handleSetCountChange = (exerciseId, setCount) => {
         setExerciseDetails(prevDetails => {
@@ -64,14 +64,30 @@ const WorkoutAdder = ({ workoutId }) => {
         });
     };
 
-    const handleRepWeightChange = (exerciseId, setIndex, type, value) => {
-        setExerciseDetails(prevDetails => {
-            const newDetails = { ...prevDetails };
-            const updatedSets = [...newDetails[exerciseId]];
-            updatedSets[setIndex] = { ...updatedSets[setIndex], [type]: value };
-            newDetails[exerciseId] = updatedSets;
-            return newDetails;
-        });
+    const handleRepWeightChange = (exerciseId, setIndex, type, value) => { 
+        const filteredValue = value.replace(/[^0-9]/g, '');
+        // Allow empty values instead of NaNN
+        if (filteredValue === '') {
+            setExerciseDetails(prevDetails => {
+                const newDetails = { ...prevDetails };
+                const updatedSets = [...newDetails[exerciseId]];
+                updatedSets[setIndex] = { ...updatedSets[setIndex], [type]: value };
+                newDetails[exerciseId] = updatedSets;
+                return newDetails;
+            });
+        } else {
+            // Process the input as a number
+            const numericValue = parseInt(value, 10);
+            if (!isNaN(numericValue) && numericValue >= 0 && numericValue <= 999) {
+                setExerciseDetails(prevDetails => {
+                    const newDetails = { ...prevDetails };
+                    const updatedSets = [...newDetails[exerciseId]];
+                    updatedSets[setIndex] = { ...updatedSets[setIndex], [type]: numericValue };
+                    newDetails[exerciseId] = updatedSets;
+                    return newDetails;
+                });
+            }
+        }
     };
     
     
@@ -108,7 +124,6 @@ const WorkoutAdder = ({ workoutId }) => {
                 if (!newDetails[exerciseId]) {
                     newDetails[exerciseId] = [];
                 }
-                // Ensure the array is large enough to hold this index
                 if (setIndex >= newDetails[exerciseId].length) {
                     newDetails[exerciseId].length = setIndex + 1;
                 }
@@ -168,6 +183,12 @@ const WorkoutAdder = ({ workoutId }) => {
                                         value={exerciseDetails[exercise.id]?.length || 0}
                                         onChange={(e) => handleSetCountChange(exercise.id, parseInt(e.target.value, 10))}
                                         fullWidth
+                                        InputProps={{
+                                            inputProps: { 
+                                                min: 0, 
+                                                max: 10
+                                            }
+                                        }}
                                     />
                                 </Grid>
                             </Grid>
@@ -182,7 +203,19 @@ const WorkoutAdder = ({ workoutId }) => {
                                             label={`Set ${index + 1} Reps`}
                                             value={set.reps}
                                             onChange={(e) => handleRepWeightChange(exercise.id, index, 'reps', parseInt(e.target.value, 10))}
-                                            sx={{ mb: 1 }} // Optional, adds margin below the TextField
+                                            onKeyDown={preventNegativeValues}
+                                            InputProps={{
+                                                inputProps: { 
+                                                    min: 0, 
+                                                    max: 99,
+                                                    inputMode: 'numeric',
+                                                    pattern: '[0-9]*',
+                                                },
+                                                style: { 
+                                                    borderColor: (set.reps < 0 || set.reps > 999) ? 'red' : 'default'
+                                                }
+                                            }}
+                                            sx={{ mb: 1 }}
                                         />
                                     </Grid>
                                     <Grid item xs={12} sm={5} md={4}>
@@ -191,8 +224,18 @@ const WorkoutAdder = ({ workoutId }) => {
                                             type="number"
                                             label={`Set ${index + 1} Weight`}
                                             value={set.weight}
-                                            onChange={(e) => handleRepWeightChange(exercise.id, index, 'weight', parseInt(e.target.value, 10))}
-                                            sx={{ mb: 1 }}
+                                            onChange={(e) => handleRepWeightChange(exercise.id, index, 'weight', e.target.value)}
+                                            onKeyDown={preventNegativeValues}
+                                            InputProps={{
+                                                inputProps: { 
+                                                    min: 0, 
+                                                    max: 999
+                                                },
+                                                style: { 
+                                                    borderColor: (set.weight < 0 || set.weight > 999) ? 'red' : 'default'
+                                                }
+                                            }}
+                                            sx={{ mb: 1, borderColor: (set.weight < 0 || set.weight > 999) ? 'red' : 'default' }}
                                         />
                                     </Grid>
                                     
@@ -202,7 +245,7 @@ const WorkoutAdder = ({ workoutId }) => {
                                             index={index}
                                             restDuration={5}
                                             onSaveTime={(time) => handleSaveSetTime(exercise.id, index, time)}
-                                            // Pass a unique key if the timers need to reset independently
+                                            // Pass a unique key
                                             key={`set-timer-${exercise.id}-${index}`} 
                                         />
                                     </Grid>

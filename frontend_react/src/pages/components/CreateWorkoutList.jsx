@@ -1,6 +1,5 @@
 import StartIcon from '@mui/icons-material/PlayArrow';
-import { Container, FormControl, Grid, InputLabel, MenuItem, Select, useMediaQuery } from '@mui/material';
-import AppBar from '@mui/material/AppBar';
+import { Alert, Container, FormControl, Grid, InputLabel, MenuItem, Select, Snackbar, useMediaQuery } from '@mui/material';
 import Button from '@mui/material/Button';
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
@@ -24,6 +23,8 @@ function CreateWorkoutList() {
     const [FilteredExercises, setFilteredExercises] = useState(null);
 
     const [WorkoutTitle,setWorkoutTitle] = useState('');
+    const [snackbarOpen, setSnackbarOpen] = useState(false);
+    const [clicked, setClicked] = useState(false);
 
     const handleDifficultyChange = (event) => {
         setSelectedDifficulty(event.target.value);
@@ -42,7 +43,23 @@ function CreateWorkoutList() {
         else{
             setWorkoutList(workoutList => [...workoutList, exercise]);
         }
+        setClicked(true);
+        setSnackbarOpen(true);
+        console.log("Added:", exercise);
+        setTimeout(() => {
+            setClicked(false);
+            setWorkoutList(currentList => 
+                currentList.map(item => ({ ...item, isNew: false }))
+            );
+        }, 300); // Reset isNew after 300ms
     }
+
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setSnackbarOpen(false);
+    };
 
     const removeWorkout = (exerciseToRemove) => {
         // Find the index of the first occurrence of the exercise
@@ -269,6 +286,11 @@ function CreateWorkoutList() {
                             </Stack>
                         </div>
                     )}
+                    <Snackbar open={snackbarOpen} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+                        <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+                            Exercise added to Current Exercises!
+                        </Alert>
+                    </Snackbar>
                 </Paper>
                 <Divider sx={{ padding: 3}}/>
                 <Typography variant="h3" align="center" sx={{ padding: 3}}>
@@ -281,12 +303,19 @@ function CreateWorkoutList() {
                         <div>
                             <Stack direction="column" spacing='16px'>
                                 {workoutList.map((exercisePicked, i) => (
-                                    <Paper key={i} elevation={3} sx={{padding: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderRadius: '15px', overflow: 'hidden', bgcolor: theme.palette.mode === 'dark' ? 'grey.800' : 'grey.100' }}>
+                                    <Paper key={i} elevation={3}
+                                        sx={{padding: 2, 
+                                            display: 'flex', 
+                                            alignItems: 'center', 
+                                            justifyContent: 'space-between', 
+                                            borderRadius: '15px', 
+                                            overflow: 'hidden', 
+                                            bgcolor: theme.palette.mode === 'dark' ? 'grey.800' : 'grey.100' }}>
                                         {console.log(exercisePicked)}
                                         <Typography variant="h6" component="div" style={{ marginBottom: '8px'}}>
                                             <b>{i+1}</b>  -  {exercisePicked.name}
                                         </Typography>
-
+                                        
                                         <Button onClick={() => removeWorkout(exercisePicked)} style={{ backgroundColor: 'red', color: 'white' }} variant="contained">Remove</Button>
                                     </Paper>                                
                                 ))}

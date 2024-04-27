@@ -22,5 +22,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', home),  # Define the URL pattern for the root URL
     path('api/', include('api.urls')),  # Include API URLs
-    path('accounts/', include('accounts.urls')),  # Include accounts URLs
+    path('accounts/', include('signup.urls')),
+    path('accounts/', include('login.urls')),
 ]

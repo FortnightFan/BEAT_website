@@ -1,19 +1,14 @@
-import { Box, Button, Container, Grid, Stack, Typography } from "@mui/material";
-import React from "react";
+import {
+  Alert, Box, Button, Container, FormControl, Grid, InputLabel,
+  MenuItem,
+  Select,
+  Snackbar, Stack, Typography, useMediaQuery
+} from "@mui/material";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import HeroBackgroundImage from "../assets/images/HeroImage.jpg";
 import PromoPhoto from "../assets/images/PromoPhoto.jpg";
 import WeightRack from "../assets/images/WeightRack.jpg";
-import { useState, useEffect } from "react";
-import {
-  Alert,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  Snackbar,
-  useMediaQuery,
-} from "@mui/material";
 
 const FilteredExercises = () => {
   const [selectedDifficulty, setSelectedDifficulty] = useState("");
@@ -200,10 +195,10 @@ const Home = () => {
           Your personal Body Exercise and Activity Tracker
         </Typography>
         <Stack direction="row" spacing={2} justifyContent="center">
-          <Button variant="contained" onClick={() => navigate("/signin")}>
+          <Button variant="contained" onClick={() => navigate("/signin")} sx={{ "&:hover": {backgroundColor: "maroon"}}}>
             Log in
           </Button>
-          <Button variant="contained" onClick={() => navigate("/signup")}>
+          <Button variant="contained" onClick={() => navigate("/signup")} sx={{ "&:hover": {backgroundColor: "maroon"}}}>
             Sign Up
           </Button>
         </Stack>

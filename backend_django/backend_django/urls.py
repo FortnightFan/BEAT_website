@@ -16,11 +16,11 @@ Including another URLconf
 
 from django.contrib import admin
 from django.urls import path, include
-from accounts.views import home  # Import the home view function from the accounts app
+# from accounts.views import home  # Import the home view function from the accounts app
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home),  # Define the URL pattern for the root URL
+    # path('', home),  # Define the URL pattern for the root URL
     path('api/', include('api.urls')),  # Include API URLs
     path('accounts/', include('signup.urls')),
     path('accounts/', include('login.urls')),

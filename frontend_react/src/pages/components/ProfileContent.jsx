@@ -25,18 +25,18 @@ const ProfileContent = () => {
         { label: 'Profile', path: '/profile' },
       ];
 
-    useEffect(() => {
-        if (!runOnce) {
-            fetch('/saved_exercises')
-            .then(response => response.json())
-            .then(data => { 
-              const workoutNames = data.map(item => item.Name);
-              setRunOnce(true);
-              setRoutines(workoutNames)
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    // useEffect(() => {
+    //     if (!runOnce) {
+    //         fetch('/saved_exercises')
+    //         .then(response => response.json())
+    //         .then(data => { 
+    //           const workoutNames = data.map(item => item.Name);
+    //           setRunOnce(true);
+    //           setRoutines(workoutNames)
+    //         });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, []);
 
   const navigate = useNavigate();
 

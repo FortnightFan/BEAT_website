@@ -26,7 +26,7 @@ const Profile = () => {
           'Authorization': `Bearer ${token}`
         }
       };
-      const response = await fetch("http://127.0.0.1:8000/api/workout_week", requestOptions);
+      const response = await fetch("http://127.0.0.1:8000/api/workout_week/", requestOptions);
       const data = await response.json();
       setdata(JSON.parse(data.message))
     };

@@ -21,22 +21,20 @@ class ExerciseListCreate(generics.ListCreateAPIView):
 @csrf_exempt
 def filter_exercises(request):
     filtered_queryset = Exercise.objects.all()
-
     data = json.loads(request.body)
     print(data)
+
     level = data['level']
     equipment = data['equipment']
     primaryMuscles = data['primaryMuscles']
-
+    
     if level != '':
         filtered_queryset = filtered_queryset.filter(level=level)
     if equipment != '':
         filtered_queryset = filtered_queryset.filter(equipment=equipment)
-    if primaryMuscles != '':
+    if primaryMuscles != ['']:
         primaryMuscles = f'["{primaryMuscles[0]}"]'
         filtered_queryset = filtered_queryset.filter(primaryMuscles=primaryMuscles)
-    print(filtered_queryset)
-
     return JsonResponse({'results': list(filtered_queryset.values())})
 
 # @login_required
@@ -88,6 +86,8 @@ from signup.models import UserProfile
 @csrf_exempt
 def add_workout(request):
     data = json.loads(request.body)
+    data['exercise_list'] = []
+
     auth_header = request.headers.get('Authorization', '')
     token = auth_header.split('Bearer ')[-1]
     user_info = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
@@ -124,4 +124,46 @@ def remove_workout(request):
 
     user_profile.saved_workouts = json.dumps(workout_list)
     user_profile.save()
-    return JsonResponse({'message': "itgood"})
+    return JsonResponse({'message': "successful"})
+
+@csrf_exempt
+def save_workout_data(request):
+    data = json.loads(request.body)
+    auth_header = request.headers.get('Authorization', '')
+    token = auth_header.split('Bearer ')[-1]
+    user_info = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+    user = get_user_model().objects.get(email=user_info['email'])
+    user_profile = get_object_or_404(UserProfile, user_id=user)
+
+    id = int(data['ID'])
+    saved_workouts = json.loads(user_profile.saved_workouts)
+    
+    for workouts in saved_workouts:
+        if workouts['ID'] == id:
+            workouts["exercise_list"] = data['exercises']
+    
+    user_profile.saved_workouts = json.dumps(saved_workouts)
+    for workouts in saved_workouts:
+        print(workouts)
+    user_profile.save()
+    
+    return JsonResponse({'message': "successful"})
+
+@csrf_exempt
+def grab_workout_data(request):
+    data = json.loads(request.body)
+    id = int(data['ID'])
+    auth_header = request.headers.get('Authorization', '')
+    token = auth_header.split('Bearer ')[-1]
+    user_info = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+    user = get_user_model().objects.get(email=user_info['email'])
+    user_profile = get_object_or_404(UserProfile, user_id=user)
+
+    saved_workouts = json.loads(user_profile.saved_workouts)
+
+    for workouts in saved_workouts:
+        if workouts['ID'] == id:
+            workout_list = workouts['exercise_list']
+            break
+
+    return JsonResponse(workout_list, safe=False)

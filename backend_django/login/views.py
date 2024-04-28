@@ -7,12 +7,29 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+from datetime import datetime, timedelta
+import jwt
+SECRET_KEY = 'django-insecure-jf-!a4zinxk^o0qixeh*=ei727pczbjc+35tz%8)3360dxeslu'
+
+def generate_token(user):
+    #This info is what is sent to the user when logged in.
+    payload = {
+        'first_name': user.first_name,
+        'last_name' : user.last_name,
+        'email' : user.email,
+        'exp': datetime.utcnow() + timedelta(days=1)  # Token expiration time (1 day from now)
+    }
+
+    # Generate JWT token
+    token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+    return token
+
 @csrf_exempt
 @require_http_methods(["POST"])
 def login_user(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        user = authenticate(request, username=data['username'], password=data['password'])
+        user = authenticate(request, username=data['email'], password=data['password'])
         if user is not None:
             if user.is_active:
                 login(request, user)
@@ -47,19 +64,3 @@ def debug_login(request):
 
 
 
-from datetime import datetime, timedelta
-import jwt
-SECRET_KEY = 'django-insecure-jf-!a4zinxk^o0qixeh*=ei727pczbjc+35tz%8)3360dxeslu'
-
-def generate_token(user):
-    #This info is what is sent to the user when logged in.
-    payload = {
-        'first_name': user.first_name,
-        'last name' : user.last_name,
-        'email' : user.email,
-        'exp': datetime.utcnow() + timedelta(days=1)  # Token expiration time (1 day from now)
-    }
-
-    # Generate JWT token
-    token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-    return token

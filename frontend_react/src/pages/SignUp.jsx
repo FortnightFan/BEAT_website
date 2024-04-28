@@ -11,6 +11,7 @@ import Link from '@mui/material/Link';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
+import SubNav from './components/Subnav';
 
 function Copyright(props) {
   return (
@@ -59,9 +60,14 @@ export default function SignUp() {
     }
   };
   
-  
+  const crumbs = [
+    { label: 'Home', path: '/' },
+    { label: 'Register', path: '/signup' },
+  ]; 
 
   return (
+    <>
+      <SubNav title={'Register'} crumbs={crumbs}/>
       <Container component="main" sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
         <CssBaseline />
         <Box
@@ -149,5 +155,6 @@ export default function SignUp() {
         </Box>
         <Copyright sx={{ mt: 5 }} />
       </Container>
+      </>
   );
 }

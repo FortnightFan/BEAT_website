@@ -1,4 +1,5 @@
 import { AppBar, Box, Button, Container, Grid, List, Typography } from '@mui/material';
+import { jwtDecode } from "jwt-decode";
 import React, { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import AddButton from './AddButton';
@@ -7,7 +8,6 @@ import HoverListItem from './HoverListItem';
 import RenameButton from './RenameButton';
 import SubNav from './Subnav';
 
-const name = "Kevin"
 const workoutTips = [
     "TIP! Stay hydrated by drinking water before, during, and after your workout.",
     "Incorporate strength training into your workout routine to build muscle and boost metabolism.",
@@ -17,8 +17,19 @@ const workoutTips = [
   ];
 
 const ProfileContent = () => {
+  const [userInfo, setUserInfo] = useState({username: ""});
   const [routines, setRoutines] = React.useState([]);
-    const [runOnce, setRunOnce] = useState(false);
+  const [runOnce, setRunOnce] = useState(false);
+
+  //Retrieve token from local storage, decode and recieve user info.
+    useEffect(() => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        const decodedToken = jwtDecode(token);
+        setUserInfo(decodedToken);
+      }
+    }, []); 
+
 
     const crumbs = [
         { label: 'Home', path: '/' },
@@ -96,7 +107,7 @@ const ProfileContent = () => {
 
     return (
         <>
-        <SubNav title={`Welcome back, ${name}!`} crumbs={crumbs}/>
+        <SubNav title={`Welcome back, ${userInfo.first_name}!`} crumbs={crumbs}/>
         <Container maxWidth="xl" sx={{ mt: 4, mb: 4 }}>
         {/* Main Content */}
         <Grid container spacing={2}>

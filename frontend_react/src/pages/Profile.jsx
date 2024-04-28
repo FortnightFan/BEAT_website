@@ -1,7 +1,7 @@
 import { BarChart } from "@mui/x-charts/BarChart";
+import { jwtDecode } from "jwt-decode";
 import React, { useEffect, useState } from "react";
 import ProfileContent from "./components/ProfileContent";
-import { jwtDecode } from "jwt-decode";
 
 const Profile = () => {
   const [userInfo, setUserInfo] = useState({username: ""});
@@ -44,8 +44,6 @@ const Profile = () => {
 
   return (
     <div>
-        {console.log(userInfo)}
-        {userInfo.first_name}
       <ProfileContent />
       <center>
         <b>Weekly Workouts</b>

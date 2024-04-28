@@ -71,7 +71,6 @@ def get_workouts_week(request):
     token = auth_header.split('Bearer ')[-1]
     user_info = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
     user = get_user_model().objects.get(email=user_info['email'])
-    print(user.userprofile.workout_week)
 
     return JsonResponse({'message': user.userprofile.workout_week})
 
@@ -81,6 +80,48 @@ def get_saved_workouts(request):
     token = auth_header.split('Bearer ')[-1]
     user_info = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
     user = get_user_model().objects.get(email=user_info['email'])
-    print(user.userprofile.saved_workouts)
 
     return JsonResponse({'message': user.userprofile.saved_workouts})
+
+from django.shortcuts import get_object_or_404
+from signup.models import UserProfile
+@csrf_exempt
+def add_workout(request):
+    data = json.loads(request.body)
+    auth_header = request.headers.get('Authorization', '')
+    token = auth_header.split('Bearer ')[-1]
+    user_info = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+    user = get_user_model().objects.get(email=user_info['email'])
+    user_profile = get_object_or_404(UserProfile, user_id=user)
+
+    workout_list = json.loads(user_profile.saved_workouts)
+    workout_list.append(data)
+    user_profile.saved_workouts = json.dumps(workout_list)
+    user_profile.save()
+    return JsonResponse({'message': user_profile.saved_workouts})
+
+@csrf_exempt
+def remove_workout(request):
+    data = json.loads(request.body)
+    auth_header = request.headers.get('Authorization', '')
+    token = auth_header.split('Bearer ')[-1]
+    user_info = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+    user = get_user_model().objects.get(email=user_info['email'])
+    user_profile = get_object_or_404(UserProfile, user_id=user)
+
+    workout_list = json.loads(user_profile.saved_workouts)
+    id = data["ID"]
+    for workout in workout_list:
+        if workout['ID'] == id:
+            workout_list.remove(workout)
+            break
+    
+    #Correct id numbers
+    id = 0
+    for workout in workout_list:
+        workout["ID"] = id
+        id += 1
+
+    user_profile.saved_workouts = json.dumps(workout_list)
+    user_profile.save()
+    return JsonResponse({'message': "itgood"})

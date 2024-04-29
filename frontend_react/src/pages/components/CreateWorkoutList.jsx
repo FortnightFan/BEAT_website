@@ -154,8 +154,32 @@ function CreateWorkoutList() {
         }
     }, [runOnce]);
 
+    useEffect(() => {
+        const url = window.location.pathname;
+        const match = url.match(/\d+/);
+        const number = match ? parseInt(match[0]) : null;
+        const token = localStorage.getItem("token");
+
+        if (!runOnce) {
+            const fetchData = async () => {
+                const requestOptions = {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    method: 'POST',
+                    body: JSON.stringify({
+                        ID: number,
+                    }),
+                };
+                const response = await fetch("http://127.0.0.1:8000/api/grab_workout_name/", requestOptions);
+                const data = await response.json();
+                setWorkoutTitle(data.Name)
+            };
+            fetchData();
+        }
+    }, []);
+
     // const exercises = data.Exercises;
-    // setWorkoutTitle(data.Name)
     // for (const exercise of exercises) {
     //     console.log(exercise.name); // Example: Log the name of each exercise
     //     addWorkout(exercise); // Assuming addWorkout is a function defined elsewhere

@@ -158,7 +158,6 @@ def grab_workout_data(request):
     user_info = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
     user = get_user_model().objects.get(email=user_info['email'])
     user_profile = get_object_or_404(UserProfile, user_id=user)
-
     saved_workouts = json.loads(user_profile.saved_workouts)
 
     for workouts in saved_workouts:
@@ -167,3 +166,54 @@ def grab_workout_data(request):
             break
 
     return JsonResponse(workout_list, safe=False)
+
+@csrf_exempt
+def grab_workout_name(request):
+    data = json.loads(request.body)
+    id = int(data['ID'])
+    auth_header = request.headers.get('Authorization', '')
+    token = auth_header.split('Bearer ')[-1]
+    user_info = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+    user = get_user_model().objects.get(email=user_info['email'])
+    user_profile = get_object_or_404(UserProfile, user_id=user)
+    workout_name = ''
+    saved_workouts = json.loads(user_profile.saved_workouts)
+
+    for workouts in saved_workouts:
+        if workouts['ID'] == id:
+            workout_name = workouts['Name']
+            break
+
+    return JsonResponse({ 'Name' : workout_name})
+
+import ast
+@csrf_exempt
+def save_previous_workout(request):
+    data = json.loads(request.body)
+    auth_header = request.headers.get('Authorization', '')
+    token = auth_header.split('Bearer ')[-1]
+    user_info = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+    user = get_user_model().objects.get(email=user_info['email'])
+    user_profile = get_object_or_404(UserProfile, user_id=user)
+    print(ast.literal_eval(user_profile.previous_workouts))
+    user_profile.previous_workouts =  ast.literal_eval(user_profile.previous_workouts)
+    user_profile.previous_workouts.append(data)
+
+    user_profile.workout_week = json.loads(user_profile.workout_week)
+    user_profile.workout_week[6] += 1
+    user_profile.save()
+    return JsonResponse({'message': "successful"})
+
+@csrf_exempt
+def grab_previous_workouts(request):
+    auth_header = request.headers.get('Authorization', '')
+    token = auth_header.split('Bearer ')[-1]
+    user_info = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+    user = get_user_model().objects.get(email=user_info['email'])
+    user_profile = get_object_or_404(UserProfile, user_id=user)
+    user_profile.previous_workouts =  ast.literal_eval(user_profile.previous_workouts)
+
+    # user_profile.previous_workouts = json.loads(user_profile.previous_workouts)
+    # return JsonResponse(user_profile.previous_workouts)
+    return JsonResponse({'message': str(user_profile.previous_workouts)})
+

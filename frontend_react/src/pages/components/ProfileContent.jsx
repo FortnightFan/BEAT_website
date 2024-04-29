@@ -166,12 +166,12 @@ const ProfileContent = () => {
               <div>
                 <center>
                   <NavLink to='/profile/prevworkouts'>
-                    <Button variant="contained" sx={{ width: '200px', mb: 1 }}>Previous Workouts</Button>
+                    <Button variant="contained" sx={{ width: '200px', mb: 1, backgroundColor: 'maroon', color: 'white' }}>Previous Workouts</Button>
                   </NavLink>
 
                   <Box height={25} />
                   <NavLink to='/profile/bodydata'>
-                    <Button variant="contained" sx={{ width: '200px', mb: 1 }}>Body</Button>
+                    <Button variant="contained" sx={{ width: '200px', mb: 1, backgroundColor: 'maroon', color: 'white' }}>Body</Button>
                   </NavLink>
 
                 </center>

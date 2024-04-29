@@ -34,6 +34,7 @@ def login_user(request):
             if user.is_active:
                 login(request, user)
                 token = generate_token(user) 
+                print(user.userprofile.workout_week)
                 return JsonResponse({'token': token})
             else:
                 logger.debug("Account is inactive.")

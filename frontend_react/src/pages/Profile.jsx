@@ -4,50 +4,44 @@ import React, { useEffect, useState } from "react";
 import ProfileContent from "./components/ProfileContent";
 
 const Profile = () => {
-  const [userInfo, setUserInfo] = useState({username: ""});
+  const [userInfo, setUserInfo] = useState({ username: "" });
 
-//Retrieve token from local storage, decode and recieve user info.
+  //Retrieve token from local storage, decode and recieve user info.
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
       const decodedToken = jwtDecode(token);
       setUserInfo(decodedToken);
     }
-  }, []); 
+  }, []);
+  const [data, setdata] = useState([0,0,0,0,0,0,0]);
+  
+  //Grab graph data according to user
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = localStorage.getItem("token");
+      const requestOptions = {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      };
+      const response = await fetch("http://127.0.0.1:8000/api/workout_week", requestOptions);
+      const data = await response.json();
+      setdata(JSON.parse(data.message))
+    };
+    fetchData();
+  }, []);
 
-  const [data, setdata] = useState({
-    w1: 0,
-    w2: 0,
-    w3: 0,
-    w4: 0,
-    w5: 0,
-    w6: 0,
-    w7: 0,
-  });
 
-  //   useEffect(() => {
-  //     fetch("/weekly").then((res) =>
-  //       res.json().then((data) => {
-  //         setdata({
-  //           w1: data.w1,
-  //           w2: data.w2,
-  //           w3: data.w3,
-  //           w4: data.w4,
-  //           w5: data.w5,
-  //           w6: data.w6,
-  //           w7: data.w7,
-  //         });
-  //       })
-  //     );
-  //   }, []);
-  //   const dataList = Object.values(data);
 
+  
   return (
     <div>
       <ProfileContent />
       <center>
         <b>Weekly Workouts</b>
-        {/* <BarChart
+        <BarChart
           xAxis={[
             {
               id: "barCategories",
@@ -65,12 +59,12 @@ const Profile = () => {
           ]}
           series={[
             {
-              data: data,
+              data: data, 
             },
           ]}
           width={500}
           height={300}
-        /> */}
+        />
       </center>
     </div>
   );

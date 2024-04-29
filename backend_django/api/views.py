@@ -11,6 +11,9 @@ from django.contrib.auth.decorators import login_required
 import sqlite3
 from django.db.models import Q
 from django.views.decorators.http import require_http_methods
+from django.contrib.auth import get_user_model
+SECRET_KEY = 'django-insecure-jf-!a4zinxk^o0qixeh*=ei727pczbjc+35tz%8)3360dxeslu'
+
 class ExerciseListCreate(generics.ListCreateAPIView):
     queryset = Exercise.objects.all()
     serializer_class = ExerciseSerializer
@@ -61,3 +64,23 @@ def login_endpoint_test(request):
     else:
         # Respond with a method not allowed error for non-GET requests
         return JsonResponse({'error': 'Method not allowed'}, status=405)
+    
+@csrf_exempt
+def get_workouts_week(request):
+    auth_header = request.headers.get('Authorization', '')
+    token = auth_header.split('Bearer ')[-1]
+    user_info = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+    user = get_user_model().objects.get(email=user_info['email'])
+    print(user.userprofile.workout_week)
+
+    return JsonResponse({'message': user.userprofile.workout_week})
+
+@csrf_exempt
+def get_saved_workouts(request):
+    auth_header = request.headers.get('Authorization', '')
+    token = auth_header.split('Bearer ')[-1]
+    user_info = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+    user = get_user_model().objects.get(email=user_info['email'])
+    print(user.userprofile.saved_workouts)
+
+    return JsonResponse({'message': user.userprofile.saved_workouts})

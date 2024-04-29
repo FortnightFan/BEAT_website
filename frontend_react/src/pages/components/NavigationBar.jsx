@@ -73,14 +73,16 @@ const NavigationBar = () => {
           </IconButton>
         )}
           {/* Spacer to balance the items */}
-          <Box sx={{ flex: 1 }} />
+          <Box sx={{ flexGrow: 1 }} />
 
           {/* Centered logo and title */}
-          <Box sx={{ display: 'flex', position: 'absolute', left: '50%', transform: 'translateX(-50%)', alignItems: 'center' }}>
-            <Box component="img" src={Logo} alt="B.E.A.T Logo" sx={{ height: 50 }} />
-            <Typography variant="h6" sx={{ alignSelf: 'center', ml: 1 }}>
-              B.E.A.T
-            </Typography>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+            <NavLink to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit', marginLeft: '120px' }}>
+              <Box component="img" src={Logo} alt="B.E.A.T Logo" sx={{ height: 50 }} />
+              <Typography variant="h6" sx={{ marginLeft: '5px' }}>
+                B.E.A.T
+              </Typography>
+            </NavLink>
           </Box>
 
           {/* Spacer to balance the items */}
@@ -91,8 +93,8 @@ const NavigationBar = () => {
               <>
                 {!isSmallScreen && (
                   <>
-                    <Button color="inherit" component={NavLink} to="/signin">Login</Button>
                     <Button color="inherit" component={NavLink} to="/signup">Register</Button>
+                    <Button color="inherit" component={NavLink} to="/signin">Login</Button>
                   </>
                 )}
               </>

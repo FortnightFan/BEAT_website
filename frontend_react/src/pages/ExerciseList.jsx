@@ -92,7 +92,8 @@ const WorkoutAdder = ({ workoutId }) => {
     };
 
     const handleRepWeightChange = (exerciseId, setIndex, type, value) => {
-        const filteredValue = value.replace(/[^0-9]/g, '');
+        const stringValue = String(value);
+        const filteredValue = stringValue.replace(/[^0-9]/g, '');
         // Allow empty values instead of NaNN
         if (filteredValue === '') {
             setExerciseDetails(prevDetails => {

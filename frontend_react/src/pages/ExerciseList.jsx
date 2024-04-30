@@ -38,6 +38,7 @@ const WorkoutAdder = ({ workoutId }) => {
 
             const response = await fetch("http://127.0.0.1:8000/api/grab_workout_data/", requestOptions);
             const data = await response.json();
+            console.log("Fetched workout data:", data); 
             setWorkoutList(data)
             const initialSetRepsWeight = new Array(data.length).fill(0);
             setSets(initialSetRepsWeight);

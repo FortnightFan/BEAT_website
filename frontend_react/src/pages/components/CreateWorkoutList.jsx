@@ -27,9 +27,30 @@ function CreateWorkoutList() {
     const navigate = useNavigate();
 
     const handleSaveWorkoutList = async () => {
-        console.log('Workout saved');
-        setUnsavedChanges(false);
-        setOpenConfirmDialog(false);
+        console.log('Attempting to save workout...');
+        if (workoutList.length > 0) {
+            const token = localStorage.getItem("token");
+            const requestOptions = {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    "ID": workoutID,
+                    "exercises": workoutList,
+                }),
+            };
+    
+            try {
+                const response = await fetch("http://127.0.0.1:8000/api/save_workout_data/", requestOptions);
+                const data = await response.json();
+                console.log('Workout saved', data);
+                setUnsavedChanges(false);
+                setOpenConfirmDialog(false);
+            } catch (error) {
+                console.error('Failed to save workout', error);
+            }
+        }
     };
 
     const handleStartWorkout = () => {
@@ -47,10 +68,9 @@ function CreateWorkoutList() {
         setOpenConfirmDialog(false);
     };
 
-    const handleConfirmSave = () => {
-        handleSaveWorkoutList();
+    const handleConfirmSave = async () => {
+        await handleSaveWorkoutList();
         navigate(`/workout/${workoutID}/start`);
-
     };
 
     const handleDifficultyChange = (event) => {

@@ -1,13 +1,12 @@
 import StartIcon from '@mui/icons-material/PlayArrow';
-import { Alert, Container, FormControl, Grid, InputLabel, MenuItem, Select, Snackbar, useMediaQuery } from '@mui/material';
-import Button from '@mui/material/Button';
+import { Alert, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, Snackbar, useMediaQuery } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 import React, { useEffect, useState } from 'react';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import SubNav from './Subnav';
 
 function CreateWorkoutList() {
@@ -17,14 +16,42 @@ function CreateWorkoutList() {
     const [selectedDifficulty, setSelectedDifficulty] = useState('');
     const [selectedMuscle, setSelectedMuscle] = useState('');
     const [selectedEquipment, setSelectedEquipment] = useState('');
-
     const [workoutList, setWorkoutList] = useState([]);
-
     const [FilteredExercises, setFilteredExercises] = useState(null);
-
     const [WorkoutTitle, setWorkoutTitle] = useState('');
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [clicked, setClicked] = useState(false);
+    const [isSaved, setIsSaved] = useState(true);
+    const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+    const [unsavedChanges, setUnsavedChanges] = useState(false);
+    const navigate = useNavigate();
+
+    const handleSaveWorkoutList = async () => {
+        console.log('Workout saved');
+        setUnsavedChanges(false);
+        setOpenConfirmDialog(false);
+    };
+
+    const handleStartWorkout = () => {
+        if (unsavedChanges) {
+            console.log("Opening Confirm Dialog");
+            setOpenConfirmDialog(true);
+        } else {
+            setUnsavedChanges(false)
+            console.log('Starting workout');
+            navigate(`/workout/${workoutID}/start`);
+        }
+    };
+
+    const handleCloseDialog = () => {
+        setOpenConfirmDialog(false);
+    };
+
+    const handleConfirmSave = () => {
+        handleSaveWorkoutList();
+        navigate(`/workout/${workoutID}/start`);
+
+    };
 
     const handleDifficultyChange = (event) => {
         setSelectedDifficulty(event.target.value);
@@ -39,19 +66,21 @@ function CreateWorkoutList() {
     const addWorkout = (exercise) => {
         if (exercise && exercise.exercise) {
             setWorkoutList(workoutList => [...workoutList, exercise.exercise]);
+            setUnsavedChanges(false);
         }
         else {
             setWorkoutList(workoutList => [...workoutList, exercise]);
         }
         setClicked(true);
         setSnackbarOpen(true);
-        console.log("Added:", exercise);
+        setUnsavedChanges(true);
         setTimeout(() => {
             setClicked(false);
             setWorkoutList(currentList =>
                 currentList.map(item => ({ ...item, isNew: false }))
             );
         }, 300); // Reset isNew after 300ms
+
     }
 
     const handleCloseSnackbar = (event, reason) => {
@@ -73,6 +102,7 @@ function CreateWorkoutList() {
                 return newList; // Update the state with the modified array
             });
         }
+        setUnsavedChanges(true);
     };
     const saveWorkoutData = async () => {
         const fetchData = async () => {
@@ -97,6 +127,7 @@ function CreateWorkoutList() {
         if (workoutList.length > 0) {
             fetchData();
         }
+        setUnsavedChanges(false);
     };
 
     const sendData = async () => {
@@ -117,8 +148,9 @@ function CreateWorkoutList() {
                 instructions: eval(item.instructions),
                 primaryMuscles: eval(item.primaryMuscles)
             }));
-            console.log(resultList);
             setFilteredExercises(resultList);
+            setUnsavedChanges(false);
+            setOpenConfirmDialog(false);
         }
 
     };
@@ -145,12 +177,13 @@ function CreateWorkoutList() {
                 const response = await fetch("http://127.0.0.1:8000/api/grab_workout_data/", requestOptions);
                 const data = await response.json();
                 for (const exercise of data) {
-                    console.log(exercise.name); // Example: Log the name of each exercise
-                    addWorkout(exercise); // Assuming addWorkout is a function defined elsewhere
+                    //console.log(exercise.name);
+                    addWorkout(exercise);
                 }
             };
             fetchData();
             setRunOnce(true);
+            setUnsavedChanges(false);
         }
     }, [runOnce]);
 
@@ -174,17 +207,11 @@ function CreateWorkoutList() {
                 const response = await fetch("http://127.0.0.1:8000/api/grab_workout_name/", requestOptions);
                 const data = await response.json();
                 setWorkoutTitle(data.Name)
+                setUnsavedChanges(false);
             };
             fetchData();
         }
     }, []);
-
-    // const exercises = data.Exercises;
-    // for (const exercise of exercises) {
-    //     console.log(exercise.name); // Example: Log the name of each exercise
-    //     addWorkout(exercise); // Assuming addWorkout is a function defined elsewhere
-    // }
-    // setRunOnce(true);
 
     const ButtonStyles = {
         backgroundColor: "green", // A green shade
@@ -215,6 +242,7 @@ function CreateWorkoutList() {
                     <div style={{ display: 'flexGrow', justifyContent: 'center', alignItems: 'center' }}>
                         <Stack direction="column">
                             <Stack direction="row" spacing={2}>
+
                                 <FormControl style={{ width: '200px', marginTop: '10px', paddingTop: '10px' }}>
                                     {/* Option 1 */}
                                     <InputLabel id="dropdown-label">Difficulty</InputLabel>
@@ -262,7 +290,6 @@ function CreateWorkoutList() {
                                         <MenuItem value="shoulders">Shoulders</MenuItem>
                                         <MenuItem value="traps">Traps</MenuItem>
                                         <MenuItem value="triceps">Triceps</MenuItem>
-
                                     </Select>
                                 </FormControl>
 
@@ -274,7 +301,6 @@ function CreateWorkoutList() {
                                         id="dropdown"
                                         value={selectedEquipment}
                                         onChange={handleEquipmentChange}
-
                                     >
                                         <MenuItem value="">
                                             <em>None</em>
@@ -291,7 +317,6 @@ function CreateWorkoutList() {
                                         <MenuItem value="machine">Machine</MenuItem>
                                         <MenuItem value="medicine ball">Medicine Ball</MenuItem>
                                         <MenuItem value="other">Other</MenuItem>
-
                                     </Select>
                                 </FormControl>
 
@@ -335,6 +360,18 @@ function CreateWorkoutList() {
                                         Exercise added to Current Exercises!
                                     </Alert>
                                 </Snackbar>
+                                <Dialog open={openConfirmDialog} onClose={handleCloseDialog}>
+                                    <DialogTitle>{"Unsaved Changes"}</DialogTitle>
+                                    <DialogContent>
+                                        <DialogContentText>
+                                            You have unsaved changes. Do you want to save them before starting the workout?
+                                        </DialogContentText>
+                                    </DialogContent>
+                                    <DialogActions>
+                                        <Button onClick={handleCloseDialog}>No</Button>
+                                        <Button onClick={handleConfirmSave}>Yes, Save</Button>
+                                    </DialogActions>
+                                </Dialog>
                             </Paper>
                             <Divider sx={{ padding: 3 }} />
                             <Typography variant="h3" align="center" sx={{ padding: 3 }}>
@@ -357,7 +394,6 @@ function CreateWorkoutList() {
                                                         overflow: 'hidden',
                                                         bgcolor: theme.palette.mode === 'dark' ? 'grey.800' : 'grey.100'
                                                     }}>
-                                                    {console.log(exercisePicked)}
                                                     <Typography variant="h6" component="div" style={{ marginBottom: '8px' }}>
                                                         <b>{i + 1}</b>  -  {exercisePicked.name}
                                                     </Typography>
@@ -376,16 +412,14 @@ function CreateWorkoutList() {
                             </Paper>
                             <Grid container justifyContent="center" style={{ marginTop: 20 }}>
                                 <Grid item>
-                                    <NavLink to={`/workout/${workoutID}/start`}>
                                         <Button
                                             variant="contained"
                                             startIcon={<StartIcon />}
                                             sx={ButtonStyles}
-                                            onClick={sendData}
+                                            onClick={handleStartWorkout}
                                         >
                                             Start
                                         </Button>
-                                    </NavLink>
                                 </Grid>
                             </Grid>
                         </Stack>

@@ -1,19 +1,41 @@
-// src/context/AuthContext.js
-import React, { createContext, useContext, useState } from 'react';
+import { jwtDecode } from "jwt-decode";
+import React, { createContext, useContext, useEffect, useState } from 'react';
 
-const AuthContext = createContext(null);
-
-export const useAuth = () => useContext(AuthContext);
+const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [isLoggedIn, setLoggedIn] = useState(false);
+    const [authData, setAuthData] = useState(null);
+    const [user, setUser] = useState(null);
 
-  const login = () => setLoggedIn(true);
-  const logout = () => setLoggedIn(false);
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            const decoded = jwtDecode(token);
+            if (decoded.exp * 1000 > Date.now()) {
+                setAuthData(decoded);
+            } else {
+                localStorage.removeItem('token');  // Token expired
+            }
+        }
+    }, []);
 
-  return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
-      {children}
-    </AuthContext.Provider>
-  );
+    const login = (token) => {
+        localStorage.setItem('token', token);
+        const decoded = jwtDecode(token);
+        setAuthData(decoded);
+        setUser(decoded);
+    };
+
+    const logout = () => {
+        localStorage.removeItem('token');
+        setAuthData(null);
+        setUser(null);
+    };
+
+    return (
+        <AuthContext.Provider value={{ user, authData, login, logout, isAuthenticated: !!user }}>
+            {children}
+        </AuthContext.Provider>
+    );
 };
+export const useAuth = () => useContext(AuthContext);

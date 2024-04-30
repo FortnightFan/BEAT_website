@@ -1,65 +1,86 @@
-import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import Avatar from '@mui/material/Avatar';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import Container from '@mui/material/Container';
-import CssBaseline from '@mui/material/CssBaseline';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import {
+  Alert,
+  Avatar,
+  Box,
+  Button,
+  Container,
+  CssBaseline,
+  Grid,
+  Link,
+  Snackbar,
+  TextField,
+  Typography,
+} from "@mui/material";
+import React, { useState } from "react";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useAuth } from '../context/AuthContext';
+import SubNav from './components/Subnav';
 
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+function SignIn() {
+    const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [responseMessage, setResponseMessage] = useState('');
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState('');
+    const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const { login } = useAuth();
 
-
-export default function SignIn() {
-  const navigate = useNavigate();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [responseMessage, setResponseMessage] = useState('');
-
-  const sendData = async () => {
-    const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: email, password: password }), // Send both fields in the request body
-    });
-
-    const responseData = await response.json();
-    setResponseMessage(responseData.message);
-    if (responseData.message === "Login successful!")
-    {
-      console.log("Login successful " + responseData.user.name + "!")
-      navigate('/profile');
-    }
-};
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const handleCloseSnackbar = (event, reason) => {
+      if (reason === 'clickaway') {
+          return;
+      }
+      setOpenSnackbar(false);
   };
 
-  return (
+    const sendData = async (event) => {
+      event.preventDefault();
+      try {
+        const response = await fetch('http://127.0.0.1:8000/accounts/login/', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email: email, password: password }),
+        });
+
+        const responseData = await response.json();
+
+        if (response.ok) {
+            setResponseMessage("Login successful! Redirecting to your profile...");
+            console.log(responseMessage);
+            login(responseData.token);
+            navigate('/profile');
+
+        } else {
+            throw new Error(responseData.message || 'Login failed due to unexpected error.');
+        }
+    } catch (error) {
+        console.error('Error during login:', error);
+        setErrorMessage(error.message);
+        setError(true);
+        setSnackbarMessage(error.message);
+        setOpenSnackbar(true);
+    }
+  };
+
+    const handleSubmit = (event) => {
+      event.preventDefault();
+      const data = new FormData(event.currentTarget);
+      setError(false);
+      sendData(event);
+    };
+
+    const crumbs = [
+      { label: 'Home', path: '/' },
+      { label: 'Login', path: '/signin' },
+    ];
+
+    return (
+      <>
+      <SubNav title={'Login'} crumbs={crumbs}/>
       <Container component="main" sx={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
         <CssBaseline />
         <Box
@@ -67,11 +88,18 @@ export default function SignIn() {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
-            flexGrow: 1, // This makes the Box grow to fill available space
-            justifyContent: 'center' // This centers the content vertically
+            flexGrow: 1,
+            justifyContent: 'center',
+            animation: error ? 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both' : 'none'
           }}
+          style={{ '@keyframes shake': {
+                      '10%, 90%': { transform: 'translate3d(-1px, 0, 0)' },
+                      '20%, 80%': { transform: 'translate3d(2px, 0, 0)' },
+                      '30%, 50%, 70%': { transform: 'translate3d(-4px, 0, 0)' },
+                      '40%, 60%': { transform: 'translate3d(4px, 0, 0)' }
+                  }}}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: 'maroon' }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
@@ -88,6 +116,8 @@ export default function SignIn() {
               autoComplete="email"
               autoFocus
               onChange={(e) => setEmail(e.target.value)}
+              error={error}
+              sx={{ '& .MuiInputBase-root': { borderColor: error ? 'red' : '' } }}
             />
             <TextField
               margin="normal"
@@ -99,36 +129,43 @@ export default function SignIn() {
               id="password"
               autoComplete="current-password"
               onChange={(e) => setPassword(e.target.value)}
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              error={error}
+              helperText={error ? errorMessage : ''}
+              sx={{ '& .MuiInputBase-root': { borderColor: error ? 'red' : '' } }}
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick={sendData}
+              sx={{ mt: 3,
+                    mb: 2,
+                    "&:hover": {backgroundColor: "maroon",}
+                  ,}}
             >
               Sign In
             </Button>
+
             <p>{responseMessage}</p>
             <Grid container>
               <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
               </Grid>
               <Grid item>
-                <Link to="/signup" variant="body2">
+                <Link component={RouterLink} to="/signup" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
+        <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseSnackbar}>
+                  <Alert onClose={handleCloseSnackbar} severity="error" sx={{ width: '100%' }}>
+                      {snackbarMessage}
+                  </Alert>
+              </Snackbar>
       </Container>
-  );
+      </>
+    );
+    
 }
+
+export default SignIn;

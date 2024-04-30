@@ -11,17 +11,27 @@ const PrevWorkouts = () => {
     const [previousWorkouts, setPreviousWorkouts] = useState([]);
 
     const [runOnce, setRunOnce] = useState(false);
-
     useEffect(() => {
+        
         if (!runOnce) {
-            fetch('/api/prev_workouts')
-            .then(response => response.json())
-            .then(data => {    
-                setPreviousWorkouts(data);
-                setRunOnce(true);
-            });
+            const fetchData = async () => {
+                const token = localStorage.getItem("token");
+                const requestOptions = {
+                    method: 'GET',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                };
+                const response = await fetch("http://127.0.0.1:8000/api/grab_previous_workouts/", requestOptions);
+                const data = await response.json();
+                const prev_workouts = JSON.parse(data.message.replace(/'/g, '"'));
+                console.log(prev_workouts)
+                setPreviousWorkouts(prev_workouts)
+            };
+            fetchData();
+            setRunOnce(true);
         }
-    }, [runOnce]); 
+    }, [runOnce]);
 
     const crumbs = [
         { label: 'Home', path: '/' },

@@ -13,7 +13,7 @@ const NavigationBar = () => {
   const [open, setOpen] = useState(false);
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
-  const { user, logout, isAuthenticated } = useAuth();
+  const { logout, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const toggleDrawer = (newOpen) => (event) => {
@@ -48,7 +48,6 @@ const NavigationBar = () => {
         <ListItem button key="Body" component={NavLink} to="/profile/bodydata">
           <ListItemText primary="Body" />
         </ListItem>
-        {/* Add more ListItem components for other navigation paths */}
       </List>
       <Box sx={{ flexGrow: 1 }} />
       <Box sx={{ px: 2, py: 1 }}>
@@ -72,10 +71,8 @@ const NavigationBar = () => {
             <MenuIcon />
           </IconButton>
         )}
-          {/* Spacer to balance the items */}
           <Box sx={{ flexGrow: 1 }} />
 
-          {/* Centered logo and title */}
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1 }}>
             <NavLink to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'inherit', marginLeft: '120px' }}>
               <Box component="img" src={Logo} alt="B.E.A.T Logo" sx={{ height: 50 }} />
@@ -85,7 +82,6 @@ const NavigationBar = () => {
             </NavLink>
           </Box>
 
-          {/* Spacer to balance the items */}
           <Box sx={{ flexGrow: 1, display: 'flex', justifyContent: 'flex-end' }}>
             {isAuthenticated ? (
               <Button color="inherit" onClick={handleLogout}>Logout</Button>

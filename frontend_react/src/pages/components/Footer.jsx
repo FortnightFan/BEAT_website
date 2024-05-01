@@ -7,11 +7,11 @@ const Footer = () => {
     <Box 
       component="footer" 
       sx={{
-        py: 3, // Padding top & bottom
-        px: 2, // Padding left & right
-        mt: 'auto', // Margin top auto for pushing footer to the bottom
-        backgroundColor: 'maroon', // Example background color
-        color: 'white', // Text color
+        py: 3,
+        px: 2,
+        mt: 'auto',
+        backgroundColor: 'maroon',
+        color: 'white',
       }}
     >
       <Container maxWidth="lg">

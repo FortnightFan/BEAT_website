@@ -1,9 +1,8 @@
-// BreadcrumbNav Component with default props
 import { Breadcrumbs, Link, Typography } from '@mui/material';
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom';
 
-const BreadcrumbNav = ({ crumbs = [] }) => {  // Default to an empty array if not provided
+const BreadcrumbNav = ({ crumbs = [] }) => {
   return (
     <Breadcrumbs aria-label="breadcrumb">
       {crumbs.map((crumb, index) => {

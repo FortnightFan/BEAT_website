@@ -24,10 +24,10 @@ root.render(
     <AuthProvider>
       <CheckSession />
       <ThemeProvider>
-        <CssBaseline /> {/* Ensures a consistent baseline across browsers */}
+        <CssBaseline />
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', margin: 0, padding: 0 }}>
           <NavigationBar/>
-          <Box component="main" sx={{ flex: 1, overflowY: 'auto' }}> {/* Allows content to grow and footer to stick at the bottom */}
+          <Box component="main" sx={{ flex: 1, overflowY: 'auto' }}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/signin" element={<SignIn />} />

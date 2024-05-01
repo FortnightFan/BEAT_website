@@ -5,14 +5,12 @@ import NavigationBar from './components/NavigationBar';
 import SubNav from './components/Subnav';
 
 export default function BodyDataForm() {
-  // States to store the input values
   const [height, setHeight] = useState('');
   const [weight, setWeight] = useState('');
   const [bmi, setBMI] = useState('');
   const [bodyWater, setBodyWater] = useState('');
   const [skeletalMuscle, setSkeletalMuscle] = useState('');
 
-  // Handlers for the input changes
   const handleHeightChange = (event) => setHeight(event.target.value);
   const handleWeightChange = (event) => setWeight(event.target.value);
   const handleBMIChange = (event) => setBMI(event.target.value);

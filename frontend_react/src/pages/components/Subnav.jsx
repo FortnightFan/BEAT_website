@@ -7,7 +7,7 @@ const SubNav = ({ title, crumbs }) => {
   const theme = useTheme();
   return (
     <>
-      <Box sx={{ marginTop: theme.spacing(8) }}> {/* Adjust spacing as needed */}
+      <Box sx={{ marginTop: theme.spacing(8) }}>
         <AppBar position="static" sx={{ width: '100%', marginBottom: 2 }}>
           <Typography variant="h6" align="center" sx={{ padding: 1, color: 'white' }}>
             {title}

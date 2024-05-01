@@ -65,7 +65,7 @@ const Home = () => {
             sx={{
               width: "100%",
               height: "auto",
-              maxHeight: { xs: 233, md: 1 }, // Restrict height on smaller screens
+              maxHeight: { xs: 233, md: 1 },
             }}
             src={PromoPhoto}
             alt="Black and White Gym"

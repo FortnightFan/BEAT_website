@@ -12,15 +12,15 @@ export const AuthProvider = ({ children }) => {
             try {
                 const decoded = jwtDecode(token);
                 if (decoded.exp * 1000 > Date.now()) {
-                    setUser(decoded);  // Set user if the token is valid
+                    setUser(decoded);
                 } else {
-                    localStorage.removeItem('token');  // Remove token if expired
-                    setUser(null);  // Reset user
+                    localStorage.removeItem('token');
+                    setUser(null);
                 }
             } catch (error) {
-                console.log("Failed to decode token:", error);
-                localStorage.removeItem('token');  // Remove invalid token
-                setUser(null);  // Reset user
+                //console.log("Failed to decode token:", error);
+                localStorage.removeItem('token');
+                setUser(null);
             }
         }
     }, []);
@@ -29,15 +29,15 @@ export const AuthProvider = ({ children }) => {
         localStorage.setItem('token', token);
         try {
             const decoded = jwtDecode(token);
-            setUser(decoded);  // Set user on successful login
+            setUser(decoded);
         } catch (error) {
-            console.log("Failed to decode token on login:", error);
+            //console.log("Failed to decode token on login:", error);
         }
     };
 
     const logout = () => {
         localStorage.removeItem('token');
-        setUser(null);  // Reset user on logout
+        setUser(null);
     };
 
     const isAuthenticated = !!user;

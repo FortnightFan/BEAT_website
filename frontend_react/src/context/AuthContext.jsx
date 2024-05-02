@@ -12,6 +12,7 @@ export const AuthProvider = ({ children }) => {
             try {
                 const decoded = jwtDecode(token);
                 if (decoded.exp * 1000 > Date.now()) {
+                    setUser(decoded);  // Set user if the token is valid
                     setUser(decoded);
                 } else {
                     localStorage.removeItem('token');

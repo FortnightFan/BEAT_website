@@ -26,7 +26,11 @@ function CreateWorkoutList() {
     const navigate = useNavigate();
 
     const handleSaveWorkoutList = async () => {
+<<<<<<< HEAD
         //console.log('Attempting to save workout...');
+=======
+        console.log('Attempting to save workout...');
+>>>>>>> main
         if (workoutList.length > 0) {
             const token = localStorage.getItem("token");
             const requestOptions = {
@@ -43,7 +47,11 @@ function CreateWorkoutList() {
             try {
                 const response = await fetch("http://127.0.0.1:8000/api/save_workout_data/", requestOptions);
                 const data = await response.json();
+<<<<<<< HEAD
                 //console.log('Workout saved', data);
+=======
+                console.log('Workout saved', data);
+>>>>>>> main
                 setUnsavedChanges(false);
                 setOpenConfirmDialog(false);
             } catch (error) {

@@ -19,7 +19,7 @@ function SignUp() {
   const [responseMessage, setResponseMessage] = useState('');
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
-  const [errors, setErrors] = useState({});  // Renamed for clarity
+  const [errors, setErrors] = useState({});
 
   const handleSnackbarClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -45,11 +45,9 @@ function SignUp() {
         setOpenSnackbar(true);
         setSnackbarMessage("Registration successful! Redirecting to login...");
         setTimeout(() => {
-          navigate('/signin', { state: { fromSignUp: true } });  // Redirect to login after showing message
-        }, 2000);  // Wait for 3 seconds before redirecting
+          navigate('/signin', { state: { fromSignUp: true } });
+        }, 2000);
       }
-        //login(responseData.token);
-        //navigate('/signin');
       else {
         const fieldErrors = {};
         let detailedErrorMessage = "Registration failed: ";
@@ -66,14 +64,14 @@ function SignUp() {
           Object.entries(parsedErrors).forEach(([key, value]) => {
             const message = value.map(err => err.message).join(", ");
             fieldErrors[key] = message;
-            detailedErrorMessage += `${message}. `; // Removed field name from the message
+            detailedErrorMessage += `${message}. `;
           });
         }
         setErrors(fieldErrors);
-        console.error(detailedErrorMessage); // Log detailed error message to console
-        setSnackbarMessage(detailedErrorMessage); // Display detailed error message in Snackbar
+        console.error(detailedErrorMessage);
+        setSnackbarMessage(detailedErrorMessage);
         setOpenSnackbar(true);
-        throw new Error(detailedErrorMessage); // Optional: might remove if throwing is unnecessary
+        throw new Error(detailedErrorMessage);
       }
     } catch (error) {
       console.error(error.toString());
@@ -85,7 +83,7 @@ function SignUp() {
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserInfo(prev => ({ ...prev, [name]: value }));
-    // Clear errors for the specific field when it is changed
+
     if (errors[name]) {
       setErrors(prev => ({ ...prev, [name]: '' }));
     }

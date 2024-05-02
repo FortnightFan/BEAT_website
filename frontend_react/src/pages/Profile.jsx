@@ -6,7 +6,6 @@ import ProfileContent from "./components/ProfileContent";
 const Profile = () => {
   const [userInfo, setUserInfo] = useState({ username: "" });
 
-  //Retrieve token from local storage, decode and recieve user info.
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -16,7 +15,6 @@ const Profile = () => {
   }, []);
   const [data, setdata] = useState([0,0,0,0,0,0,0]);
   
-  //Grab graph data according to user
   useEffect(() => {
     const fetchData = async () => {
       const token = localStorage.getItem("token");
@@ -33,9 +31,6 @@ const Profile = () => {
     fetchData();
   }, []);
 
-
-
-  
   return (
     <div>
       <ProfileContent />

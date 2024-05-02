@@ -41,7 +41,7 @@ const SetTimer = ({ index, restDuration = 30, onSaveTime }) => {
             setIsActive(false);
             setIsResting(true);
             setSavedTime(timeElapsed);
-            onSaveTime(index, timeElapsed); // Assuming onSaveTime takes an index and time
+            onSaveTime(index, timeElapsed);
             setTimeElapsed(restDuration);
         } else if (isResting) {
             setIsResting(false);
@@ -49,7 +49,6 @@ const SetTimer = ({ index, restDuration = 30, onSaveTime }) => {
         }
     };
 
-    // Define how to display the time depending on the state
     let displayTime = '';
     if (isActive || restCompleted) {
         displayTime = `Set ${index + 1}: ${timeElapsed} sec`;

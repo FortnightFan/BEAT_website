@@ -67,49 +67,46 @@
   padding-top: 15px;
 }
 
-/* Section break style */
 .section-break {
-  height: 50px; /* Or whatever height you prefer for the break */
+  height: 50px;
 }
 
-/* Two-column section layout */
 .two-column-section {
   display: flex;
   flex-direction: row;
-  align-items: stretch; /* Ensures the columns are of equal height */
+  align-items: stretch;
   flex-wrap: wrap;
   padding: 20px;
 }
 
 .left-column {
-  flex-basis: 40%; /* Adjust the width ratio if needed */
-  padding: 20px; /* Padding inside the left column */
+  flex-basis: 40%;
+  padding: 20px;
 }
 
 .left-column img {
-  width: 100%; /* Makes the image responsive */
-  height: auto; /* Maintain aspect ratio */
-  max-width: 100px; /* Maximum width of the image */
-  max-height: 300px; /* Maximum height of the image */
+  width: 100%;
+  height: auto;
+  max-width: 100px;
+  max-height: 300px;
 }
 
 .right-column {
-  flex-basis: 60%; /* Adjust the width ratio if needed */
-  padding: 20px; /* Padding inside the right column */
+  flex-basis: 60%;
+  padding: 20px;
 }
 
 .right-column h2, .right-column p {
-  margin: 0 0 20px 0; /* Spacing between text elements */
+  margin: 0 0 20px 0;
 }
 
-/* Responsive adjustments */
 @media (max-width: 768px) {
   .two-column-section {
-    flex-direction: column; /* Stack the columns on smaller screens */
+    flex-direction: column;
   }
 
   .left-column,
   .right-column {
-    flex-basis: auto; /* Let them take the full width on smaller screens */
+    flex-basis: auto;
   }
 }

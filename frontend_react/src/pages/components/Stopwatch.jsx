@@ -13,14 +13,13 @@ const Stopwatch = ({ onElapsedTimeChange }) => {
         if (isRunning) {
             intervalId = setInterval(() => {
                 setElapsedTime(prevTime => prevTime + 1);
-                // Invoke the callback with the updated elapsed time
                 onElapsedTimeChange(elapsedTime + 1);
             }, 1000);
         } else {
-            clearInterval(intervalId); // Clear the interval when stopwatch is not running
+            clearInterval(intervalId);
         }
     
-        return () => clearInterval(intervalId); // Cleanup function to clear interval when component unmounts or when interval changes
+        return () => clearInterval(intervalId);
     }, [isRunning, onElapsedTimeChange, elapsedTime]);
 
     const handleStartStop = () => {

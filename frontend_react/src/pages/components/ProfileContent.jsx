@@ -21,7 +21,6 @@ const ProfileContent = () => {
   const [routines, setRoutines] = React.useState([]);
   const [runOnce, setRunOnce] = useState(false);
 
-  //Retrieve token from local storage, decode and recieve user info.
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
@@ -47,26 +46,14 @@ const ProfileContent = () => {
       };
       const response = await fetch("http://127.0.0.1:8000/api/saved_workouts", requestOptions);
       const data = await response.json();
-      console.log(data.message)
-      console.log(JSON.parse(data.message))
+      //console.log(data.message)
+      //console.log(JSON.parse(data.message))
       const names = JSON.parse(data.message).map(item => item.Name);
       setRoutines(names)
     };
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //     if (!runOnce) {
-  //         fetch('/saved_exercises')
-  //         .then(response => response.json())
-  //         .then(data => { 
-  //           const workoutNames = data.map(item => item.Name);
-  //           setRunOnce(true);
-  //           setRoutines(workoutNames)
-  //         });
-  //     }
-  //     // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
 
   const navigate = useNavigate();
 
@@ -108,7 +95,7 @@ const ProfileContent = () => {
       const data = await response.json();
 
       setRoutines(prevRoutines => [...prevRoutines, newRoutineName]);
-      console.log(data.message)
+      //console.log(data.message)
     };
     fetchData();
   }
@@ -118,16 +105,6 @@ const ProfileContent = () => {
 
   const handleRemoveRoutine = async (event, index) => {
     event.stopPropagation();
-    // const response = await fetch('/api/remove_routine', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify({
-    //     "ID": index
-    //   }),
-    // });
-    // const data = await response.json();
     const fetchData = async () => {
       const token = localStorage.getItem("token");
       const requestOptions = {

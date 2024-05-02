@@ -1,6 +1,6 @@
 // ExerciseList.jsx
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Accordion, AccordionDetails, AccordionSummary, AppBar, Box, Container, Grid, Paper, Stack, TextField, Typography, } from '@mui/material';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Container, Grid, Paper, Stack, TextField, Typography, } from '@mui/material';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import SetTimer from './components/SetTimer';
@@ -11,7 +11,6 @@ const WorkoutAdder = ({ workoutId }) => {
     const navigate = useNavigate();
     const { workoutID } = useParams();
 
-    // Define state variables
     const [workoutName, setWorkoutName] = useState('');
     const [exerciseDetails, setExerciseDetails] = useState({});
     const [workoutList, setWorkoutList] = useState([]);
@@ -23,7 +22,6 @@ const WorkoutAdder = ({ workoutId }) => {
     const [runOnce, setRunOnce] = useState(false);
 
     useEffect(() => {
-        // This function is defined within useEffect to avoid the exhaustive-deps warning
         const fetchData = async () => {
             const token = localStorage.getItem("token");
             const requestOptions = {
@@ -38,6 +36,7 @@ const WorkoutAdder = ({ workoutId }) => {
 
             const response = await fetch("http://127.0.0.1:8000/api/grab_workout_data/", requestOptions);
             const data = await response.json();
+            //console.log("Fetched workout data:", data); 
             setWorkoutList(data)
             const initialSetRepsWeight = new Array(data.length).fill(0);
             setSets(initialSetRepsWeight);
@@ -50,7 +49,6 @@ const WorkoutAdder = ({ workoutId }) => {
             fetchData();
             setRunOnce(true);
         }
-        // Including workoutID in the dependency array to ensure effect reruns if workoutID changes
     }, [runOnce, workoutID]);
 
     useEffect(() => {
@@ -94,7 +92,6 @@ const WorkoutAdder = ({ workoutId }) => {
     const handleRepWeightChange = (exerciseId, setIndex, type, value) => {
         const stringValue = String(value);
         const filteredValue = stringValue.replace(/[^0-9]/g, '');
-        // Allow empty values instead of NaNN
         if (filteredValue === '') {
             setExerciseDetails(prevDetails => {
                 const newDetails = { ...prevDetails };
@@ -104,7 +101,6 @@ const WorkoutAdder = ({ workoutId }) => {
                 return newDetails;
             });
         } else {
-            // Process the input as a number
             const numericValue = parseInt(value, 10);
             if (!isNaN(numericValue) && numericValue >= 0 && numericValue <= 999) {
                 setExerciseDetails(prevDetails => {

@@ -11,6 +11,7 @@ import PrevWorkouts from './pages/PrevWorkouts.jsx';
 import Profile from './pages/Profile.jsx';
 import SignIn from './pages/SignIn.jsx';
 import SignUp from './pages/SignUp.jsx';
+import CheckSession from './pages/components/CheckSession';
 import CreateWorkoutList from './pages/components/CreateWorkoutList.jsx';
 import Footer from './pages/components/Footer';
 import NavigationBar from './pages/components/NavigationBar';
@@ -21,11 +22,12 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <Router>
     <AuthProvider>
+      <CheckSession />
       <ThemeProvider>
-        <CssBaseline /> {/* Ensures a consistent baseline across browsers */}
+        <CssBaseline />
         <Box sx={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', margin: 0, padding: 0 }}>
           <NavigationBar/>
-          <Box component="main" sx={{ flex: 1, overflowY: 'auto' }}> {/* Allows content to grow and footer to stick at the bottom */}
+          <Box component="main" sx={{ flex: 1, overflowY: 'auto' }}>
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/signin" element={<SignIn />} />

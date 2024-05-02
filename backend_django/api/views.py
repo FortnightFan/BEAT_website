@@ -160,6 +160,8 @@ def grab_workout_data(request):
     user_profile = get_object_or_404(UserProfile, user_id=user)
     saved_workouts = json.loads(user_profile.saved_workouts)
 
+    workout_list = []
+
     for workouts in saved_workouts:
         if workouts['ID'] == id:
             workout_list = workouts['exercise_list']

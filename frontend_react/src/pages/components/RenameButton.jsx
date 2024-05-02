@@ -1,13 +1,10 @@
-// RenameButton.jsx
 import EditIcon from '@mui/icons-material/Edit';
 import { IconButton, Tooltip } from '@mui/material';
 
 const RenameButton = ({ onRename, promptMessage }) => {
   const handleRename = (event) => {
-    // Stop the event from bubbling up
     event.stopPropagation();
 
-    // Call the prompt window with the provided message
     const newName = window.prompt(promptMessage);
     if (newName) {
       onRename(newName);

@@ -1,18 +1,17 @@
 import StartIcon from '@mui/icons-material/PlayArrow';
-import { Alert, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, Snackbar, useMediaQuery } from '@mui/material';
+import { Alert, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, FormControl, Grid, InputLabel, MenuItem, Select, Snackbar } from '@mui/material';
 import Divider from '@mui/material/Divider';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import { useTheme } from '@mui/material/styles';
 import React, { useEffect, useState } from 'react';
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import SubNav from './Subnav';
 
 function CreateWorkoutList() {
     const { workoutID } = useParams();
     const theme = useTheme();
-    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
     const [selectedDifficulty, setSelectedDifficulty] = useState('');
     const [selectedMuscle, setSelectedMuscle] = useState('');
     const [selectedEquipment, setSelectedEquipment] = useState('');
@@ -27,7 +26,7 @@ function CreateWorkoutList() {
     const navigate = useNavigate();
 
     const handleSaveWorkoutList = async () => {
-        console.log('Attempting to save workout...');
+        //console.log('Attempting to save workout...');
         if (workoutList.length > 0) {
             const token = localStorage.getItem("token");
             const requestOptions = {
@@ -44,7 +43,7 @@ function CreateWorkoutList() {
             try {
                 const response = await fetch("http://127.0.0.1:8000/api/save_workout_data/", requestOptions);
                 const data = await response.json();
-                console.log('Workout saved', data);
+                //console.log('Workout saved', data);
                 setUnsavedChanges(false);
                 setOpenConfirmDialog(false);
             } catch (error) {
@@ -55,11 +54,11 @@ function CreateWorkoutList() {
 
     const handleStartWorkout = () => {
         if (unsavedChanges) {
-            console.log("Opening Confirm Dialog");
+            //console.log("Opening Confirm Dialog");
             setOpenConfirmDialog(true);
         } else {
             setUnsavedChanges(false)
-            console.log('Starting workout');
+            //console.log('Starting workout');
             navigate(`/workout/${workoutID}/start`);
         }
     };
@@ -99,7 +98,7 @@ function CreateWorkoutList() {
             setWorkoutList(currentList =>
                 currentList.map(item => ({ ...item, isNew: false }))
             );
-        }, 300); // Reset isNew after 300ms
+        }, 300);
 
     }
 
@@ -111,15 +110,13 @@ function CreateWorkoutList() {
     };
 
     const removeWorkout = (exerciseToRemove) => {
-        // Find the index of the first occurrence of the exercise
         const index = workoutList.findIndex(exercise => exercise === exerciseToRemove);
 
-        // If the exercise is found, remove it from the workoutList array
         if (index !== -1) {
             setWorkoutList(workoutList => {
-                const newList = [...workoutList]; // Create a copy of the original array
-                newList.splice(index, 1); // Remove the exercise at the found index
-                return newList; // Update the state with the modified array
+                const newList = [...workoutList];
+                newList.splice(index, 1);
+                return newList;
             });
         }
         setUnsavedChanges(true);
@@ -234,17 +231,17 @@ function CreateWorkoutList() {
     }, []);
 
     const ButtonStyles = {
-        backgroundColor: "green", // A green shade
+        backgroundColor: "green",
         color: "white",
         marginTop: '20px',
         marginBottom: '20px',
-        padding: '10px 20px', // Increased padding for a larger button
-        fontSize: '16px', // Larger font size
-        fontWeight: 'bold', // Make the font bold
-        boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)', // Add shadow for depth
+        padding: '10px 20px',
+        fontSize: '16px',
+        fontWeight: 'bold',
+        boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.2)',
         '&:hover': {
-            backgroundColor: "#45a049", // A slightly darker green on hover
-            boxShadow: '0px 6px 12px rgba(0, 0, 0, 0.3)', // Increase shadow on hover
+            backgroundColor: "#45a049",
+            boxShadow: '0px 6px 12px rgba(0, 0, 0, 0.3)',
         },
     };
 

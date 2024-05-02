@@ -50,7 +50,7 @@ function SignIn() {
 
         if (response.ok) {
             setResponseMessage("Login successful! Redirecting to your profile...");
-            console.log(responseMessage);
+            //console.log(responseMessage);
             login(responseData.token);
             navigate('/profile');
 

@@ -1,21 +1,20 @@
-// HoverListItem.jsx
 import { ListItem, Paper } from '@mui/material';
 import React from 'react';
 
 const HoverListItem = ({ children, onClick, sx, ...otherProps }) => {
-  // Define default styles for Paper component inside HoverListItem
+
   const defaultPaperStyles = {
     display: 'flex', 
     justifyContent: 'space-between', 
     alignItems: 'center', 
     maxWidth: 600, 
     flexGrow: 0, 
-    width: '100%', // Adjust if you want the Paper to have a specific width
-    margin: '1rem auto', // Center Paper with automatic margins
-    padding: 1, // Add padding inside the Paper
+    width: '100%',
+    margin: '1rem auto',
+    padding: 1,
     '&:hover': {
-      backgroundColor: 'rgba(0, 0, 0, 0.04)', // Change background color on hover
-      cursor: 'pointer', // Change cursor to pointer on hover
+      backgroundColor: 'rgba(0, 0, 0, 0.04)',
+      cursor: 'pointer',
     },
   };
 
@@ -26,7 +25,7 @@ const HoverListItem = ({ children, onClick, sx, ...otherProps }) => {
         display: 'flex',
         justifyContent: 'center',
         padding: 0,
-        ...sx, // Apply any additional styles passed via the sx prop
+        ...sx, 
       }}
       {...otherProps}
     >
